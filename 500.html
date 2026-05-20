@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Server error. We're working on it. Return to doubles.singles and discover exclusive dating events.">
+    <meta name="robots" content="noindex">
+    <title>Server Error – Doubles</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="logo">
+                    <span class="logo-text">DOUBLES</span>
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links" id="navLinks">
+                    <a href="/events.html">EVENTS</a>
+                    <a href="/how-it-works.html">HOW IT WORKS</a>
+                    <a href="/about.html">ABOUT</a>
+                    <a href="/faq.html">FAQ</a>
+                    <a href="/contact.html">CONTACT</a>
+                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Error Section -->
+    <section class="error-section">
+        <div class="container">
+            <div class="error-content">
+                <div class="error-code">500</div>
+                <h1>Something went wrong on our end.</h1>
+                <p>Our team has been notified and we're fixing this. In the meantime, feel free to explore other pages or get in touch with us.</p>
+                <div class="error-actions">
+                    <a href="/" class="btn btn-primary">BACK TO HOME →</a>
+                    <a href="/contact.html" class="btn btn-secondary">CONTACT US →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to play?</h2>
+                <p>Apply now. Get approved in 48 hours. Show up with your friend. That's it.</p>
+                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
+                <div class="tennis-accent-bottom"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DOUBLES</h4>
+                    <p>We host curated social events that bring great people together.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📷</a>
+                        <a href="#">✉️</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>EVENTS</h4>
+                    <ul>
+                        <li><a href="/events.html">Upcoming Events</a></li>
+                        <li><a href="#">Past Events</a></li>
+                        <li><a href="#">Private Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>COMPANY</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/how-it-works.html">How It Works</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>INFO</h4>
+                    <ul>
+                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LET'S STAY IN TOUCH</h4>
+                    <form class="footer-email" id="footerEmailForm" novalidate>
+                        <input type="email" id="footerEmail" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-small">→</button>
+                        <div class="footer-email-status" id="footerEmailStatus"></div>
+                    </form>
+                    <p class="footer-note">No spam. Just good invites.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Doubles, LLC</p>
+                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+
+    // Footer Email Form Validation
+    const footerEmailForm = document.getElementById('footerEmailForm');
+    if (footerEmailForm) {
+        footerEmailForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const emailInput = document.getElementById('footerEmail');
+            const status = document.getElementById('footerEmailStatus');
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (emailRegex.test(emailInput.value.trim())) {
+                status.className = 'footer-email-status success';
+                status.textContent = '✓ Thanks! Check your email.';
+                emailInput.value = '';
+                setTimeout(() => {
+                    status.textContent = '';
+                    status.className = '';
+                }, 3000);
+            } else {
+                status.className = 'footer-email-status error';
+                status.textContent = 'Please enter a valid email.';
+            }
+        });
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Get in touch with doubles.singles. Questions about applying, hosting private events, or feedback? We're here to help.">
+    <meta name="keywords" content="contact, support, dating events, private events, SF">
+    <meta property="og:title" content="Contact – Doubles Dating Events">
+    <meta property="og:description" content="Reach out to the doubles.singles team. We reply within 24 hours.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://doubles.singles/contact.html">
+    <meta name="twitter:card" content="summary">
+    <link rel="canonical" href="https://doubles.singles/contact.html">
+    <title>Contact – Doubles Dating Events</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <a href="/" class="logo">
+                    <span class="logo-text">DOUBLES</span>
+                </a>
+                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <div class="nav-links" id="navLinks">
+                    <a href="/events.html">EVENTS</a>
+                    <a href="/how-it-works.html">HOW IT WORKS</a>
+                    <a href="/about.html">ABOUT</a>
+                    <a href="/faq.html">FAQ</a>
+                    <a href="/contact.html" class="active">CONTACT</a>
+                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero hero-secondary">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Let's talk.</h1>
+                    <p>Questions about applying? Want to host a private event? Have feedback? We're here to help.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <!-- Contact Form -->
+                <div class="contact-form-area">
+                    <h2>Send us a message</h2>
+                    <form class="contact-form" id="contactForm" novalidate>
+                        <div class="form-group">
+                            <label for="name">Name *</label>
+                            <input type="text" id="name" name="name" placeholder="Your full name" required>
+                            <span class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+                            <span class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject">Subject *</label>
+                            <select id="subject" name="subject" required>
+                                <option value="">Select a topic...</option>
+                                <option value="application">Application Question</option>
+                                <option value="bring-friend">Who Should I Bring?</option>
+                                <option value="private-event">Private Event</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <span class="form-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="6" placeholder="Tell us what's on your mind..." required></textarea>
+                            <span class="form-error"></span>
+                        </div>
+
+                        <div class="form-status" id="formStatus"></div>
+                        <button type="submit" class="btn btn-primary">SEND →</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="contact-info-area">
+                    <h2>Other ways to reach us</h2>
+
+                    <div class="contact-info-block">
+                        <h3>Email</h3>
+                        <p><a href="mailto:hello@doubles.singles" class="link-accent">hello@doubles.singles</a></p>
+                        <p style="font-size: 0.9rem; color: #999;">We usually reply within 24 hours</p>
+                    </div>
+
+                    <div class="contact-info-block">
+                        <h3>Application Questions</h3>
+                        <p><a href="mailto:apply@doubles.singles" class="link-accent">apply@doubles.singles</a></p>
+                        <p style="font-size: 0.9rem; color: #999;">Direct questions about applications</p>
+                    </div>
+
+                    <div class="contact-info-block">
+                        <h3>Private Events</h3>
+                        <p><a href="mailto:events@doubles.singles" class="link-accent">events@doubles.singles</a></p>
+                        <p style="font-size: 0.9rem; color: #999;">Host a private Doubles event</p>
+                    </div>
+
+                    <div class="contact-info-block">
+                        <h3>Location</h3>
+                        <p>San Francisco, CA</p>
+                        <p style="font-size: 0.9rem; color: #999;">Currently hosting in SF. Expanding soon.</p>
+                    </div>
+
+                    <div class="contact-info-block">
+                        <h3>Follow Us</h3>
+                        <div class="social-links" style="font-size: 1.5rem;">
+                            <a href="#">📘</a>
+                            <a href="#">🐦</a>
+                            <a href="#">📷</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Preview -->
+    <section class="info-banner-section">
+        <div class="container">
+            <h2>Can't find what you're looking for?</h2>
+            <p>Check out our <a href="/faq.html" class="link-accent">FAQ page</a> for answers to common questions.</p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to join?</h2>
+                <p>Apply now and be part of the Doubles community.</p>
+                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
+                <div class="tennis-accent-bottom"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>DOUBLES SINGLES</h4>
+                    <p>We host curated social events that bring great people together.</p>
+                    <div class="social-links">
+                        <a href="#">📘</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📷</a>
+                        <a href="#">✉️</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>EVENTS</h4>
+                    <ul>
+                        <li><a href="/events.html">Upcoming Events</a></li>
+                        <li><a href="#">Past Events</a></li>
+                        <li><a href="#">Private Events</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>COMPANY</h4>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/how-it-works.html">How It Works</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>INFO</h4>
+                    <ul>
+                        <li><a href="/faq.html">FAQ</a></li>
+                        <li><a href="#">Safety</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>LET'S STAY IN TOUCH</h4>
+                    <form class="footer-email">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-small">→</button>
+                    </form>
+                    <p class="footer-note">No spam. Just good invites.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Doubles, LLC</p>
+                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // Hamburger Menu Toggle
+    const hamburger = document.getElementById('hamburger');
+    const navLinks = document.getElementById('navLinks');
+
+    if (hamburger && navLinks) {
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        const navItems = navLinks.querySelectorAll('a');
+        navItems.forEach(item => {
+            item.addEventListener('click', function() {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+    }
+    </script>
+
+    <script>
+    // Form validation
+    const contactForm = document.getElementById('contactForm');
+
+    if (contactForm) {
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Reset status
+            const statusDiv = document.getElementById('formStatus');
+            statusDiv.className = '';
+            statusDiv.textContent = '';
+
+            // Validate form
+            const isValid = validateForm();
+
+            if (isValid) {
+                // Show success message
+                statusDiv.className = 'form-status success';
+                statusDiv.textContent = '✓ Message sent! We\'ll get back to you within 24 hours.';
+
+                // Reset form
+                contactForm.reset();
+
+                // Clear success message after 5 seconds
+                setTimeout(function() {
+                    statusDiv.className = '';
+                    statusDiv.textContent = '';
+                }, 5000);
+            }
+        });
+
+        // Real-time validation on input
+        const inputs = contactForm.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                validateField(this);
+            });
+
+            input.addEventListener('input', function() {
+                if (this.parentElement.classList.contains('error')) {
+                    validateField(this);
+                }
+            });
+        });
+    }
+
+    function validateForm() {
+        const inputs = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
+        let isValid = true;
+
+        inputs.forEach(input => {
+            if (!validateField(input)) {
+                isValid = false;
+            }
+        });
+
+        return isValid;
+    }
+
+    function validateField(field) {
+        const formGroup = field.parentElement;
+        const errorSpan = formGroup.querySelector('.form-error');
+        let isValid = true;
+        let errorMessage = '';
+
+        // Clear previous error
+        formGroup.classList.remove('error');
+        errorSpan.textContent = '';
+
+        // Validate based on type
+        if (field.type === 'email') {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!field.value.trim()) {
+                isValid = false;
+                errorMessage = 'Email is required';
+            } else if (!emailRegex.test(field.value.trim())) {
+                isValid = false;
+                errorMessage = 'Please enter a valid email address';
+            }
+        } else if (field.type === 'text' || field.name === 'message') {
+            if (!field.value.trim()) {
+                isValid = false;
+                errorMessage = field.name === 'name' ? 'Name is required' : 'This field is required';
+            } else if (field.name === 'message' && field.value.trim().length < 10) {
+                isValid = false;
+                errorMessage = 'Please tell us more (at least 10 characters)';
+            }
+        } else if (field.tagName === 'SELECT') {
+            if (!field.value) {
+                isValid = false;
+                errorMessage = 'Please select a topic';
+            }
+        }
+
+        // Show error if invalid
+        if (!isValid) {
+            formGroup.classList.add('error');
+            errorSpan.textContent = errorMessage;
+        }
+
+        return isValid;
+    }
+    </script>
+</body>
+</html>
