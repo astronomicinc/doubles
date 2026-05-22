@@ -1,346 +1,654 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Get in touch with doubles.singles. Questions about applying, hosting private events, or feedback? We're here to help.">
-    <meta name="keywords" content="contact, support, dating events, private events, SF">
-    <meta property="og:title" content="Contact – Doubles Dating Events">
-    <meta property="og:description" content="Reach out to the doubles.singles team. We reply within 24 hours.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://doubles.singles/contact.html">
-    <meta name="twitter:card" content="summary">
-    <link rel="canonical" href="https://doubles.singles/contact.html">
-    <title>Contact – Doubles Dating Events</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact Doubles — Get in touch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   DOUBLES — Premium tennis-themed dating events
+   Aesthetic: Soho House × Raya × tennis club
+   ============================================================ */
+
+:root {
+  --teal: #1B5A6B;
+  --teal-deep: #154754;
+  --navy: #1A3A42;
+  --cream: #F5F1E8;
+  --cream-warm: #EFE9DA;
+  --coral: #FF6B6B;
+  --coral-deep: #E85555;
+  --ball: #D4F748;
+  --ink: #14272D;
+  --ink-soft: #3E5258;
+  --line: rgba(20,39,45,0.12);
+
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+  --container: 1280px;
+  --gutter: clamp(20px, 4vw, 56px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 17px;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- type ---------- */
+.eyebrow {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  font-weight: 600;
+}
+.eyebrow .ball {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--ball);
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1.5px rgba(20,39,45,0.04);
+}
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  white-space: nowrap;
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 24px -12px rgba(232,85,85,0.6);
+}
+.btn-coral:hover { background: var(--coral-deep); transform: translateY(-1px); }
+.btn .arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245,241,232,0.08);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.logo-dot {
+  width: 10px; height: 10px;
+  background: var(--ball);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(212,247,72,0.18);
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity .15s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  padding: 12px 20px;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-cta { padding: 10px 16px; font-size: 11px; }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 50vh;
+  color: var(--cream);
+  overflow: hidden;
+  background: var(--teal-deep);
+  padding: clamp(100px, 15vh, 160px) 0 clamp(60px, 10vh, 100px);
+}
+.hero-content {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  max-width: 16ch;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ball);
+}
+
+/* =========================================================
+   CONTACT SECTION
+   ========================================================= */
+.contact-section {
+  padding: clamp(80px, 12vh, 140px) 0;
+  background: var(--cream);
+}
+
+.contact-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.contact-intro {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.contact-intro h2 {
+  font-size: 32px;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+
+.contact-intro p {
+  font-size: 16px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* =========================================================
+   FORM
+   ========================================================= */
+.contact-form {
+  background: white;
+  border-radius: 4px;
+  padding: clamp(40px, 5vw, 60px);
+  box-shadow: 0 24px 60px -40px rgba(20,39,45,0.2);
+  border: 1px solid rgba(20,39,45,0.04);
+}
+
+.form-group {
+  margin-bottom: 28px;
+}
+
+.form-group:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(20,39,45,0.08);
+  border-radius: 3px;
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+  transition: border-color .2s, box-shadow .2s;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(27,90,107,0.08);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--ink-soft);
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.submit-btn {
+  padding: 16px 32px;
+  background: var(--coral);
+  color: white;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, transform .2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.submit-btn:hover {
+  background: var(--coral-deep);
+  transform: translateY(-1px);
+}
+
+.submit-btn .arrow {
+  display: inline-block;
+  transition: transform .2s;
+}
+
+.submit-btn:hover .arrow {
+  transform: translateX(4px);
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 90px 0 28px;
+  border-top: 1px solid rgba(245,241,232,0.06);
+}
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr) 1.4fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(245,241,232,0.1);
+}
+.foot-brand .logo { color: var(--cream); margin-bottom: 18px; }
+.foot-brand p {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--cream);
+  margin: 0 0 24px;
+  max-width: 22ch;
+  font-style: italic;
+}
+.foot-brand .socials {
+  display: flex; gap: 10px;
+}
+.foot-brand .socials a {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(245,241,232,0.25);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.foot-brand .socials a:hover {
+  background: var(--ball);
+  border-color: var(--ball);
+  color: var(--navy);
+}
+.foot-brand .socials svg { width: 16px; height: 16px; }
+.foot-col h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 22px;
+}
+.foot-col ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.foot-col a {
+  font-size: 14px;
+  color: rgba(245,241,232,0.75);
+  transition: color .15s;
+}
+.foot-col a:hover { color: var(--cream); }
+
+.newsletter h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 14px;
+}
+.newsletter p {
+  font-size: 13px;
+  color: rgba(245,241,232,0.65);
+  margin: 0 0 18px;
+  line-height: 1.6;
+}
+.newsletter form {
+  display: flex;
+  border: 1px solid rgba(245,241,232,0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(245,241,232,0.04);
+}
+.newsletter input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 13px;
+}
+.newsletter input::placeholder { color: rgba(245,241,232,0.4); }
+.newsletter input:focus { outline: none; }
+.newsletter button {
+  background: var(--coral);
+  color: white;
+  padding: 0 20px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.newsletter button:hover { background: var(--coral-deep); }
+
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.5);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.foot-bottom .tag {
+  display: flex; align-items: center; gap: 12px;
+}
+.foot-bottom .tag .ball { width: 6px; height: 6px; background: var(--ball); border-radius: 50%; }
+
+@media (max-width: 1000px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-brand, .newsletter { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+  .foot-brand, .newsletter { grid-column: auto; }
+}
+
+@media (max-width: 900px) {
+  .hero h1 { font-size: clamp(44px, 12vw, 80px); }
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="logo">
-                    <span class="logo-text">DOUBLES</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links" id="navLinks">
-                    <a href="/events.html">EVENTS</a>
-                    <a href="/how-it-works.html">HOW IT WORKS</a>
-                    <a href="/about.html">ABOUT</a>
-                    <a href="/faq.html">FAQ</a>
-                    <a href="/contact.html" class="active">CONTACT</a>
-                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
-                </div>
-            </div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo" aria-label="Doubles">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#events">Events</a></li>
+      <li><a href="index.html#how">How it works</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="https://luma.com/doubles-singles?k=c" class="btn btn-coral nav-cta">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero">
+  <div class="hero-content">
+    <div>
+      <h1>Get in <em>touch</em>.</h1>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="contact-section">
+  <div class="contact-container">
+    <div class="contact-intro">
+      <h2>We're here to help.</h2>
+      <p>
+        Questions about an event? Want to host an event in your home? Have feedback? We read every message and try to respond within 24 hours.
+      </p>
+    </div>
+
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-group">
+        <label class="form-label" for="name">Name</label>
+        <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" name="email" class="form-input" placeholder="your@email.com" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="subject">Subject</label>
+        <input type="text" id="subject" name="subject" class="form-input" placeholder="What's this about?" required />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="message">Message</label>
+        <textarea id="message" name="message" class="form-textarea" placeholder="Tell us what's on your mind..." required></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">Send message <span class="arrow">→</span></button>
+        <span class="form-note">We'll respond within 24 hours</span>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p>"Good players. Better together."</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.92 3.78-3.92 1.1 0 2.24.2 2.24.2v2.47H15.2c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/>
+            </svg>
+          </a>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section -->
-    <section class="hero hero-secondary">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Let's talk.</h1>
-                    <p>Questions about applying? Want to host a private event? Have feedback? We're here to help.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="foot-col">
+        <h4>Events</h4>
+        <ul>
+          <li><a href="index.html#events">Next event</a></li>
+          <li><a href="#">Past events</a></li>
+          <li><a href="#">Host with us</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="contact-wrapper">
-                <!-- Contact Form -->
-                <div class="contact-form-area">
-                    <h2>Send us a message</h2>
-                    <form class="contact-form" id="contactForm" novalidate>
-                        <div class="form-group">
-                            <label for="name">Name *</label>
-                            <input type="text" id="name" name="name" placeholder="Your full name" required>
-                            <span class="form-error"></span>
-                        </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
 
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" placeholder="you@example.com" required>
-                            <span class="form-error"></span>
-                        </div>
+      <div class="foot-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Code of conduct</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
 
-                        <div class="form-group">
-                            <label for="subject">Subject *</label>
-                            <select id="subject" name="subject" required>
-                                <option value="">Select a topic...</option>
-                                <option value="application">Application Question</option>
-                                <option value="bring-friend">Who Should I Bring?</option>
-                                <option value="private-event">Private Event</option>
-                                <option value="feedback">Feedback</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <span class="form-error"></span>
-                        </div>
+      <div class="newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
 
-                        <div class="form-group">
-                            <label for="message">Message *</label>
-                            <textarea id="message" name="message" rows="6" placeholder="Tell us what's on your mind..." required></textarea>
-                            <span class="form-error"></span>
-                        </div>
+    </div>
 
-                        <div class="form-status" id="formStatus"></div>
-                        <button type="submit" class="btn btn-primary">SEND →</button>
-                    </form>
-                </div>
+    <div class="foot-bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
 
-                <!-- Contact Info -->
-                <div class="contact-info-area">
-                    <h2>Other ways to reach us</h2>
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  
+  // Collect form data
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const subject = document.getElementById('subject').value;
+  const message = document.getElementById('message').value;
+  
+  // For now, just show a confirmation and reset the form
+  // In production, you'd send this to your backend or email service
+  alert('Thanks for reaching out! We\'ll be in touch soon.');
+  e.target.reset();
+}
+</script>
 
-                    <div class="contact-info-block">
-                        <h3>Email</h3>
-                        <p><a href="mailto:hello@doubles.singles" class="link-accent">hello@doubles.singles</a></p>
-                        <p style="font-size: 0.9rem; color: #999;">We usually reply within 24 hours</p>
-                    </div>
-
-                    <div class="contact-info-block">
-                        <h3>Application Questions</h3>
-                        <p><a href="mailto:apply@doubles.singles" class="link-accent">apply@doubles.singles</a></p>
-                        <p style="font-size: 0.9rem; color: #999;">Direct questions about applications</p>
-                    </div>
-
-                    <div class="contact-info-block">
-                        <h3>Private Events</h3>
-                        <p><a href="mailto:events@doubles.singles" class="link-accent">events@doubles.singles</a></p>
-                        <p style="font-size: 0.9rem; color: #999;">Host a private Doubles event</p>
-                    </div>
-
-                    <div class="contact-info-block">
-                        <h3>Location</h3>
-                        <p>San Francisco, CA</p>
-                        <p style="font-size: 0.9rem; color: #999;">Currently hosting in SF. Expanding soon.</p>
-                    </div>
-
-                    <div class="contact-info-block">
-                        <h3>Follow Us</h3>
-                        <div class="social-links" style="font-size: 1.5rem;">
-                            <a href="#">📘</a>
-                            <a href="#">🐦</a>
-                            <a href="#">📷</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Preview -->
-    <section class="info-banner-section">
-        <div class="container">
-            <h2>Can't find what you're looking for?</h2>
-            <p>Check out our <a href="/faq.html" class="link-accent">FAQ page</a> for answers to common questions.</p>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to join?</h2>
-                <p>Apply now and be part of the Doubles community.</p>
-                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                <div class="tennis-accent-bottom"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DOUBLES SINGLES</h4>
-                    <p>We host curated social events that bring great people together.</p>
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📷</a>
-                        <a href="#">✉️</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>EVENTS</h4>
-                    <ul>
-                        <li><a href="/events.html">Upcoming Events</a></li>
-                        <li><a href="#">Past Events</a></li>
-                        <li><a href="#">Private Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>COMPANY</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>INFO</h4>
-                    <ul>
-                        <li><a href="/faq.html">FAQ</a></li>
-                        <li><a href="#">Safety</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>LET'S STAY IN TOUCH</h4>
-                    <form class="footer-email">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-small">→</button>
-                    </form>
-                    <p class="footer-note">No spam. Just good invites.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Doubles, LLC</p>
-                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-    // Hamburger Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        const navItems = navLinks.querySelectorAll('a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-    }
-    </script>
-
-    <script>
-    // Form validation
-    const contactForm = document.getElementById('contactForm');
-
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            // Reset status
-            const statusDiv = document.getElementById('formStatus');
-            statusDiv.className = '';
-            statusDiv.textContent = '';
-
-            // Validate form
-            const isValid = validateForm();
-
-            if (isValid) {
-                // Show success message
-                statusDiv.className = 'form-status success';
-                statusDiv.textContent = '✓ Message sent! We\'ll get back to you within 24 hours.';
-
-                // Reset form
-                contactForm.reset();
-
-                // Clear success message after 5 seconds
-                setTimeout(function() {
-                    statusDiv.className = '';
-                    statusDiv.textContent = '';
-                }, 5000);
-            }
-        });
-
-        // Real-time validation on input
-        const inputs = contactForm.querySelectorAll('input, select, textarea');
-        inputs.forEach(input => {
-            input.addEventListener('blur', function() {
-                validateField(this);
-            });
-
-            input.addEventListener('input', function() {
-                if (this.parentElement.classList.contains('error')) {
-                    validateField(this);
-                }
-            });
-        });
-    }
-
-    function validateForm() {
-        const inputs = contactForm.querySelectorAll('input[required], select[required], textarea[required]');
-        let isValid = true;
-
-        inputs.forEach(input => {
-            if (!validateField(input)) {
-                isValid = false;
-            }
-        });
-
-        return isValid;
-    }
-
-    function validateField(field) {
-        const formGroup = field.parentElement;
-        const errorSpan = formGroup.querySelector('.form-error');
-        let isValid = true;
-        let errorMessage = '';
-
-        // Clear previous error
-        formGroup.classList.remove('error');
-        errorSpan.textContent = '';
-
-        // Validate based on type
-        if (field.type === 'email') {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!field.value.trim()) {
-                isValid = false;
-                errorMessage = 'Email is required';
-            } else if (!emailRegex.test(field.value.trim())) {
-                isValid = false;
-                errorMessage = 'Please enter a valid email address';
-            }
-        } else if (field.type === 'text' || field.name === 'message') {
-            if (!field.value.trim()) {
-                isValid = false;
-                errorMessage = field.name === 'name' ? 'Name is required' : 'This field is required';
-            } else if (field.name === 'message' && field.value.trim().length < 10) {
-                isValid = false;
-                errorMessage = 'Please tell us more (at least 10 characters)';
-            }
-        } else if (field.tagName === 'SELECT') {
-            if (!field.value) {
-                isValid = false;
-                errorMessage = 'Please select a topic';
-            }
-        }
-
-        // Show error if invalid
-        if (!isValid) {
-            formGroup.classList.add('error');
-            errorSpan.textContent = errorMessage;
-        }
-
-        return isValid;
-    }
-    </script>
 </body>
 </html>

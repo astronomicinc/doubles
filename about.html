@@ -1,255 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Learn how doubles.singles was founded to solve the dating problem for successful founders and investors. Our mission: quality over volume, intention over convenience.">
-    <meta name="keywords" content="about doubles, founders dating, exclusive events, startup community">
-    <meta property="og:title" content="About Doubles – Dating Events for Founders & Investors">
-    <meta property="og:description" content="Discover why we created doubles.singles and our mission to connect accomplished people.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://doubles.singles/about.html">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="About Doubles – Dating Events for Founders & Investors">
-    <meta name="twitter:description" content="Learn about our mission to connect successful founders and investors.">
-    <link rel="canonical" href="https://doubles.singles/about.html">
-    <title>About Doubles – Dating Events for Founders & Investors</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About Doubles — The story behind the event</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   DOUBLES — Premium tennis-themed dating events
+   Aesthetic: Soho House × Raya × tennis club
+   ============================================================ */
+
+:root {
+  --teal: #1B5A6B;
+  --teal-deep: #154754;
+  --navy: #1A3A42;
+  --cream: #F5F1E8;
+  --cream-warm: #EFE9DA;
+  --coral: #FF6B6B;
+  --coral-deep: #E85555;
+  --ball: #D4F748;
+  --ink: #14272D;
+  --ink-soft: #3E5258;
+  --line: rgba(20,39,45,0.12);
+  --line-cream: rgba(245,241,232,0.18);
+
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+  --container: 1280px;
+  --gutter: clamp(20px, 4vw, 56px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 17px;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- type ---------- */
+.eyebrow {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  font-weight: 600;
+}
+.eyebrow .ball {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--ball);
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1.5px rgba(20,39,45,0.04);
+}
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  white-space: nowrap;
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 24px -12px rgba(232,85,85,0.6);
+}
+.btn-coral:hover { background: var(--coral-deep); transform: translateY(-1px); }
+.btn .arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245,241,232,0.08);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.logo-dot {
+  width: 10px; height: 10px;
+  background: var(--ball);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(212,247,72,0.18);
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity .15s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  padding: 12px 20px;
+  font-size: 12px;
+}
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-cta { padding: 10px 16px; font-size: 11px; }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 60vh;
+  color: var(--cream);
+  overflow: hidden;
+  background: var(--teal-deep);
+  padding: clamp(100px, 15vh, 160px) 0 clamp(60px, 10vh, 100px);
+}
+.hero-content {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+.hero h1 {
+  font-size: clamp(48px, 8vw, 120px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  max-width: 16ch;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ball);
+}
+.hero-sub {
+  max-width: 52ch;
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.6;
+  opacity: 0.92;
+  font-weight: 300;
+}
+
+/* =========================================================
+   CONTENT SECTIONS
+   ========================================================= */
+.content-section {
+  padding: clamp(80px, 12vh, 140px) 0;
+  background: var(--cream);
+}
+.content-section.teal {
+  background: var(--teal);
+  color: var(--cream);
+}
+.content-section.teal h2,
+.content-section.teal h3 {
+  color: var(--cream);
+}
+.content-section.teal h2 em {
+  color: var(--ball);
+  font-style: italic;
+}
+.content-section.teal .eyebrow { color: var(--ball); }
+.content-section.teal p {
+  color: rgba(245,241,232,0.82);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 64px;
+}
+.section-head h2 {
+  font-size: clamp(40px, 5.6vw, 88px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.section-head .lead {
+  max-width: 36ch;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.content-section.teal .section-head .lead {
+  color: rgba(245,241,232,0.7);
+}
+
+@media (max-width: 800px) {
+  .section-head { grid-template-columns: 1fr; }
+}
+
+.story-card {
+  background: white;
+  border-radius: 4px;
+  padding: clamp(40px, 5vw, 60px);
+  box-shadow: 0 24px 60px -40px rgba(20,39,45,0.2);
+  border: 1px solid rgba(20,39,45,0.04);
+  margin-bottom: 40px;
+}
+.story-card h3 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: var(--ink);
+}
+.story-card p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+.story-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 90px 0 28px;
+  border-top: 1px solid rgba(245,241,232,0.06);
+}
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr) 1.4fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(245,241,232,0.1);
+}
+.foot-brand .logo { color: var(--cream); margin-bottom: 18px; }
+.foot-brand p {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--cream);
+  margin: 0 0 24px;
+  max-width: 22ch;
+  font-style: italic;
+}
+.foot-brand .socials {
+  display: flex; gap: 10px;
+}
+.foot-brand .socials a {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(245,241,232,0.25);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.foot-brand .socials a:hover {
+  background: var(--ball);
+  border-color: var(--ball);
+  color: var(--navy);
+}
+.foot-brand .socials svg { width: 16px; height: 16px; }
+.foot-col h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 22px;
+}
+.foot-col ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.foot-col a {
+  font-size: 14px;
+  color: rgba(245,241,232,0.75);
+  transition: color .15s;
+}
+.foot-col a:hover { color: var(--cream); }
+
+.newsletter h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 14px;
+}
+.newsletter p {
+  font-size: 13px;
+  color: rgba(245,241,232,0.65);
+  margin: 0 0 18px;
+  line-height: 1.6;
+}
+.newsletter form {
+  display: flex;
+  border: 1px solid rgba(245,241,232,0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(245,241,232,0.04);
+}
+.newsletter input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 13px;
+}
+.newsletter input::placeholder { color: rgba(245,241,232,0.4); }
+.newsletter input:focus { outline: none; }
+.newsletter button {
+  background: var(--coral);
+  color: white;
+  padding: 0 20px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.newsletter button:hover { background: var(--coral-deep); }
+
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.5);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.foot-bottom .tag {
+  display: flex; align-items: center; gap: 12px;
+}
+.foot-bottom .tag .ball { width: 6px; height: 6px; background: var(--ball); border-radius: 50%; }
+
+@media (max-width: 1000px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-brand, .newsletter { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+  .foot-brand, .newsletter { grid-column: auto; }
+}
+
+@media (max-width: 900px) {
+  .hero h1 { font-size: clamp(44px, 12vw, 80px); }
+  .section-head h2 { font-size: clamp(36px, 9vw, 60px); }
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="logo">
-                    <span class="logo-text">DOUBLES</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links" id="navLinks">
-                    <a href="/events.html">EVENTS</a>
-                    <a href="/how-it-works.html">HOW IT WORKS</a>
-                    <a href="/about.html" class="active">ABOUT</a>
-                    <a href="/faq.html">FAQ</a>
-                    <a href="/contact.html">CONTACT</a>
-                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
-                </div>
-            </div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo" aria-label="Doubles">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html#events">Events</a></li>
+      <li><a href="index.html#how">How it works</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="https://luma.com/doubles-singles?k=c" class="btn btn-coral nav-cta">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero">
+  <div class="hero-content">
+    <div>
+      <h1>Good players.<br/><em>Better</em> together.</h1>
+    </div>
+    <p class="hero-sub">
+      We built Doubles because we got tired of dating apps. This is the story behind why we started, and where we're headed.
+    </p>
+  </div>
+</header>
+
+<!-- ============================================================
+     THE PROBLEM
+     ============================================================ -->
+<section class="content-section">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> Why we started</div>
+        <h2 style="margin-top:14px;">We got tired of <em>apps and algorithms</em>.</h2>
+      </div>
+      <p class="lead">
+        We're founders who understand what it's like to be selective about who you spend time with. Dating apps broke something real.
+      </p>
+    </div>
+
+    <div class="story-card">
+      <h3>The problem with swiping</h3>
+      <p>
+        If you're successful—if you've built something, raised capital, or led a team—dating apps feel insulting. You're comparing humans like startups, reducing someone to five photos and a bio. The algorithm is supposed to be smart, but it's optimizing for engagement, not compatibility. You get flooded with messages from people who don't know you and never will.
+      </p>
+      <p>
+        The irony is that as a founder, you understand the power of networks and human judgment. You'd never make a hire based on an algorithm alone. You'd want to know who introduced them, what they've built, what they care about. Yet somehow dating apps convinced us to ignore that wisdom when it comes to meeting partners.
+      </p>
+    </div>
+
+    <div class="story-card">
+      <h3>Why friend-vetted is better</h3>
+      <p>
+        Your friend knows you. They know what matters to you, how you show up, what you're looking for. When they introduce you to someone they'd vouch for, there's credibility in that introduction. It's not an algorithm guessing; it's someone you trust betting on a connection.
+      </p>
+      <p>
+        That's the whole point of the bring-a-friend format. You show up with someone who knows you, who can vouch for you. That person also brings a friend. Suddenly you're in a room with 30 people who all came with intention, all brought by someone, all vetted by someone you respect. The quality shifts immediately.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     OUR VISION
+     ============================================================ -->
+<section class="content-section teal">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> Where we're headed</div>
+        <h2 style="margin-top:14px;">We're building the <em>default way</em> founders meet.</h2>
+      </div>
+      <p class="lead">
+        Our five-year vision is ambitious: to become the way successful people in tech meet each other romantically in San Francisco. Not an app. Not a novelty. An institution.
+      </p>
+    </div>
+
+    <div class="story-card" style="background: rgba(245,241,232,0.08); border: 1px solid rgba(245,241,232,0.15); color: var(--cream);">
+      <h3 style="color: var(--cream);">From SF to the world</h3>
+      <p style="color: rgba(245,241,232,0.82);">
+        We're starting in San Francisco because this is where the density of ambitious founders and investors is highest. We'll prove the model works here, build a reputation, and then expand to other cities: New York, Austin, Los Angeles. Eventually, London and Singapore.
+      </p>
+      <p style="color: rgba(245,241,232,0.82);">
+        But this will never be a franchise. Each city will have its own identity, hosted in the homes of its most successful people, curated by people who know their community. The rigor and taste will scale. The algorithm will never show up.
+      </p>
+    </div>
+
+    <div class="story-card" style="background: rgba(245,241,232,0.08); border: 1px solid rgba(245,241,232,0.15); color: var(--cream);">
+      <h3 style="color: var(--cream);">Building for real people</h3>
+      <p style="color: rgba(245,241,232,0.82);">
+        We're not trying to maximize engagement or sell data. We're trying to build something that actually works for the people we serve. That means we'll always cap our events at 30 people. We'll always require vetting. We'll always keep out the flakes.
+      </p>
+      <p style="color: rgba(245,241,232,0.82);">
+        Success for us isn't a metric. It's a breakup that turns into a marriage. It's a business partnership that started over drinks. It's friendships that lasted longer than the dates. Those are the stories we want to hear.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="content-section">
+  <div class="container" style="text-align: center; max-width: 700px;">
+    <h2 style="font-size: clamp(40px, 6vw, 80px); margin-bottom: 24px;">You're invited to the <em>founding community</em>.</h2>
+    <p style="font-size: 17px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 40px;">
+      Vol. 01 is our first event. Bring a friend. Be part of building something that lasts.
+    </p>
+    <a href="https://luma.com/doubles-singles?k=c" class="btn btn-coral">Apply now <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <a href="index.html" class="logo">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p>"Good players. Better together."</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.92 3.78-3.92 1.1 0 2.24.2 2.24.2v2.47H15.2c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/>
+            </svg>
+          </a>
         </div>
-    </nav>
+      </div>
 
-    <!-- Hero Section -->
-    <section class="hero hero-secondary">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Why we exist.</h1>
-                    <p>Successful people deserve better options. No algorithms. No profiles. Just quality people, real conversations, actual connections.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+      <div class="foot-col">
+        <h4>Events</h4>
+        <ul>
+          <li><a href="index.html#events">Next event</a></li>
+          <li><a href="#">Past events</a></li>
+          <li><a href="#">Host with us</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
 
-    <!-- The Problem Section -->
-    <section class="about-section">
-        <div class="container">
-            <h2 class="section-title"><span class="accent-yellow">THE PROBLEM</span></h2>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
 
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <h3>Dating Apps Don't Work</h3>
-                    <p>Algorithms are broken. Swiping is exhausting. Everyone's playing games. If you've built something, invested in something, or lead people, you know what quality looks like. Apps don't deliver it.</p>
-                </div>
+      <div class="foot-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="index.html#how">How it works</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+          <li><a href="#">Code of conduct</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
 
-                <div class="problem-card">
-                    <h3>Singles Events Feel Desperate</h3>
-                    <p>Volume over quality. Strangers. Awkward icebreakers. Low-energy rooms. You didn't spend years building your life to spend your Friday night in a basement with randos.</p>
-                </div>
+      <div class="newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
 
-                <div class="problem-card">
-                    <h3>Your Network Isn't Helping</h3>
-                    <p>Your friends want to set you up, but they don't know enough single people at your level. And asking feels... needy. So you default back to apps.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    </div>
 
-    <!-- The Vision Section -->
-    <section class="vision-section">
-        <div class="container">
-            <h2 class="section-title"><span class="accent-yellow">OUR VISION</span></h2>
+    <div class="foot-bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
 
-            <div class="vision-content">
-                <p class="vision-intro">The default way successful people in tech meet each other romantically — where the caliber of people, curation of experience, and intentionality of connection rivals that of venture capital, not dating apps.</p>
-
-                <div class="vision-points">
-                    <div class="vision-point">
-                        <div class="vision-number">1.</div>
-                        <h3>Curated, Not Algorithmic</h3>
-                        <p>Every attendee is vetted by someone in the room. Your friend knows you're serious. Their reputation is on the line. That's better than any algorithm.</p>
-                    </div>
-
-                    <div class="vision-point">
-                        <div class="vision-number">2.</div>
-                        <h3>Premium Experiences</h3>
-                        <p>Hosted in the private homes of SF's most ambitious founders. Not restaurants, not venues, not generic spaces. Real places where real people live and build.</p>
-                    </div>
-
-                    <div class="vision-point">
-                        <div class="vision-number">3.</div>
-                        <h3>Intentional Community</h3>
-                        <p>We're building a community of serious, accomplished people who want to meet each other. Not a transaction. A real network where friendships compound, and sometimes, so do matches.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Values Section -->
-    <section class="values-section">
-        <div class="container">
-            <h2 class="section-title"><span class="accent-yellow">OUR VALUES</span></h2>
-
-            <div class="values-grid">
-                <div class="value-card">
-                    <h3>Quality Over Volume</h3>
-                    <p>We cap every event at 30 people. Not because we can't scale. Because we won't sacrifice quality for it.</p>
-                </div>
-
-                <div class="value-card">
-                    <h3>Intention Over Convenience</h3>
-                    <p>You have to apply. We have to say yes. You have to bring someone. This isn't easy. That's the point.</p>
-                </div>
-
-                <div class="value-card">
-                    <h3>Real Connections Over Gamification</h3>
-                    <p>No swiping. No algorithms. No dopamine loops. Just people having real conversations and genuine connections.</p>
-                </div>
-
-                <div class="value-card">
-                    <h3>Community Over Profit</h3>
-                    <p>We're building something that lasts. That means thinking about what's best for the community, not just the business.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Story Section -->
-    <section class="story-section">
-        <div class="container">
-            <h2 class="section-title"><span class="accent-yellow">THE STORY</span></h2>
-
-            <div class="story-content">
-                <p>Doubles started because I was tired. Tired of dating apps. Tired of the algorithm. Tired of swiping through hundreds of people to find one person worth talking to.</p>
-
-                <p>I'd sold a company a few years prior. I had friends who'd done the same—or were leading major teams, raising capital, building things. And we were all... stuck. Not lonely, exactly. But stuck in this weird gap: too successful for apps, too normal for matchmakers, too busy for organic networking.</p>
-
-                <p>One night, I brought a single friend to a casual dinner with some other founders. The person next to me? Same situation. Single, successful, frustrated with dating. We got to talking. Really talking. And I realized: this is what's missing. Real people, real conversations, in a real space. No algorithms. No profile gaming. Just chemistry.</p>
-
-                <p>That dinner sparked something. If I felt this way, how many other founders did too? What if we built something that solved this explicitly—not as a side hustle, but as a real service for people like us?</p>
-
-                <p>So I started Doubles. Thirty people. Curated. Intentional. Real. And it worked. People showed up. They connected. Some dated. Most made friends. All of them said the same thing: "Why doesn't this exist everywhere?"</p>
-
-                <p>We're building it.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to join?</h2>
-                <p>The next event is coming. Let's find you a great match.</p>
-                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                <div class="tennis-accent-bottom"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DOUBLES SINGLES</h4>
-                    <p>We host curated social events that bring great people together.</p>
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📷</a>
-                        <a href="#">✉️</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>EVENTS</h4>
-                    <ul>
-                        <li><a href="/events.html">Upcoming Events</a></li>
-                        <li><a href="#">Past Events</a></li>
-                        <li><a href="#">Private Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>COMPANY</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>INFO</h4>
-                    <ul>
-                        <li><a href="/faq.html">FAQ</a></li>
-                        <li><a href="#">Safety</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>LET'S STAY IN TOUCH</h4>
-                    <form class="footer-email">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-small">→</button>
-                    </form>
-                    <p class="footer-note">No spam. Just good invites.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Doubles, LLC</p>
-                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-    // Hamburger Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        const navItems = navLinks.querySelectorAll('a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-    }
-    </script>
 </body>
 </html>
