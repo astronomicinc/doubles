@@ -1,348 +1,1487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Exclusive dating events for post-exit founders and high-net-worth singles in SF. Bring a friend, meet quality people, make real connections. No apps. No swipes. Just great people.">
-    <meta name="keywords" content="dating events, singles events, founders, investors, San Francisco, curated dating">
-    <meta property="og:title" content="doubles.singles – Dating Events for Founders & Investors">
-    <meta property="og:description" content="Exclusive dating events for accomplished singles in SF. Bring a friend. Find your match.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://doubles.singles/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="doubles.singles – Dating Events for Founders & Investors">
-    <meta name="twitter:description" content="Exclusive dating events for accomplished singles. Bring a friend. Find your match.">
-    <link rel="canonical" href="https://doubles.singles/">
-    <title>doubles.singles – Dating Events for Founders & Investors</title>
-    <link rel="stylesheet" href="styles.css">
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "doubles.singles",
-      "url": "https://doubles.singles",
-      "logo": "https://doubles.singles/logo.png",
-      "description": "Exclusive dating events for post-exit founders and high-net-worth singles in San Francisco",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "San Francisco",
-        "addressRegion": "CA",
-        "postalCode": "94103",
-        "addressCountry": "US"
-      },
-      "sameAs": [
-        "https://twitter.com/doublesingles",
-        "https://instagram.com/doublesingles"
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Event",
-      "name": "The Deuce – Exclusive Doubles Dating Event",
-      "description": "Exclusive dating event for 30 accomplished singles in SF. Bring a friend. Catered appetizers, drinks, and great music.",
-      "startDate": "2026-06-21T19:00:00-07:00",
-      "endDate": "2026-06-21T23:00:00-07:00",
-      "eventStatus": "EventScheduled",
-      "eventAttendanceMode": "OfflineEventAttendanceMode",
-      "location": {
-        "@type": "Place",
-        "name": "Presidio Heights House",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "San Francisco",
-          "addressLocality": "San Francisco",
-          "addressRegion": "CA",
-          "addressCountry": "US"
-        }
-      },
-      "organizer": {
-        "@type": "Organization",
-        "name": "doubles.singles",
-        "url": "https://doubles.singles"
-      },
-      "offers": {
-        "@type": "Offer",
-        "url": "https://doubles.singles/apply.html",
-        "price": "110",
-        "priceCurrency": "USD"
-      }
-    }
-    </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Doubles — Good players. Better together.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* ============================================================
+   DOUBLES — Premium tennis-themed dating events
+   Aesthetic: Soho House × Raya × tennis club
+   ============================================================ */
+
+:root {
+  --teal: #1B5A6B;
+  --teal-deep: #154754;
+  --navy: #1A3A42;
+  --cream: #F5F1E8;
+  --cream-warm: #EFE9DA;
+  --coral: #FF6B6B;
+  --coral-deep: #E85555;
+  --ball: #D4F748;       /* tennis-ball yellow-green */
+  --ink: #14272D;
+  --ink-soft: #3E5258;
+  --line: rgba(20,39,45,0.12);
+  --line-cream: rgba(245,241,232,0.18);
+
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans: 'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+  --container: 1280px;
+  --gutter: clamp(20px, 4vw, 56px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 17px;
+  line-height: 1.55;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- type ---------- */
+.eyebrow {
+  font-family: var(--sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 12px;
+  font-weight: 600;
+}
+.eyebrow .ball {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: var(--ball);
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+  transform: translateY(-1px);
+  box-shadow: 0 0 0 1.5px rgba(20,39,45,0.04);
+}
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+  margin: 0;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+  white-space: nowrap;
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.4) inset, 0 12px 24px -12px rgba(232,85,85,0.6);
+}
+.btn-coral:hover { background: var(--coral-deep); transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--cream);
+  border: 1px solid rgba(245,241,232,0.4);
+}
+.btn-ghost:hover { background: rgba(245,241,232,0.08); }
+.btn-dark {
+  background: var(--navy);
+  color: var(--cream);
+}
+.btn-dark:hover { background: var(--ink); transform: translateY(-1px); }
+.btn .arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.btn:hover .arrow { transform: translateX(4px); }
+
+/* =========================================================
+   NAV
+   ========================================================= */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245,241,232,0.08);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.logo-dot {
+  width: 10px; height: 10px;
+  background: var(--ball);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(212,247,72,0.18);
+  position: relative;
+}
+.logo-dot::before, .logo-dot::after {
+  /* tennis seam */
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 0 solid transparent;
+}
+.logo-suffix {
+  font-family: var(--sans);
+  text-transform: lowercase;
+  letter-spacing: 0;
+  font-size: 13px;
+  opacity: .6;
+  align-self: flex-end;
+  padding-bottom: 4px;
+  font-weight: 400;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0; padding: 0;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.85;
+  transition: opacity .15s;
+}
+.nav-links a:hover { opacity: 1; }
+.nav-cta {
+  padding: 12px 20px;
+  font-size: 12px;
+}
+.menu-toggle { display: none; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-cta { padding: 10px 16px; font-size: 11px; }
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  color: var(--cream);
+  overflow: hidden;
+  background: var(--teal-deep);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('assets/venue-soma.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.95) brightness(0.78);
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(20,39,45,0.55) 0%, rgba(20,39,45,0.15) 40%, rgba(20,39,45,0.65) 100%),
+    linear-gradient(110deg, rgba(27,90,107,0.55) 0%, rgba(27,90,107,0.10) 60%);
+}
+.hero-content {
+  position: relative;
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: clamp(120px, 17vh, 180px) var(--gutter) clamp(60px, 10vh, 100px);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  min-height: 92vh;
+  align-content: end;
+}
+.hero h1 {
+  font-size: clamp(56px, 9.2vw, 148px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 0.95;
+  max-width: 14ch;
+}
+.hero h1 em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--ball);
+}
+.hero-sub {
+  max-width: 56ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.6;
+  opacity: 0.92;
+  font-weight: 300;
+}
+.hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+  margin-top: 8px;
+}
+.hero-meta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.hero-meta::before {
+  content: '';
+  display: block;
+  width: 48px; height: 1px;
+  background: rgba(245,241,232,0.5);
+}
+
+/* hero top eyebrow */
+.hero-eyebrow {
+  position: absolute;
+  top: clamp(40px, 6vh, 60px);
+  left: 0;
+  right: 0;
+  padding: 0 var(--gutter);
+  max-width: var(--container);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  font-weight: 500;
+  opacity: 0.85;
+  z-index: 2;
+}
+.hero-eyebrow .item { display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow .item .ball {
+  width: 8px; height: 8px; background: var(--ball); border-radius: 50%;
+}
+@media (max-width: 700px) {
+  .hero-eyebrow .item:nth-child(2),
+  .hero-eyebrow .item:nth-child(3) { display: none; }
+}
+
+/* tennis court-line decoration on hero edge */
+.hero-court {
+  position: absolute;
+  right: -120px;
+  bottom: -120px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(212,247,72,0.35);
+  pointer-events: none;
+}
+.hero-court::before, .hero-court::after {
+  content: '';
+  position: absolute;
+  background: rgba(212,247,72,0.35);
+}
+.hero-court::before {
+  left: 50%; top: 0; bottom: 0; width: 1px;
+}
+.hero-court::after {
+  left: 0; right: 0; top: 50%; height: 1px;
+}
+@media (max-width: 800px) { .hero-court { display: none; } }
+
+/* marquee */
+.marquee {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 18px 0;
+  overflow: hidden;
+  border-top: 1px solid rgba(212,247,72,0.15);
+}
+.marquee-track {
+  display: flex;
+  gap: 56px;
+  animation: marquee 40s linear infinite;
+  white-space: nowrap;
+  width: max-content;
+}
+.marquee-item {
+  display: flex; align-items: center; gap: 18px;
+  font-size: 12px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  opacity: 0.9;
+  font-weight: 500;
+}
+.marquee-item .dot {
+  width: 6px; height: 6px; background: var(--ball); border-radius: 50%;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* =========================================================
+   NEXT EVENT
+   ========================================================= */
+.next-event {
+  padding: clamp(80px, 12vh, 140px) 0;
+  background: var(--cream);
+}
+.event-card {
+  background: white;
+  border-radius: 4px;
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  overflow: hidden;
+  box-shadow: 0 40px 80px -40px rgba(20,39,45,0.18), 0 1px 0 rgba(20,39,45,0.04);
+  position: relative;
+}
+.event-card-photo {
+  position: relative;
+  min-height: 580px;
+  background-image: url('assets/venue-pacific-heights.webp');
+  background-size: cover;
+  background-position: center;
+}
+.event-card-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(20,39,45,0) 50%, rgba(20,39,45,0.45) 100%);
+}
+.event-tag {
+  position: absolute;
+  top: 24px; left: 24px;
+  background: var(--ball);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.event-tag .pulse {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--ink);
+  animation: pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.event-card-body {
+  padding: clamp(36px, 5vw, 64px);
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  position: relative;
+}
+.event-card-body .eyebrow { color: var(--teal); }
+.event-card-body h2 {
+  font-size: clamp(40px, 4.2vw, 64px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.event-card-body h2 em {
+  font-style: italic;
+  color: var(--teal);
+}
+.event-meta {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px 22px;
+  font-size: 15px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 22px 0;
+}
+.event-meta dt {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+  padding-top: 4px;
+  align-self: start;
+}
+.event-meta dd {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.event-features {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px 28px;
+  list-style: none;
+  padding: 0; margin: 0;
+}
+.event-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+.event-features .ball {
+  width: 8px; height: 8px;
+  background: var(--ball);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.event-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.event-actions .note {
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .event-card { grid-template-columns: 1fr; }
+  .event-card-photo { min-height: 320px; }
+}
+
+/* section heading */
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 64px;
+}
+.section-head h2 {
+  font-size: clamp(40px, 5.6vw, 88px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+.section-head .lead {
+  max-width: 36ch;
+  font-size: 15px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+@media (max-width: 800px) {
+  .section-head { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   HOW IT WORKS (teal)
+   ========================================================= */
+.how {
+  background: var(--teal);
+  color: var(--cream);
+  padding: clamp(90px, 14vh, 160px) 0;
+  position: relative;
+  overflow: hidden;
+}
+.how::before {
+  /* faint court lines decoration */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245,241,232,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,241,232,0.04) 1px, transparent 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+.how .section-head h2 { color: var(--cream); }
+.how .section-head h2 em { color: var(--ball); font-style: italic; }
+.how .section-head .lead { color: rgba(245,241,232,0.7); }
+.how .section-head .eyebrow { color: var(--ball); }
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(245,241,232,0.18);
+  border-top: 1px solid rgba(245,241,232,0.18);
+  border-bottom: 1px solid rgba(245,241,232,0.18);
+  position: relative;
+}
+.step {
+  background: var(--teal);
+  padding: 40px 32px 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-height: 380px;
+  position: relative;
+}
+.step-num {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--ball);
+}
+.step-num .badge {
+  font-family: var(--serif);
+  font-size: 64px;
+  font-weight: 400;
+  line-height: 1;
+  color: rgba(245,241,232,0.92);
+  letter-spacing: -0.02em;
+}
+.step-icon {
+  width: 64px; height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(245,241,232,0.28);
+  border-radius: 50%;
+  color: var(--ball);
+  flex-shrink: 0;
+}
+.step-icon svg { width: 28px; height: 28px; }
+.step h3 {
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--cream);
+}
+.step p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(245,241,232,0.72);
+}
+
+@media (max-width: 1000px) {
+  .steps { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr; }
+}
+
+/* court-net divider at bottom of how section */
+.net-divider {
+  margin-top: 80px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.65);
+}
+.net-divider .net {
+  flex: 1;
+  height: 14px;
+  background:
+    linear-gradient(rgba(245,241,232,0.35), rgba(245,241,232,0.35)) center / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, rgba(245,241,232,0.35) 0 1px, transparent 1px 8px);
+}
+
+/* =========================================================
+   WHY DOUBLES (testimonials)
+   ========================================================= */
+.why {
+  background: var(--cream);
+  padding: clamp(90px, 14vh, 160px) 0;
+}
+.why .section-head .eyebrow { color: var(--coral); }
+.why .section-head h2 em { color: var(--coral); font-style: italic; }
+
+.testimonials {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.card {
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px -40px rgba(20,39,45,0.2);
+  border: 1px solid rgba(20,39,45,0.04);
+}
+.card-photo {
+  aspect-ratio: 4 / 5;
+  position: relative;
+  background-color: var(--cream-warm);
+  background-size: cover;
+  background-position: center;
+}
+.card-photo::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(20,39,45,0.35) 100%);
+}
+.card-badge {
+  position: absolute;
+  top: 16px; right: 16px;
+  background: rgba(245,241,232,0.92);
+  backdrop-filter: blur(8px);
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--teal);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.card-badge .ball { width: 6px; height: 6px; background: var(--ball); border-radius: 50%; }
+.card-body {
+  padding: 32px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  flex: 1;
+}
+.card-quote {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+  font-weight: 500;
+  color: var(--ink);
+}
+.card-quote::before {
+  content: '"';
+  font-family: var(--serif);
+  font-size: 48px;
+  line-height: 0;
+  color: var(--coral);
+  margin-right: 4px;
+  vertical-align: -10px;
+  font-style: italic;
+}
+.card-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.card-name {
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink);
+}
+.card-meta {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+@media (max-width: 900px) {
+  .testimonials { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+}
+
+/* stats strip */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--line);
+  margin-top: 80px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat {
+  background: var(--cream);
+  padding: 36px 24px;
+  text-align: center;
+}
+.stat .num {
+  font-family: var(--serif);
+  font-size: clamp(48px, 6vw, 84px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--teal);
+}
+.stat .num sup {
+  font-size: 0.5em;
+  color: var(--coral);
+  font-weight: 500;
+  margin-left: 2px;
+  vertical-align: super;
+}
+.stat .label {
+  margin-top: 14px;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 600;
+}
+@media (max-width: 700px) {
+  .stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* =========================================================
+   THE NIGHT (editorial — venues + catering)
+   ========================================================= */
+.night {
+  background: var(--navy);
+  color: var(--cream);
+  padding: clamp(90px, 14vh, 160px) 0;
+  position: relative;
+}
+.night .section-head h2 { color: var(--cream); }
+.night .section-head h2 em { color: var(--coral); font-style: italic; }
+.night .section-head .lead { color: rgba(245,241,232,0.7); }
+.night .section-head .eyebrow { color: var(--ball); }
+
+.editorial {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 18px;
+}
+.ed-tile {
+  position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+  min-height: 280px;
+  background-color: #111;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+  padding: 28px;
+}
+.ed-tile::after {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.88) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 25%);
+}
+.ed-tile > * { position: relative; z-index: 1; }
+.ed-tile .ed-cap {
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--cream);
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+}
+.ed-tile .ed-tag {
+  position: absolute;
+  top: 22px; left: 22px;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 0 1px 12px rgba(0,0,0,0.55);
+}
+.ed-tile .ed-tag::before {
+  content: '';
+  width: 22px; height: 1px; background: var(--ball);
+}
+.ed-tile .ed-cap {
+  text-shadow: 0 2px 18px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.4);
+}
+.ed-1 { grid-row: span 2; min-height: 600px; }
+.ed-2 { min-height: 290px; }
+.ed-3 { min-height: 290px; }
+
+@media (max-width: 800px) {
+  .editorial { grid-template-columns: 1fr; }
+  .ed-1 { grid-row: auto; min-height: 360px; }
+}
+
+/* =========================================================
+   FINAL CTA
+   ========================================================= */
+.final-cta {
+  background: var(--cream);
+  padding: clamp(100px, 16vh, 180px) 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::before,
+.final-cta::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 28%;
+  height: 1px;
+  background: var(--line);
+}
+.final-cta::before { left: 0; }
+.final-cta::after { right: 0; }
+.final-cta .inner { position: relative; max-width: 900px; margin: 0 auto; padding: 0 var(--gutter); }
+.final-cta h2 {
+  font-size: clamp(48px, 7.5vw, 120px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.final-cta h2 em { font-style: italic; color: var(--coral); }
+.final-cta h2 .ball {
+  display: inline-block;
+  width: 0.6em; height: 0.6em;
+  background: var(--ball);
+  border-radius: 50%;
+  vertical-align: -0.05em;
+  margin: 0 0.08em;
+  position: relative;
+  box-shadow: inset 0 -4px 12px rgba(0,0,0,0.06);
+}
+.final-cta p {
+  margin: 28px auto 40px;
+  max-width: 52ch;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.final-cta .actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.final-cta .actions .approve {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  display: flex; align-items: center; gap: 10px;
+}
+.final-cta .actions .approve::before {
+  content: ''; width: 6px; height: 6px; background: var(--ball); border-radius: 50%;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.footer {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 90px 0 28px;
+  border-top: 1px solid rgba(245,241,232,0.06);
+}
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(3, 1fr) 1.4fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(245,241,232,0.1);
+}
+.foot-brand .logo { color: var(--cream); margin-bottom: 18px; }
+.foot-brand p {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 400;
+  color: var(--cream);
+  margin: 0 0 24px;
+  max-width: 22ch;
+  font-style: italic;
+}
+.foot-brand .socials {
+  display: flex; gap: 10px;
+}
+.foot-brand .socials a {
+  width: 38px; height: 38px;
+  border: 1px solid rgba(245,241,232,0.25);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s, border-color .2s;
+}
+.foot-brand .socials a:hover {
+  background: var(--ball);
+  border-color: var(--ball);
+  color: var(--navy);
+}
+.foot-brand .socials svg { width: 16px; height: 16px; }
+.foot-col h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 22px;
+}
+.foot-col ul {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.foot-col a {
+  font-size: 14px;
+  color: rgba(245,241,232,0.75);
+  transition: color .15s;
+}
+.foot-col a:hover { color: var(--cream); }
+
+.newsletter h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ball);
+  margin-bottom: 14px;
+}
+.newsletter p {
+  font-size: 13px;
+  color: rgba(245,241,232,0.65);
+  margin: 0 0 18px;
+  line-height: 1.6;
+}
+.newsletter form {
+  display: flex;
+  border: 1px solid rgba(245,241,232,0.2);
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(245,241,232,0.04);
+}
+.newsletter input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 13px;
+}
+.newsletter input::placeholder { color: rgba(245,241,232,0.4); }
+.newsletter input:focus { outline: none; }
+.newsletter button {
+  background: var(--coral);
+  color: white;
+  padding: 0 20px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.newsletter button:hover { background: var(--coral-deep); }
+
+.foot-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245,241,232,0.5);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.foot-bottom .tag {
+  display: flex; align-items: center; gap: 12px;
+}
+.foot-bottom .tag .ball { width: 6px; height: 6px; background: var(--ball); border-radius: 50%; }
+
+@media (max-width: 1000px) {
+  .foot-grid { grid-template-columns: 1fr 1fr; }
+  .foot-brand, .newsletter { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .foot-grid { grid-template-columns: 1fr; gap: 36px; }
+  .foot-brand, .newsletter { grid-column: auto; }
+}
+
+/* mobile nav: keep simple */
+@media (max-width: 900px) {
+  .hero h1 { font-size: clamp(52px, 14vw, 88px); }
+  .section-head h2 { font-size: clamp(36px, 9vw, 60px); }
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="logo">
-                    <span class="logo-text">DOUBLES</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links" id="navLinks">
-                    <a href="/events.html">EVENTS</a>
-                    <a href="/how-it-works.html">HOW IT WORKS</a>
-                    <a href="/about.html">ABOUT</a>
-                    <a href="/faq.html">FAQ</a>
-                    <a href="/contact.html">CONTACT</a>
-                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
-                </div>
-            </div>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav-inner">
+    <a href="#" class="logo" aria-label="Doubles">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#events">Events</a></li>
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#apply" class="btn btn-coral nav-cta">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<header class="hero" data-screen-label="Hero">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-court" aria-hidden="true"></div>
+
+  <div class="hero-eyebrow">
+    <div class="item"><span class="ball"></span> An invite-only dating club</div>
+    <div class="item">SF · Founders · Investors</div>
+    <div class="item">Vol. 04 / Summer Season ’26</div>
+  </div>
+
+  <div class="hero-content">
+    <div>
+      <h1>Good players.<br/><em>Better</em> together.</h1>
+    </div>
+    <p class="hero-sub">
+      Exclusive dating evenings for founders and investors. Bring a friend, meet quality
+      people, and make real connections — no apps, no algorithms, no awkward icebreakers.
+      Just thirty interesting humans in one extraordinary room.
+    </p>
+    <div class="hero-row">
+      <a href="#apply" class="btn btn-coral">Apply for next event <span class="arrow">→</span></a>
+      <div class="hero-meta">Next match · Saturday, June 21</div>
+    </div>
+  </div>
+</header>
+
+<!-- marquee -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="dot"></span> Match Point — Vol. 04</div>
+    <div class="marquee-item"><span class="dot"></span> Presidio Heights · June 21</div>
+    <div class="marquee-item"><span class="dot"></span> 30 Singles · Catered · Curated</div>
+    <div class="marquee-item"><span class="dot"></span> Bring a friend. Meet a match.</div>
+    <div class="marquee-item"><span class="dot"></span> No apps. No algorithms.</div>
+    <!-- duplicated for seamless loop -->
+    <div class="marquee-item"><span class="dot"></span> Match Point — Vol. 04</div>
+    <div class="marquee-item"><span class="dot"></span> Presidio Heights · June 21</div>
+    <div class="marquee-item"><span class="dot"></span> 30 Singles · Catered · Curated</div>
+    <div class="marquee-item"><span class="dot"></span> Bring a friend. Meet a match.</div>
+    <div class="marquee-item"><span class="dot"></span> No apps. No algorithms.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     NEXT EVENT
+     ============================================================ -->
+<section class="next-event" id="events" data-screen-label="Next Event">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> The next match</div>
+        <h2 style="margin-top:14px;">Vol. 04 — <em>Summer Open</em></h2>
+      </div>
+      <p class="lead">
+        A single evening, three months in the making. Capped at thirty people, half brought
+        by friends, half brought by us. Apply early — last event closed in 36 hours.
+      </p>
+    </div>
+
+    <article class="event-card">
+      <div class="event-card-photo" role="img" aria-label="Pacific Heights penthouse with bay view">
+        <span class="event-tag"><span class="pulse"></span> Applications open</span>
+      </div>
+      <div class="event-card-body">
+        <div class="eyebrow">Next Doubles event</div>
+        <h2>An evening <em>above</em> the bridge.</h2>
+
+        <dl class="event-meta">
+          <dt>Date</dt>     <dd>Saturday, June 21</dd>
+          <dt>Time</dt>     <dd>7:00 — 11:00 PM</dd>
+          <dt>Location</dt> <dd>Presidio Heights House, SF</dd>
+          <dt>Dress</dt>    <dd>Smart casual, no sneakers</dd>
+        </dl>
+
+        <ul class="event-features">
+          <li><span class="ball"></span> 30 hand-picked singles</li>
+          <li><span class="ball"></span> Catered bites &amp; cocktails</li>
+          <li><span class="ball"></span> Live vinyl, dim lights</li>
+          <li><span class="ball"></span> Real conversation, no name tags</li>
+        </ul>
+
+        <div class="event-actions">
+          <a href="#apply" class="btn btn-coral">Reserve your spot <span class="arrow">→</span></a>
+          <span class="note">12 of 30 seats remain</span>
         </div>
-    </nav>
+      </div>
+    </article>
+  </div>
+</section>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Good players.<br><span class="accent-yellow">Better together.</span></h1>
-                    <p>Exclusive dating events for founders and investors. Bring a friend. Meet quality people. Make real connections—no apps, no algorithms.</p>
-                    <a href="/apply.html" class="btn btn-primary">APPLY FOR NEXT EVENT →</a>
-                    <p class="hero-subtext">YOU + A FRIEND = REAL CONNECTIONS</p>
-                </div>
-                <div class="hero-image">
-                    <div class="tennis-balls">
-                        <div class="ball ball-1"></div>
-                        <div class="ball ball-2"></div>
-                    </div>
-                </div>
-            </div>
+<!-- ============================================================
+     HOW DOUBLES WORKS
+     ============================================================ -->
+<section class="how" id="how" data-screen-label="How it works">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> Match rules</div>
+        <h2 style="margin-top:14px;">How <em>doubles</em> works.</h2>
+      </div>
+      <p class="lead">
+        Four moves. No swiping. The rules are simple because the night should be effortless —
+        we obsess over the details so you don't have to.
+      </p>
+    </div>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-num"><span>Match 01</span><span class="badge">01</span></div>
+        <div class="step-icon" aria-hidden="true">
+          <!-- two figures icon -->
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="11" cy="10" r="3.5"/>
+            <circle cx="21" cy="10" r="3.5"/>
+            <path d="M5 25c0-3.6 2.7-7 6-7s6 3.4 6 7"/>
+            <path d="M15 25c0-3.6 2.7-7 6-7s6 3.4 6 7"/>
+          </svg>
         </div>
-    </section>
+        <h3>Bring a friend.</h3>
+        <p>One you'd trust to set you up. Opposite sex, single, and as interesting as you are.
+          The doubles format is the whole point — it changes how you walk into the room.</p>
+      </div>
 
-    <!-- Next Event Card -->
-    <section class="next-event-section">
-        <div class="container">
-            <div class="event-card">
-                <div class="event-card-left">
-                    <div class="event-label">NEXT DOUBLES EVENT</div>
-                    <h2>Saturday<br>June 21</h2>
-                    <p class="event-time">7:00PM – 11:00PM</p>
-                    <div class="event-location">
-                        <span class="icon">📍</span>
-                        <div>
-                            <p>PRESIDIO HEIGHTS HOUSE</p>
-                            <p>SAN FRANCISCO, CA</p>
-                        </div>
-                    </div>
-                    <a href="/apply.html" class="btn btn-primary">RESERVE YOUR SPOT →</a>
-                </div>
-                <div class="event-card-right">
-                    <div class="event-card-illustration">
-                        <p class="illustration-text">EPIC HOUSE.<br>GOOD VIBES.</p>
-                        <!-- Stylized house representation -->
-                        <div class="house-illustration"></div>
-                    </div>
-                </div>
-                <div class="event-card-features">
-                    <div class="feature">
-                        <div class="feature-icon">👥</div>
-                        <p><strong>30 PEOPLE</strong><br>15 PAIRS</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🍽️</div>
-                        <p><strong>CATERED FOOD</strong><br>+ DRINKS</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">🎵</div>
-                        <p><strong>GREAT PEOPLE</strong><br>GREAT MUSIC</p>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-icon">💛</div>
-                        <p><strong>REAL CONNECTIONS</strong><br>NOT SWIPES</p>
-                    </div>
-                </div>
-            </div>
+      <div class="step">
+        <div class="step-num"><span>Match 02</span><span class="badge">02</span></div>
+        <div class="step-icon" aria-hidden="true">
+          <!-- crossed rackets / tennis ball -->
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="16" cy="16" r="11"/>
+            <path d="M5.5 12c4 2.5 7 6 8 14"/>
+            <path d="M26.5 12c-4 2.5-7 6-8 14"/>
+          </svg>
         </div>
-    </section>
+        <h3>We mix it up.</h3>
+        <p>Thirty singles, curated by us, in a beautiful private home. The room is small
+          enough to remember faces and big enough to find chemistry. We handle the choreography.</p>
+      </div>
 
-    <!-- How Doubles Works -->
-    <section class="how-it-works-section">
-        <div class="container">
-            <h2 class="section-title"><span class="accent-yellow">HOW DOUBLES WORKS</span></h2>
-
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1.</div>
-                    <div class="step-icon">👥</div>
-                    <h3>BRING A FRIEND</h3>
-                    <p>You bring one single friend of the opposite sex.</p>
-                </div>
-
-                <div class="step-connector"></div>
-
-                <div class="step">
-                    <div class="step-number">2.</div>
-                    <div class="step-icon">🎭</div>
-                    <h3>WE MIX IT UP</h3>
-                    <p>30 singles in a relaxed, high-energy environment.</p>
-                </div>
-
-                <div class="step-connector"></div>
-
-                <div class="step">
-                    <div class="step-number">3.</div>
-                    <div class="step-icon">🥂</div>
-                    <h3>GOOD TIMES</h3>
-                    <p>Catered bites, drinks, music, & good people.</p>
-                </div>
-
-                <div class="step-connector"></div>
-
-                <div class="step">
-                    <div class="step-number">4.</div>
-                    <div class="step-icon">💕</div>
-                    <h3>MAKE CONNECTIONS</h3>
-                    <p>Meet, mingle, and make real connections.</p>
-                </div>
-            </div>
+      <div class="step">
+        <div class="step-num"><span>Match 03</span><span class="badge">03</span></div>
+        <div class="step-icon" aria-hidden="true">
+          <!-- glasses / cheers -->
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 6h6l-1 8a3 3 0 0 1-6 0L9 6z"/>
+            <path d="M17 6h6l1 8a3 3 0 0 1-6 0L17 6z"/>
+            <path d="M12 17v9"/><path d="M20 17v9"/>
+            <path d="M9 27h6"/><path d="M17 27h6"/>
+          </svg>
         </div>
-    </section>
+        <h3>Good times.</h3>
+        <p>Catered bites from one of SF's favorite kitchens, a hand-picked wine list,
+          and the kind of music that makes a room loosen up. No mixers. No matchmakers
+          with clipboards.</p>
+      </div>
 
-    <!-- Why Doubles -->
-    <section class="why-doubles-section">
-        <div class="container">
-            <div class="why-doubles-content">
-                <div class="why-doubles-text">
-                    <h2>NOT YOUR AVERAGE<br>DATING SCENE</h2>
-                    <p class="accent-red"><strong>REAL PEOPLE.<br>REAL CHEMISTRY.</strong></p>
-                </div>
-                <div class="testimonials-mini">
-                    <div class="testimonial-card">
-                        <blockquote>"I came with a friend, left with new friends, and maybe something more."</blockquote>
-                        <div class="testimonial-author">
-                            <div class="avatar avatar-1"></div>
-                            <div>
-                                <strong>JESS, 34</strong>
-                                <p>SAN FRANCISCO</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <blockquote>"Finally, a way to meet amazing people without the apps."</blockquote>
-                        <div class="testimonial-author">
-                            <div class="avatar avatar-2"></div>
-                            <div>
-                                <strong>MIKE, 36</strong>
-                                <p>PALO ALTO</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-card">
-                        <blockquote>"High energy, zero pressure, genuinely one of the best nights I've had in a while."</blockquote>
-                        <div class="testimonial-author">
-                            <div class="avatar avatar-3"></div>
-                            <div>
-                                <strong>LAUREN, 33</strong>
-                                <p>SAN FRANCISCO</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="step">
+        <div class="step-num"><span>Match 04</span><span class="badge">04</span></div>
+        <div class="step-icon" aria-hidden="true">
+          <!-- spark / two dots connected -->
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="10" cy="16" r="3"/>
+            <circle cx="22" cy="16" r="3"/>
+            <path d="M13 16h6"/>
+            <path d="M16 7v3"/><path d="M16 22v3"/>
+            <path d="M8 9l2 2"/><path d="M22 21l2 2"/>
+            <path d="M24 9l-2 2"/><path d="M10 21l-2 2"/>
+          </svg>
         </div>
-    </section>
+        <h3>Make connections.</h3>
+        <p>The good kind. Some end the night with plans for breakfast. Some leave with
+          a new friend, a new client, or both. Either way, you'll know it was a night
+          well spent.</p>
+      </div>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to meet someone great?</h2>
-                <p>Apply now. Get approved in 48 hours. Show up with your friend. That's it.</p>
-                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                <div class="tennis-accent-bottom"></div>
-            </div>
+    </div>
+
+    <div class="net-divider">
+      <span>Game</span>
+      <div class="net"></div>
+      <span>Set</span>
+      <div class="net"></div>
+      <span>Match</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     WHY DOUBLES — testimonials
+     ============================================================ -->
+<section class="why" id="about" data-screen-label="Why">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> Why doubles</div>
+        <h2 style="margin-top:14px;">Not your average <em>dating scene</em>.</h2>
+      </div>
+      <p class="lead">
+        Real people. Real chemistry. We screen for character, not metrics — which is
+        why nine out of ten guests come back, and most bring someone new.
+      </p>
+    </div>
+
+    <div class="testimonials">
+
+      <article class="card">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=720&q=80');">
+          <span class="card-badge"><span class="ball"></span> Vol. 02</span>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DOUBLES SINGLES</h4>
-                    <p>We host curated social events that bring great people together.</p>
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📷</a>
-                        <a href="#">✉️</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>EVENTS</h4>
-                    <ul>
-                        <li><a href="/events.html">Upcoming Events</a></li>
-                        <li><a href="#">Past Events</a></li>
-                        <li><a href="#">Private Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>COMPANY</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>INFO</h4>
-                    <ul>
-                        <li><a href="/faq.html">FAQ</a></li>
-                        <li><a href="#">Safety</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>LET'S STAY IN TOUCH</h4>
-                    <form class="footer-email">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-small">→</button>
-                    </form>
-                    <p class="footer-note">No spam. Just good invites.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Doubles, LLC</p>
-                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
-            </div>
+        <div class="card-body">
+          <p class="card-quote">I came with a friend, left with new friends — and maybe something more. Honestly the most fun I've had at a dating event in years.</p>
+          <div class="card-footer">
+            <span class="card-name">Jess, 34</span>
+            <span class="card-meta">San Francisco</span>
+          </div>
         </div>
-    </footer>
+      </article>
 
-    <script>
-    // Hamburger Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
+      <article class="card">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=720&q=80');">
+          <span class="card-badge"><span class="ball"></span> Vol. 03</span>
+        </div>
+        <div class="card-body">
+          <p class="card-quote">Felt like a friend's birthday party where every single person was someone you wanted to meet. We're going on date number five.</p>
+          <div class="card-footer">
+            <span class="card-name">Marcus, 31</span>
+            <span class="card-meta">Mission District</span>
+          </div>
+        </div>
+      </article>
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+      <article class="card">
+        <div class="card-photo" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=720&q=80');">
+          <span class="card-badge"><span class="ball"></span> Vol. 03</span>
+        </div>
+        <div class="card-body">
+          <p class="card-quote">No phones, no profiles, no algorithm pretending to know me. Just a beautiful room full of people actually present. Rare in this city.</p>
+          <div class="card-footer">
+            <span class="card-name">Priya, 29</span>
+            <span class="card-meta">Pacific Heights</span>
+          </div>
+        </div>
+      </article>
 
-        // Close menu when a link is clicked
-        const navItems = navLinks.querySelectorAll('a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+    </div>
 
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-    }
-    </script>
+    <div class="stats">
+      <div class="stat">
+        <div class="num">94<sup>%</sup></div>
+        <div class="label">Return guests</div>
+      </div>
+      <div class="stat">
+        <div class="num">30</div>
+        <div class="label">Seats per night</div>
+      </div>
+      <div class="stat">
+        <div class="num">36<sup>hrs</sup></div>
+        <div class="label">To sell out, last event</div>
+      </div>
+      <div class="stat">
+        <div class="num">4</div>
+        <div class="label">Volumes, and counting</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     THE NIGHT — editorial gallery
+     ============================================================ -->
+<section class="night" data-screen-label="The Night">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow"><span class="ball"></span> The night</div>
+        <h2 style="margin-top:14px;">A room <em>worth showing up for</em>.</h2>
+      </div>
+      <p class="lead">
+        We host inside the homes of founders we trust — penthouses, garden flats,
+        skylit lofts. Every detail is set so the only thing you have to think about
+        is the person across from you.
+      </p>
+    </div>
+
+    <div class="editorial">
+      <div class="ed-tile ed-1" style="background-image:url('assets/venue-presidio.jpg');">
+        <span class="ed-tag">Venue · Presidio Heights</span>
+        <p class="ed-cap">A bay-view living room, twelve-foot ceilings, the right amount of candlelight.</p>
+      </div>
+      <div class="ed-tile ed-2" style="background-image:url('assets/catering-spread.jpg');">
+        <span class="ed-tag">Catering · Local kitchens</span>
+        <p class="ed-cap">Seasonal small plates from SF's favorite chefs.</p>
+      </div>
+      <div class="ed-tile ed-3" style="background-image:url('assets/venue-nob-hill.jpg');">
+        <span class="ed-tag">Vol. 03 · Russian Hill</span>
+        <p class="ed-cap">Glass walls, golden hour, and 30 of the most interesting people in the city.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FINAL CTA
+     ============================================================ -->
+<section class="final-cta" id="apply" data-screen-label="Apply">
+  <div class="inner">
+    <div class="eyebrow" style="color:var(--coral); margin-bottom:24px;"><span class="ball" style="background:var(--coral);"></span> Match point</div>
+    <h2>Ready to meet<br/>someone <em>great</em>?</h2>
+    <p>
+      Apply now. We review in 48 hours. Show up with your friend.
+      That's the whole game.
+    </p>
+    <div class="actions">
+      <a href="#" class="btn btn-coral">Apply now <span class="arrow">→</span></a>
+      <span class="approve">Reviewed in 48 hours</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" id="contact" data-screen-label="Footer">
+  <div class="container">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <a href="#" class="logo">
+          <span class="logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p>“Good players. Better together.”</p>
+        <div class="socials">
+          <a href="#" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="3" y="3" width="18" height="18" rx="5"/>
+              <circle cx="12" cy="12" r="4"/>
+              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/>
+            </svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.92 3.78-3.92 1.1 0 2.24.2 2.24.2v2.47H15.2c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h4>Events</h4>
+        <ul>
+          <li><a href="#">Next event</a></li>
+          <li><a href="#">Past events</a></li>
+          <li><a href="#">Host with us</a></li>
+          <li><a href="#">Sponsor</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Press</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Info</h4>
+        <ul>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Code of conduct</a></li>
+          <li><a href="#">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
