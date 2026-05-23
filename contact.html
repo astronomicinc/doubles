@@ -536,7 +536,7 @@ h1, h2, h3, h4 {
       </p>
     </div>
 
-    <form class="contact-form" action="https://formspree.io/f/doubles-contact" method="POST">
+    <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
       <div class="form-group">
         <label class="form-label" for="name">Name</label>
         <input type="text" id="name" name="name" class="form-input" placeholder="Your name" required />
@@ -632,8 +632,8 @@ h1, h2, h3, h4 {
       <div class="newsletter">
         <h4>The Doubles Dispatch</h4>
         <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
-        <form onsubmit="event.preventDefault();">
-          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" name="newsletter-email" placeholder="your@email.com" aria-label="Email" required/>
           <button type="submit">Join <span class="arrow">→</span></button>
         </form>
       </div>
@@ -648,7 +648,80 @@ h1, h2, h3, h4 {
   </div>
 </footer>
 
-<!-- Formspree handles form submission automatically -->
+<script>
+async function handleContactSubmit(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const button = form.querySelector('.submit-btn');
+  const originalText = button.innerHTML;
+
+  try {
+    button.textContent = 'Sending...';
+    button.disabled = true;
+
+    const response = await fetch('/api/mailchimp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: form.querySelector('#name').value,
+        email: form.querySelector('#email').value,
+        subject: form.querySelector('#subject').value,
+        message: form.querySelector('#message').value,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert('Thanks for reaching out! We\'ll be in touch soon.');
+      form.reset();
+    } else {
+      alert('Error: ' + (data.error || 'Something went wrong'));
+    }
+  } catch (error) {
+    alert('Error sending message: ' + error.message);
+  } finally {
+    button.innerHTML = originalText;
+    button.disabled = false;
+  }
+}
+
+async function handleNewsletterSubmit(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const button = form.querySelector('button');
+  const originalText = button.innerHTML;
+
+  try {
+    button.textContent = 'Joining...';
+    button.disabled = true;
+
+    const response = await fetch('/api/mailchimp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.querySelector('input[type="email"]').value,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      alert('Welcome to the Doubles Dispatch! 🎾');
+      form.reset();
+    } else {
+      alert('Error: ' + (data.error || 'Something went wrong'));
+    }
+  } catch (error) {
+    alert('Error subscribing: ' + error.message);
+  } finally {
+    button.innerHTML = originalText;
+    button.disabled = false;
+  }
+}
+</script>
 
 </body>
 </html>

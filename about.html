@@ -629,8 +629,8 @@ h1, h2, h3, h4 {
       <div class="newsletter">
         <h4>The Doubles Dispatch</h4>
         <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
-        <form onsubmit="event.preventDefault();">
-          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          <input type="email" name="newsletter-email" placeholder="your@email.com" required aria-label="Email"/>
           <button type="submit">Join <span class="arrow">→</span></button>
         </form>
       </div>
