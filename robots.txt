@@ -1,16 +1,6 @@
-# Robots.txt for doubles.singles
-# Directs search engines how to crawl the site
-
 User-agent: *
 Allow: /
-Disallow: /404.html
-Disallow: /500.html
+Disallow: /admin/
+Disallow: /api/
 
-# Specify sitemap location
 Sitemap: https://doubles.singles/sitemap.xml
-
-# Crawl delay (optional - helps with server load)
-# Crawl-delay: 1
-
-# Request rate (optional - requests per second)
-# Request-rate: 10/60

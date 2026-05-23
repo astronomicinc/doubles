@@ -1,170 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Page not found. Return to doubles.singles and discover exclusive dating events for founders and investors.">
-    <meta name="robots" content="noindex">
-    <title>Page Not Found – Doubles</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Page Not Found — Doubles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --teal: #1B5A6B;
+  --navy: #1A3A42;
+  --cream: #F5F1E8;
+  --coral: #FF6B6B;
+  --ink: #14272D;
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Hanken Grotesk', sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.error-container {
+  text-align: center;
+  max-width: 600px;
+}
+
+.error-code {
+  font-family: var(--serif);
+  font-size: 120px;
+  font-weight: 700;
+  color: var(--teal);
+  margin: 0;
+  line-height: 1;
+}
+
+.error-title {
+  font-family: var(--serif);
+  font-size: 32px;
+  color: var(--ink);
+  margin: 16px 0 8px;
+}
+
+.error-message {
+  font-size: 16px;
+  color: var(--ink);
+  opacity: 0.7;
+  margin: 0 0 32px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: all .2s;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-coral {
+  background: var(--coral);
+  color: white;
+}
+.btn-coral:hover {
+  background: #E85555;
+  transform: translateY(-2px);
+}
+
+.btn-dark {
+  background: var(--navy);
+  color: var(--cream);
+  margin-left: 12px;
+}
+.btn-dark:hover {
+  background: var(--ink);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 600px) {
+  .error-code { font-size: 80px; }
+  .error-title { font-size: 24px; }
+  .btn { display: block; margin: 12px 0; }
+  .btn-dark { margin-left: 0; }
+}
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="logo">
-                    <span class="logo-text">DOUBLES</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links" id="navLinks">
-                    <a href="/events.html">EVENTS</a>
-                    <a href="/how-it-works.html">HOW IT WORKS</a>
-                    <a href="/about.html">ABOUT</a>
-                    <a href="/faq.html">FAQ</a>
-                    <a href="/contact.html">CONTACT</a>
-                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
-                </div>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Error Section -->
-    <section class="error-section">
-        <div class="container">
-            <div class="error-content">
-                <div class="error-code">404</div>
-                <h1>Oops, this page doesn't exist.</h1>
-                <p>We couldn't find what you were looking for. But we did find something better—a community of accomplished singles ready to make real connections.</p>
-                <div class="error-actions">
-                    <a href="/" class="btn btn-primary">BACK TO HOME →</a>
-                    <a href="/events.html" class="btn btn-secondary">VIEW EVENTS →</a>
-                </div>
-            </div>
-        </div>
-    </section>
+<div class="error-container">
+  <h1 class="error-code">404</h1>
+  <h2 class="error-title">Court Not Found</h2>
+  <p class="error-message">The page you're looking for doesn't exist. Let's get you back in the game.</p>
+  <a href="/" class="btn btn-coral">Back to Home</a>
+  <a href="/events" class="btn btn-dark">View Events</a>
+</div>
 
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to play?</h2>
-                <p>Apply now. Get approved in 48 hours. Show up with your friend. That's it.</p>
-                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                <div class="tennis-accent-bottom"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DOUBLES</h4>
-                    <p>We host curated social events that bring great people together.</p>
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📷</a>
-                        <a href="#">✉️</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>EVENTS</h4>
-                    <ul>
-                        <li><a href="/events.html">Upcoming Events</a></li>
-                        <li><a href="#">Past Events</a></li>
-                        <li><a href="#">Private Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>COMPANY</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>INFO</h4>
-                    <ul>
-                        <li><a href="/faq.html">FAQ</a></li>
-                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
-                        <li><a href="/terms-of-service.html">Terms of Service</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>LET'S STAY IN TOUCH</h4>
-                    <form class="footer-email" id="footerEmailForm" novalidate>
-                        <input type="email" id="footerEmail" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-small">→</button>
-                        <div class="footer-email-status" id="footerEmailStatus"></div>
-                    </form>
-                    <p class="footer-note">No spam. Just good invites.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Doubles, LLC</p>
-                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-    // Hamburger Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
-
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        const navItems = navLinks.querySelectorAll('a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
-
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
-    }
-
-    // Footer Email Form Validation
-    const footerEmailForm = document.getElementById('footerEmailForm');
-    if (footerEmailForm) {
-        footerEmailForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const emailInput = document.getElementById('footerEmail');
-            const status = document.getElementById('footerEmailStatus');
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (emailRegex.test(emailInput.value.trim())) {
-                status.className = 'footer-email-status success';
-                status.textContent = '✓ Thanks! Check your email.';
-                emailInput.value = '';
-                setTimeout(() => {
-                    status.textContent = '';
-                    status.className = '';
-                }, 3000);
-            } else {
-                status.className = 'footer-email-status error';
-                status.textContent = 'Please enter a valid email.';
-            }
-        });
-    }
-    </script>
 </body>
 </html>

@@ -1,272 +1,399 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Upcoming exclusive dating events for founders and investors in San Francisco. See dates, times, locations, and apply for the next Doubles event.">
-    <meta name="keywords" content="dating events, upcoming events, SF events, founders, investors, exclusive events">
-    <meta property="og:title" content="Upcoming Events – Doubles Dating Events">
-    <meta property="og:description" content="Check out our upcoming exclusive dating events in SF. Limited spots available.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://doubles.singles/events.html">
-    <meta name="twitter:card" content="summary">
-    <link rel="canonical" href="https://doubles.singles/events.html">
-    <title>Upcoming Events – Doubles Dating Events</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Upcoming Doubles dating events in SF. Exclusive gatherings for post-exit founders and high-net-worth singles." />
+<meta property="og:title" content="Upcoming Events — Doubles" />
+<meta property="og:description" content="Exclusive dating events for post-exit founders and investors in SF." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://doubles.singles/events" />
+<meta name="twitter:card" content="summary_large_image" />
+<title>Events — Doubles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MZ4BPXHTY0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-MZ4BPXHTY0');
+</script>
+
+<style>
+:root {
+  --teal: #1B5A6B;
+  --teal-deep: #154754;
+  --navy: #1A3A42;
+  --cream: #F5F1E8;
+  --coral: #FF6B6B;
+  --ball: #D4F748;
+  --ink: #14272D;
+  --line: rgba(20,39,45,0.12);
+  --serif: 'Cormorant Garamond', serif;
+  --sans: 'Hanken Grotesk', sans-serif;
+  --container: 1100px;
+  --gutter: clamp(20px, 4vw, 80px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--sans);
+  color: var(--ink);
+  background: var(--cream);
+}
+a { color: var(--teal); text-decoration: none; }
+a:hover { opacity: 0.8; }
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245,241,232,0.08);
+}
+.nav-inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  color: var(--cream);
+  text-decoration: none;
+}
+.logo-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--ball);
+  border-radius: 50%;
+}
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav-links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cream);
+  opacity: 0.85;
+}
+.nav-links a:hover { opacity: 1; }
+
+.btn {
+  padding: 12px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all .2s;
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+}
+.btn-coral:hover { background: #E85555; }
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: var(--gutter);
+}
+
+.page-header {
+  padding: 80px var(--gutter) 40px;
+  text-align: center;
+  background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 100%);
+  color: var(--cream);
+}
+.page-header h1 {
+  font-family: var(--serif);
+  font-size: clamp(36px, 6vw, 56px);
+  margin: 0 0 16px;
+}
+.page-header p {
+  font-size: 18px;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin: 60px 0;
+}
+
+.event-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  transition: transform .2s, box-shadow .2s;
+}
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(20,39,45,0.08);
+}
+
+.event-header {
+  background: linear-gradient(135deg, var(--teal-deep) 0%, var(--teal) 100%);
+  color: var(--cream);
+  padding: 24px;
+}
+.event-header h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+.event-meta {
+  font-size: 13px;
+  opacity: 0.9;
+}
+
+.event-body {
+  padding: 24px;
+}
+.event-detail {
+  margin: 0 0 16px;
+  font-size: 14px;
+}
+.event-detail strong {
+  display: block;
+  font-weight: 600;
+  color: var(--teal);
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+}
+.event-detail span {
+  display: block;
+}
+
+.event-cta {
+  margin-top: 24px;
+}
+
+.waitlist-section {
+  background: #f9f7f2;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  margin: 60px 0;
+}
+.waitlist-section h2 {
+  font-family: var(--serif);
+  font-size: 28px;
+  margin: 0 0 16px;
+}
+.waitlist-section p {
+  font-size: 16px;
+  margin: 0 0 24px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 14px;
+}
+.newsletter-form button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: var(--coral);
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .events-grid { grid-template-columns: 1fr; }
+  .newsletter-form { flex-direction: column; }
+}
+
+footer {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 60px var(--gutter) 40px;
+  text-align: center;
+  margin-top: 80px;
+}
+footer a { color: var(--ball); }
+</style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="navbar-content">
-                <a href="/" class="logo">
-                    <span class="logo-text">DOUBLES</span>
-                </a>
-                <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-                <div class="nav-links" id="navLinks">
-                    <a href="/events.html" class="active">EVENTS</a>
-                    <a href="/how-it-works.html">HOW IT WORKS</a>
-                    <a href="/about.html">ABOUT</a>
-                    <a href="/faq.html">FAQ</a>
-                    <a href="/contact.html">CONTACT</a>
-                    <a href="/apply.html" class="nav-cta">JOIN THE LIST →</a>
-                </div>
-            </div>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <span class="logo-dot"></span>
+      DOUBLES
+    </a>
+    <ul class="nav-links">
+      <li><a href="/events">Events</a></li>
+      <li><a href="/application">Apply</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/faq">FAQ</a></li>
+      <li><a href="/contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="page-header">
+  <h1>Upcoming Events</h1>
+  <p>Vol. 01 Founding Launch coming June 21. Join our waitlist below.</p>
+</header>
+
+<div class="container">
+  
+  <div class="events-grid">
+    <div class="event-card">
+      <div class="event-header">
+        <h3>Vol. 01 / The Deuce</h3>
+        <div class="event-meta">Founding Launch</div>
+      </div>
+      <div class="event-body">
+        <div class="event-detail">
+          <strong>Date & Time</strong>
+          <span>Saturday, June 21, 2026 · 7:00 PM – 10:00 PM</span>
         </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="hero hero-secondary">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>What's coming.<br><span class="accent-yellow">Game on.</span></h1>
-                    <p>Exclusive dating events in the homes of SF's most ambitious founders. Limited spots. Real connections guaranteed.</p>
-                </div>
-            </div>
+        <div class="event-detail">
+          <strong>Venue</strong>
+          <span>Agi House, Twin Peaks<br />170 Germaine Ave, San Francisco</span>
         </div>
-    </section>
-
-    <!-- Events Grid -->
-    <section class="events-section">
-        <div class="container">
-            <div class="events-grid">
-                <!-- Event 1 -->
-                <div class="event-card-full">
-                    <div class="event-header">
-                        <h3>The Deuce</h3>
-                        <span class="event-badge">Upcoming</span>
-                    </div>
-                    <div class="event-details">
-                        <div class="event-info">
-                            <div class="info-row">
-                                <strong>📅 Date</strong>
-                                <span>Saturday, June 21, 2026</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>🕖 Time</strong>
-                                <span>7:00 PM – 11:00 PM</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>📍 Location</strong>
-                                <span>Presidio Heights House, San Francisco, CA</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>👥 Size</strong>
-                                <span>30 people (15 pairs)</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>💰 Price</strong>
-                                <span>$110 per person</span>
-                            </div>
-                        </div>
-                        <div class="event-description">
-                            <p>Our flagship summer event at one of SF's most iconic homes. Rooftop views, catered appetizers, great music. 30 accomplished singles bringing vetted friends. This one's special.</p>
-                        </div>
-                        <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                    </div>
-                </div>
-
-                <!-- Event 2 -->
-                <div class="event-card-full">
-                    <div class="event-header">
-                        <h3>Love All</h3>
-                        <span class="event-badge">Coming Soon</span>
-                    </div>
-                    <div class="event-details">
-                        <div class="event-info">
-                            <div class="info-row">
-                                <strong>📅 Date</strong>
-                                <span>Saturday, July 19, 2026</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>🕖 Time</strong>
-                                <span>7:00 PM – 11:00 PM</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>📍 Location</strong>
-                                <span>Twin Peaks House, San Francisco, CA</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>👥 Size</strong>
-                                <span>30 people (15 pairs)</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>💰 Price</strong>
-                                <span>$110 per person</span>
-                            </div>
-                        </div>
-                        <div class="event-description">
-                            <p>Mid-summer edition hosted in a stunning Twin Peaks home with panoramic bridge views. Craft cocktails, live acoustic music, and the community you've come to expect.</p>
-                        </div>
-                        <p class="coming-soon-text">Applications open June 1st</p>
-                    </div>
-                </div>
-
-                <!-- Event 3 -->
-                <div class="event-card-full">
-                    <div class="event-header">
-                        <h3>Match Point</h3>
-                        <span class="event-badge">Coming Soon</span>
-                    </div>
-                    <div class="event-details">
-                        <div class="event-info">
-                            <div class="info-row">
-                                <strong>📅 Date</strong>
-                                <span>Saturday, August 16, 2026</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>🕖 Time</strong>
-                                <span>7:00 PM – 11:00 PM</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>📍 Location</strong>
-                                <span>Pacific Heights House, San Francisco, CA</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>👥 Size</strong>
-                                <span>30 people (15 pairs)</span>
-                            </div>
-                            <div class="info-row">
-                                <strong>💰 Price</strong>
-                                <span>$110 per person</span>
-                            </div>
-                        </div>
-                        <div class="event-description">
-                            <p>Late summer event in an elegant Pacific Heights home. Garden setting, wine, cheese, and the community of accomplished singles you've come to know.</p>
-                        </div>
-                        <p class="coming-soon-text">Applications open July 1st</p>
-                    </div>
-                </div>
-            </div>
+        <div class="event-detail">
+          <strong>What to Expect</strong>
+          <span>30 guests, curated mini-dates (6 min each), cocktails, community</span>
         </div>
-    </section>
-
-    <!-- How It Works CTA -->
-    <section class="info-banner-section">
-        <div class="container">
-            <h2>How do I join?</h2>
-            <p>Head to the <a href="/apply.html" class="link-accent">apply page</a>, fill out the form, and tell us about yourself. We review applications within 48 hours. If approved, you're in—just bring your plus-one. That's it.</p>
-            <a href="/how-it-works.html" class="btn btn-secondary">Learn More</a>
+        <div class="event-detail">
+          <strong>Price</strong>
+          <span>$110 per person</span>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta-section">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Ready to play?</h2>
-                <p>Spots sell out fast. Apply now and be first to know.</p>
-                <a href="/apply.html" class="btn btn-primary">APPLY NOW →</a>
-                <div class="tennis-accent-bottom"></div>
-            </div>
+        <div class="event-cta">
+          <a href="/application" class="btn btn-coral">Apply Now</a>
         </div>
-    </section>
+      </div>
+    </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h4>DOUBLES SINGLES</h4>
-                    <p>We host curated social events that bring great people together.</p>
-                    <div class="social-links">
-                        <a href="#">📘</a>
-                        <a href="#">🐦</a>
-                        <a href="#">📷</a>
-                        <a href="#">✉️</a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h4>EVENTS</h4>
-                    <ul>
-                        <li><a href="/events.html">Upcoming Events</a></li>
-                        <li><a href="#">Past Events</a></li>
-                        <li><a href="#">Private Events</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>COMPANY</h4>
-                    <ul>
-                        <li><a href="/about.html">About</a></li>
-                        <li><a href="/how-it-works.html">How It Works</a></li>
-                        <li><a href="/contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>INFO</h4>
-                    <ul>
-                        <li><a href="/faq.html">FAQ</a></li>
-                        <li><a href="#">Safety</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>LET'S STAY IN TOUCH</h4>
-                    <form class="footer-email">
-                        <input type="email" placeholder="Your email address" required>
-                        <button type="submit" class="btn btn-small">→</button>
-                    </form>
-                    <p class="footer-note">No spam. Just good invites.</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Doubles, LLC</p>
-                <p class="footer-tagline">GOOD PEOPLE. GREAT MATCHES.</p>
-            </div>
+    <div class="event-card">
+      <div class="event-header">
+        <h3>Vol. 02 / Mixed Doubles</h3>
+        <div class="event-meta">July 2026</div>
+      </div>
+      <div class="event-body">
+        <div class="event-detail">
+          <strong>Date & Time</strong>
+          <span>Coming July 2026</span>
         </div>
-    </footer>
+        <div class="event-detail">
+          <strong>Venue</strong>
+          <span>Portola House, Pacific Heights</span>
+        </div>
+        <div class="event-detail">
+          <strong>What to Expect</strong>
+          <span>30 guests, curated conversations, dinner and wine</span>
+        </div>
+        <div class="event-detail">
+          <strong>Price</strong>
+          <span>$110 per person</span>
+        </div>
+        <div class="event-cta">
+          <form onsubmit="handleNewsletterSubmit(event)" style="display: inline;">
+            <input type="email" name="newsletter-email" placeholder="your@email.com" required style="padding: 8px 12px; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; width: 140px;" />
+            <button type="submit" class="btn btn-coral" style="padding: 8px 14px; font-size: 11px;">Waitlist</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
-    <script>
-    // Hamburger Menu Toggle
-    const hamburger = document.getElementById('hamburger');
-    const navLinks = document.getElementById('navLinks');
+</div>
 
-    if (hamburger && navLinks) {
-        hamburger.addEventListener('click', function() {
-            hamburger.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
+<div class="waitlist-section">
+  <h2>Get on the List</h2>
+  <p>Events fill fast. Join our community to get early access to Vol. 02, Vol. 03, and beyond.</p>
+  <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+    <input type="email" name="newsletter-email" placeholder="your@email.com" required />
+    <button type="submit">Join Waitlist</button>
+  </form>
+</div>
 
-        const navItems = navLinks.querySelectorAll('a');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            });
-        });
+<footer>
+  <p>&copy; 2026 Doubles. Strategy. Partnership. Connection.</p>
+  <p style="font-size: 12px; margin-top: 20px;">
+    <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a> · <a href="/contact">Contact</a>
+  </p>
+</footer>
 
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('nav') && navLinks.classList.contains('active')) {
-                hamburger.classList.remove('active');
-                navLinks.classList.remove('active');
-            }
-        });
+<script>
+async function handleNewsletterSubmit(e) {
+  e.preventDefault();
+  const form = e.target;
+  const button = form.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+  
+  try {
+    button.textContent = 'Joining...';
+    button.disabled = true;
+    const email = form.querySelector('input[name="newsletter-email"]').value;
+    
+    const response = await fetch('/api/mailchimp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert('You\'re on the list! 🎾');
+      form.reset();
+    } else {
+      alert('Error: ' + (data.error || 'Something went wrong'));
     }
-    </script>
+  } catch (error) {
+    alert('Error: ' + error.message);
+  } finally {
+    button.textContent = originalText;
+    button.disabled = false;
+  }
+}
+</script>
+
 </body>
 </html>
