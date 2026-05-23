@@ -220,6 +220,10 @@ footer a { color: #D4F748; }
     <p style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line);">
       Ready to meet someone who gets it? <a href="/application">Apply for the next Doubles event →</a>
     </p>
+    <div class="social-share" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--line); display: flex; gap: 16px;">
+      <a href="javascript:void(0)" onclick="shareTwitter()" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #1DA1F2; color: white; border-radius: 6px; font-size: 12px; font-weight: 600;" title="Share on Twitter">𝕏 Share</a>
+      <a href="javascript:void(0)" onclick="shareLinkedIn()" style="display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: #0A66C2; color: white; border-radius: 6px; font-size: 12px; font-weight: 600;" title="Share on LinkedIn">in Share</a>
+    </div>
   </article>
 </div>
 
@@ -230,5 +234,18 @@ footer a { color: #D4F748; }
   </p>
 </footer>
 
+<script>
+function shareTwitter() {
+  const title = document.querySelector("h1").textContent;
+  const url = window.location.href;
+  const twitterUrl = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)} via @DoublesSingles`;
+  window.open(twitterUrl, "_blank", "width=600,height=400");
+}
+function shareLinkedIn() {
+  const url = window.location.href;
+  const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+  window.open(linkedInUrl, "_blank", "width=600,height=400");
+}
+</script>
 </body>
 </html>
