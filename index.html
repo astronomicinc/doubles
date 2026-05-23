@@ -566,23 +566,6 @@ h1, h2, h3, h4 {
 }
 
 /* =========================================================
-   NIGHT SECTION (override section-head for vertical layout)
-   ========================================================= */
-.night .section-head {
-  grid-template-columns: 1fr;
-  align-items: start;
-}
-.night .section-head h2 {
-  margin-bottom: 24px;
-}
-.night .section-head .lead {
-  max-width: none;
-  font-size: 17px;
-  color: var(--cream);
-  line-height: 1.8;
-}
-
-/* =========================================================
    TESTIMONIALS (Stories Coming Soon)
    ========================================================= */
 .testimonials {
@@ -868,81 +851,6 @@ h1, h2, h3, h4 {
 /* =========================================================
    THE NIGHT (editorial — venues + catering)
    ========================================================= */
-.night {
-  background: var(--navy);
-  color: var(--cream);
-  padding: clamp(90px, 14vh, 160px) 0;
-  position: relative;
-}
-.night .section-head h2 { color: var(--cream); }
-.night .section-head h2 em { color: var(--coral); font-style: italic; }
-.night .section-head .lead { color: rgba(245,241,232,0.7); }
-.night .section-head .eyebrow { color: var(--ball); }
-
-.editorial {
-  display: grid;
-  grid-template-columns: 1.4fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 18px;
-}
-.ed-tile {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  min-height: 280px;
-  background-color: #111;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: flex-end;
-  padding: 28px;
-}
-.ed-tile::after {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(180deg, rgba(0,0,0,0) 35%, rgba(0,0,0,0.55) 75%, rgba(0,0,0,0.88) 100%),
-    linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0) 25%);
-}
-.ed-tile > * { position: relative; z-index: 1; }
-.ed-tile .ed-cap {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 500;
-  color: var(--cream);
-  letter-spacing: -0.01em;
-  max-width: 22ch;
-}
-.ed-tile .ed-tag {
-  position: absolute;
-  top: 22px; left: 22px;
-  font-size: 11px;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--ball);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  text-shadow: 0 1px 12px rgba(0,0,0,0.55);
-}
-.ed-tile .ed-tag::before {
-  content: '';
-  width: 22px; height: 1px; background: var(--ball);
-}
-.ed-tile .ed-cap {
-  text-shadow: 0 2px 18px rgba(0,0,0,0.6), 0 1px 2px rgba(0,0,0,0.4);
-}
-.ed-1 { grid-row: span 2; min-height: 600px; }
-.ed-2 { min-height: 290px; }
-.ed-3 { min-height: 290px; }
-
-@media (max-width: 800px) {
-  .editorial { grid-template-columns: 1fr; }
-  .ed-1 { grid-row: auto; min-height: 360px; }
-}
-
 /* =========================================================
    FINAL CTA
    ========================================================= */
@@ -1396,38 +1304,6 @@ h1, h2, h3, h4 {
       <div class="stat">
         <div class="num">1</div>
         <div class="label">Extraordinary evening</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     THE NIGHT — editorial gallery
-     ============================================================ -->
-<section class="night" data-screen-label="The Night">
-  <div class="container">
-    <div class="section-head">
-      <div>
-        <div class="eyebrow"><span class="ball"></span> The venue</div>
-        <h2 style="margin-top:14px;">Where Vol. 01 <em>happens</em>.</h2>
-      </div>
-      <p class="lead">
-        We're hosting in the homes of founders we trust. For our founding event, we've chosen a Presidio Heights penthouse with views that make you remember why you live in San Francisco. Every detail is curated so you can focus on meeting people who matter.
-      </p>
-    </div>
-
-    <div class="editorial">
-      <div class="ed-tile ed-1" style="background-image:url('assets/venue-presidio.jpg');">
-        <span class="ed-tag">Venue · Presidio Heights</span>
-        <p class="ed-cap">A bay-view living room, twelve-foot ceilings, the right amount of candlelight.</p>
-      </div>
-      <div class="ed-tile ed-2" style="background-image:url('assets/catering-spread.jpg');">
-        <span class="ed-tag">Catering · Local kitchens</span>
-        <p class="ed-cap">Seasonal small plates from SF's favorite chefs.</p>
-      </div>
-      <div class="ed-tile ed-3" style="background-image:url('assets/venue-nob-hill.jpg');">
-        <span class="ed-tag">Vol. 03 · Russian Hill</span>
-        <p class="ed-cap">Glass walls, golden hour, and 30 of the most interesting people in the city.</p>
       </div>
     </div>
   </div>
