@@ -531,6 +531,23 @@ h1, h2, h3, h4 {
 }
 
 /* =========================================================
+   NEXT EVENT (override section-head for vertical layout)
+   ========================================================= */
+.next-event .section-head {
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+.next-event .section-head h2 {
+  margin-bottom: 20px;
+}
+.next-event .section-head .lead {
+  max-width: none;
+  font-size: 17px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+/* =========================================================
    HOW IT WORKS (teal)
    ========================================================= */
 .how {
