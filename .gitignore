@@ -1,3 +1,4 @@
+# Vercel
 .vercel
 
 # Environment variables & secrets
@@ -15,10 +16,27 @@ api/config.js
 .DS_Store
 Thumbs.db
 
-# Node modules (if using Node)
+# Node modules & package manager
 node_modules/
 npm-debug.log
+yarn-error.log
+.npm
+.yarn
+
+# Next.js build artifacts
+.next/
+out/
+dist/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Build & dev
+.turbo/
+.env*.local
+.cache/

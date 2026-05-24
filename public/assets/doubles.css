@@ -1,0 +1,501 @@
+/* ===========================================================================
+   doubles.singles — Shared design system stylesheet
+   ---------------------------------------------------------------------------
+   This file is the single source of truth for:
+     · Design tokens (colors, type, spacing, radius, shadow)
+     · Base typography
+     · Nav + Footer (identical on every page)
+     · Button system
+     · Eyebrow / section-head / container / hairline patterns
+     · Tennis-ball + court-line decorative primitives
+
+   Page-specific styles (hero, event card, Volley spotlight, etc.) live in a
+   <style> block on each page, but ALL of them inherit the tokens below.
+
+   Import order on every page:
+     1. Google Fonts (Cormorant Garamond + Hanken Grotesk)
+     2. This file
+     3. Page-specific <style> block
+   =========================================================================== */
+
+
+/* ---------- 1. TOKENS ----------------------------------------------------- */
+:root {
+  /* Brand palette */
+  --teal:        #1B5A6B;
+  --teal-deep:   #154754;
+  --navy:        #1A3A42;
+  --cream:       #F5F1E8;
+  --cream-warm:  #EFE9DA;
+  --coral:       #FF6B6B;
+  --coral-deep:  #E85555;
+  --ball:        #D4F748;        /* tennis-ball yellow-green */
+  --ink:         #14272D;
+  --ink-soft:    #3E5258;
+
+  /* Hairlines */
+  --line:        rgba(20, 39, 45, 0.12);
+  --line-cream:  rgba(245, 241, 232, 0.18);
+  --line-dark:   rgba(245, 241, 232, 0.28);
+
+  /* Type families */
+  --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+  --sans:  'Hanken Grotesk', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+
+  /* Type weights — single source of truth.
+     Use these vars instead of raw numbers so weight is consistent. */
+  --w-serif-regular: 400;   /* headlines & numerals */
+  --w-serif-medium:  500;   /* h3, quotes, event meta values */
+  --w-sans-light:    300;   /* hero subhead only */
+  --w-sans-body:     400;   /* body text */
+  --w-sans-medium:   500;   /* nav links, eyebrows */
+  --w-sans-bold:     600;   /* buttons, labels, tags */
+
+  /* Page shell */
+  --container: 1280px;
+  --gutter:    clamp(20px, 4vw, 56px);
+
+  /* Section vertical rhythm */
+  --section-pad-sm: clamp(80px, 12vh, 140px);
+  --section-pad-md: clamp(90px, 14vh, 160px);
+  --section-pad-lg: clamp(100px, 16vh, 180px);
+
+  /* Radii */
+  --r-card: 4px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-cta:   0 12px 24px -12px rgba(232, 85, 85, 0.6);
+  --shadow-card:  0 24px 60px -40px rgba(20, 39, 45, 0.20);
+  --shadow-event: 0 40px 80px -40px rgba(20, 39, 45, 0.18), 0 1px 0 rgba(20, 39, 45, 0.04);
+}
+
+
+/* ---------- 2. RESET / BASE ---------------------------------------------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--sans);
+  font-weight: var(--w-sans-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img { max-width: 100%; display: block; }
+a   { color: inherit; text-decoration: none; }
+button {
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+
+/* ---------- 3. PAGE SHELL ------------------------------------------------- */
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.section          { padding: var(--section-pad-sm) 0; }
+.section--md      { padding: var(--section-pad-md) 0; }
+.section--lg      { padding: var(--section-pad-lg) 0; }
+.section--cream   { background: var(--cream); color: var(--ink); }
+.section--teal    { background: var(--teal);  color: var(--cream); }
+.section--navy    { background: var(--navy);  color: var(--cream); }
+
+
+/* ---------- 4. TYPOGRAPHY ------------------------------------------------- */
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: var(--w-serif-regular);
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Italic accent words inside headlines — use <em>.
+   DEFAULT is coral (works on cream / cream-warm / white backgrounds).
+   Dark contexts (.section--teal, .section--navy, .hero, .page-header)
+   override to --ball below. New pages don't have to remember the
+   modifier class — coral is the safe fallback. */
+h1 em, h2 em, h3 em, h4 em {
+  font-style: italic;
+  font-weight: var(--w-serif-regular);
+  color: var(--coral);
+}
+.section--teal  h1 em,
+.section--teal  h2 em,
+.section--teal  h3 em,
+.section--teal  h4 em,
+.section--navy  h1 em,
+.section--navy  h2 em,
+.section--navy  h3 em,
+.section--navy  h4 em,
+.hero h1 em,
+.hero h2 em,
+.page-header h1 em,
+.page-header h2 em { color: var(--ball); }
+
+/* Type scale */
+.t-display { font-size: clamp(56px, 9.2vw, 148px); line-height: 0.95; letter-spacing: -0.025em; }
+.t-h1      { font-size: clamp(48px, 7.5vw, 120px); line-height: 1;     letter-spacing: -0.025em; }
+.t-h2      { font-size: clamp(40px, 5.6vw,  88px); }
+.t-h3      { font-size: clamp(32px, 3.4vw,  52px); }
+.t-h4      { font-size: 28px; font-weight: var(--w-serif-medium); }
+.t-lead    { font-size: clamp(16px, 1.4vw, 19px); line-height: 1.6; font-weight: var(--w-sans-light); }
+
+/* Eyebrow — universal small uppercase label.
+   Always prefix with a 7px ball dot inside a <span class="ball"></span>. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: var(--w-sans-bold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: inherit;
+}
+.eyebrow .ball {
+  width: 7px;
+  height: 7px;
+  background: var(--ball);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+/* Color variants by context */
+.section--cream .eyebrow            { color: var(--teal); }
+.section--cream .eyebrow--coral     { color: var(--coral); }
+.section--cream .eyebrow--coral .ball { background: var(--coral); }
+.section--teal  .eyebrow,
+.section--navy  .eyebrow            { color: var(--ball); }
+
+
+/* Section head — standard 2-col block at the top of every section */
+.section-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 40px;
+  margin-bottom: 64px;
+}
+.section-head h2 { margin-top: 14px; }
+.section-head .lead {
+  max-width: 36ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.section--teal  .section-head .lead,
+.section--navy  .section-head .lead { color: rgba(245, 241, 232, 0.7); }
+@media (max-width: 800px) {
+  .section-head { grid-template-columns: 1fr; }
+}
+
+
+/* ---------- 5. BUTTONS ---------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: var(--r-pill);
+  font-family: var(--sans);
+  font-weight: var(--w-sans-bold);
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+}
+.btn .arrow { display: inline-block; transition: transform 0.2s ease; }
+.btn:hover .arrow { transform: translateX(4px); }
+
+.btn--coral { background: var(--coral); color: white; box-shadow: var(--shadow-cta); }
+.btn--coral:hover { background: var(--coral-deep); transform: translateY(-1px); }
+
+.btn--ghost { background: transparent; color: var(--cream); border: 1px solid rgba(245, 241, 232, 0.4); }
+.btn--ghost:hover { background: rgba(245, 241, 232, 0.08); }
+
+.btn--ink   { background: var(--ink); color: var(--cream); }
+.btn--ink:hover { background: var(--navy); transform: translateY(-1px); }
+
+.btn--sm    { padding: 12px 20px; font-size: 12px; }
+
+
+/* ---------- 6. NAV (identical on every page) ----------------------------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--teal);
+  color: var(--cream);
+  border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+}
+.nav__inner {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 18px var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+.nav__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: var(--w-serif-medium);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--cream);
+}
+.nav__logo-dot {
+  width: 10px;
+  height: 10px;
+  background: var(--ball);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(212, 247, 72, 0.18);
+}
+.nav__links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nav__links a {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: var(--w-sans-medium);
+  opacity: 0.85;
+  transition: opacity 0.15s;
+  display: inline-block;       /* needed for ::after dot to position correctly */
+  padding-bottom: 4px;          /* gives the dot a defined gutter below text */
+  position: relative;
+}
+.nav__links a:hover,
+.nav__links a[aria-current="page"],
+.nav__links a.is-current { opacity: 1; }
+.nav__links a[aria-current="page"]::after,
+.nav__links a.is-current::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 5px;
+  height: 5px;
+  background: var(--ball);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 900px) {
+  .nav__links { display: none; }
+}
+
+
+/* ---------- 7. FOOTER (identical on every page) -------------------------- */
+.footer {
+  background: var(--navy);
+  color: var(--cream);
+  padding: 90px 0 28px;
+  border-top: 1px solid rgba(245, 241, 232, 0.06);
+}
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(2, 1fr) 1.4fr;
+  gap: 48px;
+  padding-bottom: 60px;
+  border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+}
+.footer__brand .nav__logo { margin-bottom: 18px; }
+.footer__tag {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  font-weight: var(--w-serif-regular);
+  line-height: 1.3;
+  color: var(--cream);
+  margin: 0 0 24px;
+  white-space: nowrap;
+}
+.footer__socials { display: flex; gap: 10px; }
+.footer__socials a {
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(245, 241, 232, 0.25);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.footer__socials a:hover {
+  background: var(--ball);
+  border-color: var(--ball);
+  color: var(--navy);
+}
+.footer__socials svg { width: 16px; height: 16px; }
+
+.footer__col h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: var(--w-sans-bold);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ball);
+  margin-bottom: 22px;
+}
+.footer__col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.footer__col a {
+  font-size: 14px;
+  color: rgba(245, 241, 232, 0.75);
+  transition: color 0.15s;
+}
+.footer__col a:hover { color: var(--cream); }
+
+.footer__newsletter h4 {
+  font-family: var(--sans);
+  font-size: 11px;
+  font-weight: var(--w-sans-bold);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ball);
+  margin-bottom: 14px;
+}
+.footer__newsletter p {
+  font-size: 13px;
+  color: rgba(245, 241, 232, 0.65);
+  line-height: 1.6;
+  margin: 0 0 18px;
+}
+.footer__newsletter form {
+  display: flex;
+  border: 1px solid rgba(245, 241, 232, 0.2);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  background: rgba(245, 241, 232, 0.04);
+}
+.footer__newsletter input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--cream);
+  padding: 12px 18px;
+  font: inherit;
+  font-size: 13px;
+}
+.footer__newsletter input::placeholder { color: rgba(245, 241, 232, 0.4); }
+.footer__newsletter input:focus { outline: none; }
+.footer__newsletter button {
+  background: var(--coral);
+  color: white;
+  padding: 0 20px;
+  font-size: 12px;
+  font-weight: var(--w-sans-bold);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.footer__newsletter button:hover { background: var(--coral-deep); }
+
+.footer__bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 28px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(245, 241, 232, 0.5);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer__bottom .tag { display: flex; align-items: center; gap: 12px; }
+.footer__bottom .tag .ball {
+  width: 6px;
+  height: 6px;
+  background: var(--ball);
+  border-radius: 50%;
+}
+
+@media (max-width: 1000px) {
+  .footer__grid { grid-template-columns: 1fr 1fr; }
+  .footer__brand, .footer__newsletter { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .footer__grid { grid-template-columns: 1fr; gap: 36px; }
+  .footer__brand, .footer__newsletter { grid-column: auto; }
+}
+
+
+/* ---------- 8. DECORATIVE PRIMITIVES ------------------------------------- */
+
+/* Generic ball dot — small, inline */
+.ball-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: var(--ball);
+  border-radius: 50%;
+  vertical-align: middle;
+}
+
+/* Court grid background — apply as ::before of any dark section */
+.court-grid {
+  position: relative;
+  overflow: hidden;
+}
+.court-grid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(245, 241, 232, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 241, 232, 0.04) 1px, transparent 1px);
+  background-size: 120px 120px;
+  pointer-events: none;
+}
+.court-grid > * { position: relative; }
+
+/* Net divider — "Game · Set · Match" style hairline */
+.net-divider {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 11px;
+  font-weight: var(--w-sans-medium);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(245, 241, 232, 0.65);
+}
+.section--cream .net-divider { color: var(--ink-soft); }
+.net-divider .net {
+  flex: 1;
+  height: 14px;
+  background:
+    linear-gradient(currentColor, currentColor) center / 100% 1px no-repeat,
+    repeating-linear-gradient(90deg, currentColor 0 1px, transparent 1px 8px);
+  opacity: 0.55;
+}
