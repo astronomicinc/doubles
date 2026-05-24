@@ -9,10 +9,17 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'Email is required' });
   }
 
-  // Mailchimp credentials (from environment or hardcoded for now)
-  const API_KEY = '83d871bd01bd56d17f23c7a1000d51d2-us18';
-  const LIST_ID = '0fdc19f24f';
-  const SERVER_PREFIX = 'us18';
+  // Mailchimp credentials (from environment variables)
+  const API_KEY = process.env.MAILCHIMP_API_KEY;
+  const LIST_ID = process.env.MAILCHIMP_LIST_ID;
+  const SERVER_PREFIX = process.env.MAILCHIMP_SERVER_PREFIX;
+
+  if (!API_KEY || !LIST_ID || !SERVER_PREFIX) {
+    console.error('Missing Mailchimp environment variables');
+    return res.status(500).json({
+      error: 'Server configuration error'
+    });
+  }
 
   try {
     // Prepare subscriber data
