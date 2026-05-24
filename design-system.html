@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System — Doubles</title>
+<meta name="description" content="The doubles.singles design system: tokens, type, nav, footer, components." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Page header */
+  .ds-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(90px, 13vh, 140px) 0 clamp(60px, 9vh, 90px);
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  }
+  .ds-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 241, 232, 0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 241, 232, 0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+  .ds-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .ds-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6vw, 96px);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+  }
+  .ds-header h1 em { color: var(--ball); }
+  .ds-header__sub {
+    font-size: 15px;
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.75);
+    max-width: 44ch;
+    margin: 0;
+    padding-bottom: 8px;
+  }
+  .ds-meta {
+    display: flex;
+    gap: 32px;
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(245, 241, 232, 0.12);
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+    flex-wrap: wrap;
+  }
+  .ds-meta strong {
+    display: block;
+    color: var(--ball);
+    font-weight: var(--w-sans-bold);
+    margin-bottom: 4px;
+  }
+  @media (max-width: 800px) {
+    .ds-header__inner { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* Section structure */
+  .ds-section {
+    padding: clamp(70px, 10vh, 110px) 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-section--cream-warm { background: var(--cream-warm); }
+  .ds-section__head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 40px;
+    align-items: baseline;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .ds-section__num {
+    font-family: var(--serif);
+    font-size: 64px;
+    font-weight: var(--w-serif-regular);
+    color: var(--teal);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    width: 80px;
+  }
+  .ds-section__title h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.6vw, 52px);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    color: var(--ink);
+    margin: 0;
+  }
+  .ds-section__title h2 em { color: var(--coral); }
+  .ds-section__title p {
+    margin: 8px 0 0;
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 48ch;
+  }
+  .ds-section__id {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 800px) {
+    .ds-section__head { grid-template-columns: 1fr; gap: 16px; }
+    .ds-section__num  { font-size: 48px; width: auto; }
+  }
+
+  /* Color swatches */
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .swatch {
+    border-radius: var(--r-card);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: white;
+    display: flex;
+    flex-direction: column;
+  }
+  .swatch__chip {
+    aspect-ratio: 4 / 3;
+    position: relative;
+  }
+  .swatch__chip::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.08) 100%);
+  }
+  .swatch__chip.is-light::after {
+    background: linear-gradient(180deg, transparent 60%, rgba(20, 39, 45, 0.08) 100%);
+  }
+  .swatch__chip.is-light { box-shadow: inset 0 0 0 1px var(--line); }
+  .swatch__meta {
+    padding: 16px 18px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .swatch__token {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    color: var(--teal);
+  }
+  .swatch__name {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-top: 4px;
+  }
+  .swatch__hex {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .swatch__use {
+    font-size: 12px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  @media (max-width: 900px) { .swatch-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  /* Type specimens */
+  .type-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 40px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .type-row:last-child { border-bottom: none; }
+  .type-row__spec {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .type-row__spec strong {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .type-row__sample { color: var(--ink); }
+  .type-row__sample em { color: var(--coral); font-style: italic; }
+  @media (max-width: 800px) {
+    .type-row { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* Spec list */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .spec {
+    background: white;
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .spec__name {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12px;
+    color: var(--teal);
+  }
+  .spec__val {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+  }
+  .spec__use {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  @media (max-width: 700px) { .spec-grid { grid-template-columns: 1fr; } }
+
+  /* Demo wrappers */
+  .demo {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 40px;
+    margin-bottom: 12px;
+  }
+  .demo--dark { background: var(--teal); color: var(--cream); border-color: transparent; }
+  .demo--navy { background: var(--navy); color: var(--cream); border-color: transparent; }
+  .demo__label {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .demo--dark .demo__label,
+  .demo--navy .demo__label { color: rgba(245, 241, 232, 0.55); }
+
+  .demo-row {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  /* Code block */
+  .code {
+    background: var(--ink);
+    color: rgba(245, 241, 232, 0.92);
+    padding: 22px 26px;
+    border-radius: var(--r-card);
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.7;
+    overflow-x: auto;
+    white-space: pre;
+    margin: 0;
+  }
+  .code .c-key   { color: var(--ball); }
+  .code .c-val   { color: var(--cream); }
+  .code .c-com   { color: rgba(245, 241, 232, 0.45); }
+
+  /* Two-col: shown + spec */
+  .preview-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  @media (max-width: 900px) { .preview-grid { grid-template-columns: 1fr; } }
+
+  /* Mini nav demo (rendered identically to live nav) */
+  .nav-demo, .footer-demo {
+    border-radius: var(--r-card);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+
+  /* Don't-do list */
+  .rule-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  .rule {
+    padding: 24px 26px;
+    border-radius: var(--r-card);
+    border: 1px solid var(--line);
+    background: white;
+  }
+  .rule__icon {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .rule--do .rule__icon  { background: var(--ball);  color: var(--ink); }
+  .rule--dont .rule__icon { background: var(--coral); color: white; }
+  .rule h4 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: var(--w-serif-medium);
+    margin-bottom: 6px;
+  }
+  .rule p { margin: 0; font-size: 13.5px; color: var(--ink-soft); line-height: 1.6; }
+  @media (max-width: 700px) { .rule-list { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (the same nav documented below)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="index.html#apply">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="design-system.html" aria-current="page">System</a></li>
+    </ul>
+    <a href="index.html#apply" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+<header class="ds-header" data-screen-label="DS Header">
+  <div class="ds-header__inner">
+    <div>
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> doubles.singles · Design system v1</span>
+      <h1>The <em>system</em>.</h1>
+      <div class="ds-meta">
+        <div><strong>Stylesheet</strong> assets/doubles.css</div>
+        <div><strong>Type</strong> Cormorant Garamond + Hanken Grotesk</div>
+        <div><strong>Pages</strong> index · events · volley · system</div>
+      </div>
+    </div>
+    <p class="ds-header__sub">
+      One stylesheet, one nav, one footer, one type stack. Use this page as the
+      source of truth — if it's not here, don't ship it. Every page in the site
+      imports <code style="background: rgba(245,241,232,0.08); padding: 2px 8px; border-radius: 4px; font-family: ui-monospace, Menlo, monospace; font-size: 13px;">assets/doubles.css</code>
+      and inherits all tokens below.
+    </p>
+  </div>
+</header>
+
+<!-- =========================================================
+     01 · COLOR
+     ========================================================= -->
+<section class="ds-section" data-screen-label="01 Color">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">01</div>
+      <div class="ds-section__title">
+        <h2>Color <em>palette</em>.</h2>
+        <p>Restrained brand palette. Teal carries primary surfaces; coral is reserved for CTAs and accent words on light; ball-yellow is the tennis signal — accents and italic emphasis on dark only.</p>
+      </div>
+      <div class="ds-section__id">§ Tokens</div>
+    </div>
+
+    <div class="swatch-grid">
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #1B5A6B;"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--teal</span>
+          <span class="swatch__name">Teal</span>
+          <span class="swatch__hex">#1B5A6B</span>
+          <span class="swatch__use">Primary brand. Nav, How-it-Works, headlines on light.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #1A3A42;"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--navy</span>
+          <span class="swatch__name">Navy</span>
+          <span class="swatch__hex">#1A3A42</span>
+          <span class="swatch__use">Footer, editorial sections, page headers on Volley.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #F5F1E8;" class="is-light"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--cream</span>
+          <span class="swatch__name">Cream</span>
+          <span class="swatch__hex">#F5F1E8</span>
+          <span class="swatch__use">Page canvas. Always pair with --ink for text.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #EFE9DA;" class="is-light"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--cream-warm</span>
+          <span class="swatch__name">Cream warm</span>
+          <span class="swatch__hex">#EFE9DA</span>
+          <span class="swatch__use">Secondary canvas — Volley spotlight, alt sections.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #FF6B6B;"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--coral</span>
+          <span class="swatch__name">Coral</span>
+          <span class="swatch__hex">#FF6B6B</span>
+          <span class="swatch__use">Every CTA. Italic accent words on cream backgrounds.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #D4F748;" class="is-light"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--ball</span>
+          <span class="swatch__name">Ball yellow</span>
+          <span class="swatch__hex">#D4F748</span>
+          <span class="swatch__use">Tennis signal. Dots, italic accent words on dark. Never on cream text.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #14272D;"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--ink</span>
+          <span class="swatch__name">Ink</span>
+          <span class="swatch__hex">#14272D</span>
+          <span class="swatch__use">Primary text on cream. Almost-black with teal undertone.</span>
+        </div>
+      </div>
+
+      <div class="swatch">
+        <div class="swatch__chip" style="background: #3E5258;"></div>
+        <div class="swatch__meta">
+          <span class="swatch__token">--ink-soft</span>
+          <span class="swatch__name">Ink soft</span>
+          <span class="swatch__hex">#3E5258</span>
+          <span class="swatch__use">Body / secondary text on cream. Eyebrow labels.</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+      <div class="rule rule--do">
+        <span class="rule__icon">✓</span>
+        <h4>Do — italic accent words.</h4>
+        <p>Use <em>--coral</em> for italic words inside a headline on cream. Use <em>--ball</em> inside a headline on dark. The system handles this automatically when the parent section is <code style="font-size: 12px;">.section--cream / --teal / --navy</code>.</p>
+      </div>
+      <div class="rule rule--dont">
+        <span class="rule__icon">×</span>
+        <h4>Don't — ball on cream.</h4>
+        <p>Ball-yellow text on cream fails contrast and reads as a highlighter mistake. If you need yellow on light, use it as a 7px dot, never as a typeface color.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     02 · TYPOGRAPHY
+     ========================================================= -->
+<section class="ds-section ds-section--cream-warm" data-screen-label="02 Type">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">02</div>
+      <div class="ds-section__title">
+        <h2>Type <em>scale</em>.</h2>
+        <p>Two families, six weights total. Serif is always for headlines, numerals, and quotes. Sans is everything else. Weights are tokenized — use <code style="font-size: 13px;">var(--w-*)</code>, never raw numbers.</p>
+      </div>
+      <div class="ds-section__id">§ Type</div>
+    </div>
+
+    <div style="background: white; border-radius: var(--r-card); border: 1px solid var(--line); padding: 0 36px;">
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>Display</strong>
+          .t-display<br/>
+          Cormorant Garamond 400<br/>
+          clamp(56, 9.2vw, 148)px<br/>
+          line-height 0.95<br/>
+          letter-spacing -0.025em
+        </div>
+        <div class="type-row__sample t-display">Good people. Great <em>matches</em>.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>H1</strong>
+          .t-h1<br/>
+          Cormorant Garamond 400<br/>
+          clamp(48, 7.5vw, 120)px<br/>
+          line-height 1<br/>
+          letter-spacing -0.025em
+        </div>
+        <div class="type-row__sample t-h1">Be part of <em>something new</em>.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>H2 — section head</strong>
+          .t-h2<br/>
+          Cormorant Garamond 400<br/>
+          clamp(40, 5.6vw, 88)px<br/>
+          line-height 1.04
+        </div>
+        <div class="type-row__sample t-h2">How <em>doubles</em> works.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>H3 — card title</strong>
+          .t-h3<br/>
+          Cormorant Garamond 400<br/>
+          clamp(32, 3.4vw, 52)px
+        </div>
+        <div class="type-row__sample t-h3">A speaker <em>worth flying in for</em>.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>H4 — step heading</strong>
+          .t-h4<br/>
+          Cormorant Garamond 500<br/>
+          28px
+        </div>
+        <div class="type-row__sample t-h4">Bring your <em>MVP</em>.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>Lead — subhead</strong>
+          .t-lead<br/>
+          Hanken Grotesk 300<br/>
+          clamp(16, 1.4vw, 19)px<br/>
+          line-height 1.6
+        </div>
+        <div class="type-row__sample t-lead">Exclusive evenings for experienced SF founders and investors who are tired of apps and algorithms. Bring a friend, meet quality people, and make real connections.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>Body</strong>
+          (default)<br/>
+          Hanken Grotesk 400<br/>
+          17px / 1.55<br/>
+          color --ink
+        </div>
+        <div class="type-row__sample">The doubles format is the whole point — it changes how you walk into the room. Every conversation is intentional, every conversation a chance to begin, and every guest pre-vetted by the people who brought them.</div>
+      </div>
+
+      <div class="type-row">
+        <div class="type-row__spec">
+          <strong>Eyebrow</strong>
+          .eyebrow<br/>
+          Hanken Grotesk 600<br/>
+          12px / 0.22em tracking<br/>
+          uppercase
+        </div>
+        <div class="type-row__sample"><span class="eyebrow"><span class="ball"></span> The founding match</span></div>
+      </div>
+
+    </div>
+
+    <div style="margin-top: 32px;">
+      <pre class="code"><span class="c-com">/* Tokenized weights — single source of truth */</span>
+<span class="c-key">--w-serif-regular</span><span class="c-val">: 400;</span>   <span class="c-com">/* headlines, numerals      */</span>
+<span class="c-key">--w-serif-medium</span><span class="c-val">:  500;</span>   <span class="c-com">/* h3 / h4, quotes, meta dd */</span>
+<span class="c-key">--w-sans-light</span><span class="c-val">:    300;</span>   <span class="c-com">/* hero subhead ONLY        */</span>
+<span class="c-key">--w-sans-body</span><span class="c-val">:     400;</span>   <span class="c-com">/* body text                */</span>
+<span class="c-key">--w-sans-medium</span><span class="c-val">:   500;</span>   <span class="c-com">/* nav links, eyebrows      */</span>
+<span class="c-key">--w-sans-bold</span><span class="c-val">:     600;</span>   <span class="c-com">/* buttons, labels, tags    */</span></pre>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     03 · BUTTONS
+     ========================================================= -->
+<section class="ds-section" data-screen-label="03 Buttons">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">03</div>
+      <div class="ds-section__title">
+        <h2>Buttons &amp; <em>CTAs</em>.</h2>
+        <p>One pill geometry, three color variants. The arrow glyph translates 4px right on parent hover. Don't introduce new variants — if a CTA doesn't fit one of these three, the layout problem is upstream.</p>
+      </div>
+      <div class="ds-section__id">§ Buttons</div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__label">Coral — Primary CTA</div>
+      <div class="demo-row">
+        <a class="btn btn--coral" href="#">Apply for next event <span class="arrow">→</span></a>
+        <a class="btn btn--coral btn--sm" href="#">Join the list <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="demo demo--dark">
+      <div class="demo__label">Ghost — Secondary on dark</div>
+      <div class="demo-row">
+        <a class="btn btn--ghost" href="#">Learn more <span class="arrow">→</span></a>
+        <a class="btn btn--ghost btn--sm" href="#">Read FAQ <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="demo__label">Ink — Tertiary on cream</div>
+      <div class="demo-row">
+        <a class="btn btn--ink" href="#">Learn more about Volley <span class="arrow">→</span></a>
+        <a class="btn btn--ink btn--sm" href="#">View calendar <span class="arrow">→</span></a>
+      </div>
+    </div>
+
+    <pre class="code"><span class="c-com">&lt;!-- Always include the arrow span so hover animation works --&gt;</span>
+&lt;a class=<span class="c-val">"btn btn--coral"</span> href=<span class="c-val">"..."</span>&gt;
+  Apply now <span class="c-key">&lt;span class="arrow"&gt;→&lt;/span&gt;</span>
+&lt;/a&gt;</pre>
+  </div>
+</section>
+
+<!-- =========================================================
+     04 · NAV
+     ========================================================= -->
+<section class="ds-section ds-section--cream-warm" data-screen-label="04 Nav">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">04</div>
+      <div class="ds-section__title">
+        <h2>The <em>nav</em>.</h2>
+        <p>Identical on every page. Sticky teal bar, ball-dot logo, six link slots, one coral CTA. The active page shows a 5px ball-yellow dot below its link via <code style="font-size: 13px;">aria-current="page"</code>.</p>
+      </div>
+      <div class="ds-section__id">§ Nav</div>
+    </div>
+
+    <div class="nav-demo">
+      <nav class="nav" style="position: relative; top: auto;">
+        <div class="nav__inner">
+          <a href="#" class="nav__logo">
+            <span class="nav__logo-dot" aria-hidden="true"></span>
+            <span>DOUBLES</span>
+          </a>
+          <ul class="nav__links">
+            <li><a href="#">Events</a></li>
+            <li><a href="#" aria-current="page">Apply</a></li>
+            <li><a href="#">Volley</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+          <a href="#" class="btn btn--coral btn--sm">Join the list <span class="arrow">→</span></a>
+        </div>
+      </nav>
+    </div>
+
+    <div style="margin-top: 24px;">
+      <pre class="code"><span class="c-com">&lt;!-- Paste this block at the top of every page. Set --&gt;</span>
+<span class="c-com">&lt;!-- aria-current="page" on the current link.       --&gt;</span>
+&lt;nav class=<span class="c-val">"nav"</span>&gt;
+  &lt;div class=<span class="c-val">"nav__inner"</span>&gt;
+    &lt;a href=<span class="c-val">"index.html"</span> class=<span class="c-val">"nav__logo"</span>&gt;
+      &lt;span class=<span class="c-val">"nav__logo-dot"</span>&gt;&lt;/span&gt;
+      &lt;span&gt;DOUBLES&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;ul class=<span class="c-val">"nav__links"</span>&gt;
+      &lt;li&gt;&lt;a href=<span class="c-val">"events.html"</span>&gt;Events&lt;/a&gt;&lt;/li&gt;
+      ...
+    &lt;/ul&gt;
+    &lt;a href=<span class="c-val">"#apply"</span> class=<span class="c-val">"btn btn--coral btn--sm"</span>&gt;
+      Join the list <span class="c-key">&lt;span class="arrow"&gt;→&lt;/span&gt;</span>
+    &lt;/a&gt;
+  &lt;/div&gt;
+&lt;/nav&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     05 · FOOTER
+     ========================================================= -->
+<section class="ds-section" data-screen-label="05 Footer">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">05</div>
+      <div class="ds-section__title">
+        <h2>The <em>footer</em>.</h2>
+        <p>Navy, four columns (brand · community · legal · newsletter), one bottom bar. Same markup on every page. Don't reorder columns, don't add a fifth.</p>
+      </div>
+      <div class="ds-section__id">§ Footer</div>
+    </div>
+
+    <div class="footer-demo">
+      <footer class="footer" style="padding: 60px 0 24px;">
+        <div class="container">
+          <div class="footer__grid" style="gap: 36px; padding-bottom: 40px;">
+            <div class="footer__brand">
+              <a href="#" class="nav__logo">
+                <span class="nav__logo-dot" aria-hidden="true"></span>
+                <span>DOUBLES</span>
+              </a>
+              <p class="footer__tag">"Doubles, not solos."</p>
+              <div class="footer__socials">
+                <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+                <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+                <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+              </div>
+            </div>
+            <div class="footer__col">
+              <h4>Community</h4>
+              <ul><li><a href="#">What's Next</a></li><li><a href="code-of-conduct.html">Code of Conduct</a></li><li><a href="#">Contact</a></li></ul>
+            </div>
+            <div class="footer__col">
+              <h4>Legal</h4>
+              <ul><li><a href="terms.html">Terms</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+            </div>
+            <div class="footer__newsletter">
+              <h4>The Doubles Dispatch</h4>
+              <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+              <form onsubmit="event.preventDefault();">
+                <input type="email" placeholder="your@email.com" aria-label="Email"/>
+                <button type="submit">Join <span class="arrow">→</span></button>
+              </form>
+            </div>
+          </div>
+          <div class="footer__bottom">
+            <span>© 2026 Doubles, LLC</span>
+            <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+            <span>Made in San Francisco</span>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     06 · SPACING & PAGE SHELL
+     ========================================================= -->
+<section class="ds-section ds-section--cream-warm" data-screen-label="06 Spacing">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">06</div>
+      <div class="ds-section__title">
+        <h2>Spacing &amp; <em>shell</em>.</h2>
+        <p>Three tokenized vertical rhythms. Container 1280px. Gutter scales with viewport. Sections always use the rhythm tokens — never hand-set padding.</p>
+      </div>
+      <div class="ds-section__id">§ Spacing</div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec">
+        <span class="spec__name">--container</span>
+        <span class="spec__val">1280px max</span>
+        <span class="spec__use">Outer page width. Apply via <code style="font-size: 12px;">.container</code>.</span>
+      </div>
+      <div class="spec">
+        <span class="spec__name">--gutter</span>
+        <span class="spec__val">clamp(20, 4vw, 56)px</span>
+        <span class="spec__use">Side padding. Same on nav, footer, and every section.</span>
+      </div>
+      <div class="spec">
+        <span class="spec__name">--section-pad-sm</span>
+        <span class="spec__val">clamp(80, 12vh, 140)px</span>
+        <span class="spec__use">Standard sections on cream — Next Event, testimonials.</span>
+      </div>
+      <div class="spec">
+        <span class="spec__name">--section-pad-md</span>
+        <span class="spec__val">clamp(90, 14vh, 160)px</span>
+        <span class="spec__use">Dark sections — How It Works, Volley, page headers.</span>
+      </div>
+      <div class="spec">
+        <span class="spec__name">--section-pad-lg</span>
+        <span class="spec__val">clamp(100, 16vh, 180)px</span>
+        <span class="spec__use">Final CTA — only one per page, always lg.</span>
+      </div>
+      <div class="spec">
+        <span class="spec__name">section-head margin-bottom</span>
+        <span class="spec__val">64px</span>
+        <span class="spec__use">Between section eyebrow/h2 and section body.</span>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <pre class="code"><span class="c-com">&lt;!-- Use the section modifiers, not custom padding --&gt;</span>
+&lt;section class=<span class="c-val">"section section--cream"</span>&gt; ... &lt;/section&gt;
+&lt;section class=<span class="c-val">"section section--md section--teal"</span>&gt; ... &lt;/section&gt;
+&lt;section class=<span class="c-val">"section section--lg section--navy"</span>&gt; ... &lt;/section&gt;</pre>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     07 · COMPONENTS
+     ========================================================= -->
+<section class="ds-section" data-screen-label="07 Components">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">07</div>
+      <div class="ds-section__title">
+        <h2>Recurring <em>components</em>.</h2>
+        <p>Small set of patterns used across pages. Recreate these in your codebase as proper components — don't hand-roll variants per page.</p>
+      </div>
+      <div class="ds-section__id">§ Components</div>
+    </div>
+
+    <div class="preview-grid">
+      <div class="demo" style="padding: 28px;">
+        <div class="demo__label">Eyebrow label</div>
+        <span class="eyebrow"><span class="ball"></span> The founding match</span>
+        <br/><br/>
+        <span class="eyebrow eyebrow--coral"><span class="ball"></span> Match point</span>
+      </div>
+      <div>
+        <pre class="code">&lt;span class=<span class="c-val">"eyebrow"</span>&gt;
+  &lt;span class=<span class="c-val">"ball"</span>&gt;&lt;/span&gt;
+  The founding match
+&lt;/span&gt;</pre>
+      </div>
+    </div>
+
+    <div style="height: 18px;"></div>
+
+    <div class="preview-grid">
+      <div class="demo demo--dark" style="padding: 28px;">
+        <div class="demo__label">Net divider</div>
+        <div class="net-divider"><span>Game</span><div class="net"></div><span>Set</span><div class="net"></div><span>Match</span></div>
+      </div>
+      <div>
+        <pre class="code">&lt;div class=<span class="c-val">"net-divider"</span>&gt;
+  &lt;span&gt;Game&lt;/span&gt;
+  &lt;div class=<span class="c-val">"net"</span>&gt;&lt;/div&gt;
+  &lt;span&gt;Set&lt;/span&gt;
+  &lt;div class=<span class="c-val">"net"</span>&gt;&lt;/div&gt;
+  &lt;span&gt;Match&lt;/span&gt;
+&lt;/div&gt;</pre>
+      </div>
+    </div>
+
+    <div style="height: 18px;"></div>
+
+    <div class="preview-grid">
+      <div class="demo demo--navy" style="padding: 32px;">
+        <div class="demo__label">Court grid (decorative bg)</div>
+        <div class="court-grid" style="padding: 24px; margin: -24px;">
+          <div style="font-family: var(--serif); font-size: 28px; line-height: 1.1;">
+            Any dark section can wear the court-grid background — apply <code style="font-size: 13px; background: rgba(245,241,232,0.1); padding: 1px 6px; border-radius: 4px;">.court-grid</code> to the section.
+          </div>
+        </div>
+      </div>
+      <div>
+        <pre class="code">&lt;section class=<span class="c-val">"section section--teal court-grid"</span>&gt;
+  ...
+&lt;/section&gt;</pre>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     08 · RULES
+     ========================================================= -->
+<section class="ds-section ds-section--cream-warm" data-screen-label="08 Rules">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">08</div>
+      <div class="ds-section__title">
+        <h2>Rules of the <em>court</em>.</h2>
+        <p>If a new page or component breaks any of these, fix the page — not the system.</p>
+      </div>
+      <div class="ds-section__id">§ Rules</div>
+    </div>
+
+    <div class="rule-list">
+
+      <div class="rule rule--do">
+        <span class="rule__icon">✓</span>
+        <h4>One nav. One footer.</h4>
+        <p>Copy the markup verbatim from this page (or import a shared partial in your framework). If you find yourself adjusting padding "just for this page," stop.</p>
+      </div>
+
+      <div class="rule rule--dont">
+        <span class="rule__icon">×</span>
+        <h4>No new font weights.</h4>
+        <p>Use one of the six tokenized weights. Adding a 700-weight headline or a 300-weight body breaks rhythm between pages — that's the bug you're seeing live right now.</p>
+      </div>
+
+      <div class="rule rule--do">
+        <span class="rule__icon">✓</span>
+        <h4>Italic accents in <em>headlines</em>.</h4>
+        <p>One italic phrase per headline maximum. Color comes from the surrounding section (coral on cream, ball on dark). Don't manually override.</p>
+      </div>
+
+      <div class="rule rule--dont">
+        <span class="rule__icon">×</span>
+        <h4>No new CTA colors.</h4>
+        <p>Coral, Ghost, Ink. Three variants. If the design needs a fourth button style, the layout problem is hierarchical, not chromatic.</p>
+      </div>
+
+      <div class="rule rule--do">
+        <span class="rule__icon">✓</span>
+        <h4>Ball dots on every eyebrow.</h4>
+        <p>The 7px tennis ball dot is the brand signature. Every <code style="font-size: 12px;">.eyebrow</code> starts with one.</p>
+      </div>
+
+      <div class="rule rule--dont">
+        <span class="rule__icon">×</span>
+        <h4>No emoji. No stock illustrations.</h4>
+        <p>Inline SVG icons (1.5 stroke, 28×28) and real photography only. Cartoon tennis balls are not on brand.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     09 · PAGE SHELL TEMPLATE
+     ========================================================= -->
+<section class="ds-section" data-screen-label="09 Shell">
+  <div class="container">
+    <div class="ds-section__head">
+      <div class="ds-section__num">09</div>
+      <div class="ds-section__title">
+        <h2>Page <em>shell</em>.</h2>
+        <p>Every new page starts from this skeleton. Replace the body, never the head, nav, or footer.</p>
+      </div>
+      <div class="ds-section__id">§ Shell</div>
+    </div>
+
+    <pre class="code">&lt;!DOCTYPE html&gt;
+&lt;html lang=<span class="c-val">"en"</span>&gt;
+&lt;head&gt;
+  &lt;meta charset=<span class="c-val">"UTF-8"</span> /&gt;
+  &lt;meta name=<span class="c-val">"viewport"</span> content=<span class="c-val">"width=device-width, initial-scale=1.0"</span> /&gt;
+  &lt;title&gt;[Page] — Doubles&lt;/title&gt;
+
+  <span class="c-com">&lt;!-- Required fonts (every page) --&gt;</span>
+  &lt;link rel=<span class="c-val">"preconnect"</span> href=<span class="c-val">"https://fonts.googleapis.com"</span> /&gt;
+  &lt;link href=<span class="c-val">"https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Hanken+Grotesk:wght@300;400;500;600&amp;display=swap"</span> rel=<span class="c-val">"stylesheet"</span> /&gt;
+
+  <span class="c-com">&lt;!-- The design system. Don't redefine these tokens. --&gt;</span>
+  &lt;link rel=<span class="c-val">"stylesheet"</span> href=<span class="c-val">"assets/doubles.css"</span> /&gt;
+
+  &lt;style&gt;
+    <span class="c-com">/* Page-specific styles ONLY. Use tokens. */</span>
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;nav class=<span class="c-val">"nav"</span>&gt; ... &lt;/nav&gt;
+
+  &lt;header class=<span class="c-val">"page-header section--navy"</span>&gt; ... &lt;/header&gt;
+
+  &lt;section class=<span class="c-val">"section section--cream"</span>&gt; ... &lt;/section&gt;
+  &lt;section class=<span class="c-val">"section section--md section--teal"</span>&gt; ... &lt;/section&gt;
+  &lt;section class=<span class="c-val">"section section--lg section--navy"</span>&gt; ... &lt;/section&gt;
+
+  &lt;footer class=<span class="c-val">"footer"</span>&gt; ... &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="mailto:chris@astronomic.com">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

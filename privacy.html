@@ -4,125 +4,699 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Privacy Policy — Doubles</title>
+<meta name="description" content="What data we collect, why we collect it, and how long we keep it." />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700&family=Hanken+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<link rel="stylesheet" href="main.css">
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POLICY PAGE TEMPLATE — same as code-of-conduct.html
+     Page-specific additions for Privacy:
+       - .data-table (data inventory grid)
+       - .rights-card (per-section "your rights" mini-callout)
+       - .changelog (revision history at the bottom)
+     ========================================================= */
+
+  .policy-header {
+    background: var(--navy); color: var(--cream);
+    padding: clamp(90px, 13vh, 140px) 0 clamp(50px, 7vh, 80px);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  }
+  .policy-header__inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+  .policy-header h1 {
+    font-family: var(--serif); font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6.5vw, 92px);
+    line-height: 1; letter-spacing: -0.025em;
+    color: var(--cream); margin-top: 16px; max-width: 16ch;
+  }
+  .policy-header h1 em { color: var(--ball); }
+  .policy-meta {
+    display: flex; flex-wrap: wrap; gap: 32px;
+    margin-top: 40px; padding-top: 28px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    font-size: 11px; font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+  }
+  .policy-meta__item strong {
+    display: block; color: var(--ball);
+    font-weight: var(--w-sans-bold); margin-bottom: 4px;
+  }
+  .policy-meta__item span {
+    font-family: var(--serif); font-weight: var(--w-serif-medium);
+    text-transform: none; letter-spacing: 0;
+    font-size: 16px; color: var(--cream);
+  }
+
+  .policy { background: var(--cream); padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm); }
+  .policy__grid {
+    display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start;
+  }
+  @media (max-width: 1000px) { .policy__grid { grid-template-columns: 1fr; gap: 36px; } }
+
+  .policy__toc { position: sticky; top: 100px; }
+  @media (max-width: 1000px) { .policy__toc { position: static; } }
+  .policy__toc-label {
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  }
+  .policy__toc ol {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 2px; counter-reset: toc;
+  }
+  .policy__toc li { counter-increment: toc; }
+  .policy__toc a {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 10px 0 10px 14px; margin-left: -14px;
+    font-size: 13.5px; line-height: 1.4;
+    color: var(--ink-soft);
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .policy__toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--serif); font-size: 13px;
+    color: var(--coral); flex-shrink: 0; width: 22px;
+  }
+  .policy__toc a:hover { color: var(--ink); }
+  .policy__toc a.is-active {
+    color: var(--ink); border-left-color: var(--coral);
+    font-weight: var(--w-sans-medium);
+  }
+
+  .prose { max-width: 62ch; }
+
+  .tldr {
+    background: var(--cream-warm); border-left: 2px solid var(--coral);
+    padding: 28px 32px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    margin-bottom: 56px;
+  }
+  .tldr__label {
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tldr__label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .tldr p {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45;
+    color: var(--ink); margin: 0;
+  }
+
+  .prose h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.05; color: var(--ink);
+    margin: 64px 0 20px; scroll-margin-top: 100px;
+    display: flex; align-items: baseline; gap: 20px;
+  }
+  .prose h2 em { color: var(--coral); }
+  .prose h2 .num {
+    font-family: var(--serif); font-size: 0.55em;
+    font-weight: var(--w-serif-regular); color: var(--teal); flex-shrink: 0;
+  }
+  .prose h2:first-of-type { margin-top: 0; }
+  .prose h3 {
+    font-family: var(--serif); font-size: 22px;
+    font-weight: var(--w-serif-medium); color: var(--ink);
+    margin: 36px 0 14px; line-height: 1.3;
+  }
+  .prose p {
+    font-size: 17px; line-height: 1.7; color: var(--ink); margin: 0 0 18px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+  .prose em { color: var(--coral); font-style: italic; }
+  .prose a {
+    color: var(--teal); border-bottom: 1px solid var(--teal);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .prose a:hover { color: var(--coral); border-color: var(--coral); }
+
+  .prose ul {
+    list-style: none; padding: 0; margin: 0 0 22px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .prose ul li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 17px; line-height: 1.6; color: var(--ink);
+  }
+  .prose ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 10px;
+    width: 7px; height: 7px;
+    background: var(--ball); border-radius: 50%;
+  }
+
+  /* ===== Data table — Privacy-specific ===== */
+  .data-table {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    overflow: hidden;
+    margin: 24px 0 28px;
+  }
+  .data-table__head {
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr 1fr 1fr;
+    background: var(--cream-warm);
+    border-bottom: 1px solid var(--line);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .data-table__head > div { padding: 14px 18px; }
+  .data-table__row {
+    display: grid;
+    grid-template-columns: 1.1fr 1.4fr 1fr 1fr;
+    border-bottom: 1px solid var(--line);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .data-table__row:last-child { border-bottom: none; }
+  .data-table__row > div { padding: 18px; color: var(--ink-soft); }
+  .data-table__field {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    font-style: italic;
+  }
+  @media (max-width: 800px) {
+    .data-table__head { display: none; }
+    .data-table__row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 18px;
+    }
+    .data-table__row > div { padding: 0; }
+    .data-table__row > div::before {
+      content: attr(data-label);
+      display: block;
+      font-size: 10px;
+      font-weight: var(--w-sans-bold);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin: 6px 0 2px;
+    }
+    .data-table__field::before { display: none; }
+  }
+
+  /* ===== Rights mini-callout — Privacy-specific ===== */
+  .rights-card {
+    margin: 28px 0;
+    padding: 22px 26px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    align-items: start;
+  }
+  .rights-card__icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--ball);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .rights-card__icon svg { width: 18px; height: 18px; }
+  .rights-card h4 {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .rights-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ===== Changelog — Privacy-specific ===== */
+  .changelog {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .changelog__head {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 20px;
+  }
+  .changelog__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .changelog__entry {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+  .changelog__entry .date {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    color: var(--teal);
+  }
+  .changelog__entry .note {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+  @media (max-width: 600px) {
+    .changelog__entry { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* Related cards */
+  .related { background: var(--cream-warm); padding: var(--section-pad-sm) 0; border-top: 1px solid var(--line); }
+  .related__inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+  .related__head {
+    display: grid; grid-template-columns: 1fr auto; gap: 40px;
+    align-items: end; margin-bottom: 36px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .related h2 {
+    font-family: var(--serif); font-size: clamp(28px, 3vw, 44px);
+    font-weight: var(--w-serif-regular); color: var(--ink); margin-top: 10px;
+  }
+  .related h2 em { color: var(--coral); }
+  .related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .related__card {
+    background: white; border: 1px solid var(--line);
+    border-radius: var(--r-card); padding: 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .related__card:hover {
+    border-color: var(--teal); transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .related__card.is-current {
+    background: var(--ink); color: var(--cream); border-color: transparent;
+  }
+  .related__card-num { font-family: var(--serif); font-size: 14px; color: var(--coral); }
+  .related__card.is-current .related__card-num { color: var(--ball); }
+  .related__card h3 {
+    font-family: var(--serif); font-size: 24px;
+    font-weight: var(--w-serif-medium); color: var(--ink); line-height: 1.2;
+  }
+  .related__card.is-current h3 { color: var(--cream); }
+  .related__card h3 em { color: var(--coral); }
+  .related__card.is-current h3 em { color: var(--ball); }
+  .related__card p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.55; margin: 0;
+  }
+  .related__card.is-current p { color: rgba(245, 241, 232, 0.7); }
+  .related__card-link {
+    margin-top: auto; padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--teal);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .related__card.is-current .related__card-link {
+    color: rgba(245, 241, 232, 0.55);
+    border-top-color: rgba(245, 241, 232, 0.18);
+  }
+  @media (max-width: 800px) {
+    .related__grid { grid-template-columns: 1fr; }
+    .related__head { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>
 </head>
 <body>
 
-<nav class="nav">
-  <div class="nav-inner">
-    <a href="/" class="logo">
-      <span class="logo-dot"></span>
-      DOUBLES
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="/events">Events</a></li>
-      <li><a href="/application">Apply</a></li>
-      <li><a href="/volley">Volley</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="/contact">Contact</a></li>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
   </div>
 </nav>
 
-<header class="page-header">
-  <h1>Privacy Policy</h1>
-</header>
-
-<div class="container">
-  <div class="content">
-    <h2>Privacy Policy</h2>
-    <p><strong>Last Updated: May 2026</strong></p>
-
-    <h3>What We Collect</h3>
-    <p>When you apply for Doubles events, we collect:</p>
-    <ul>
-      <li>Name, email, age, and location</li>
-      <li>Background information (founder status, income, company details)</li>
-      <li>Information about your plus-one friend</li>
-      <li>Newsletter signup information</li>
-      <li>Event attendance and feedback</li>
-    </ul>
-
-    <h3>How We Use Your Information</h3>
-    <p>We use your information to:</p>
-    <ul>
-      <li>Process your application and registration</li>
-      <li>Send you event details, confirmations, and updates</li>
-      <li>Communicate about Doubles services and events</li>
-      <li>Improve our events and services</li>
-      <li>Comply with legal obligations</li>
-    </ul>
-
-    <h3>Email Communications</h3>
-    <p>We use Mailchimp to manage our mailing list. By signing up, you consent to receive emails about upcoming events and community updates. You can unsubscribe at any time by clicking the unsubscribe link in our emails.</p>
-
-    <h3>Third-Party Services</h3>
-    <p>We use:</p>
-    <ul>
-      <li>Mailchimp (email marketing)</li>
-      <li>Google Analytics (website analytics)</li>
-      <li>Vercel (hosting)</li>
-      <li>Luma (event ticketing)</li>
-    </ul>
-    <p>These services have their own privacy policies. We are not responsible for their practices.</p>
-
-    <h3>Data Security</h3>
-    <p>We implement reasonable security measures to protect your information. However, no internet transmission is 100% secure. We cannot guarantee absolute security.</p>
-
-    <h3>Your Rights</h3>
-    <p>You have the right to:</p>
-    <ul>
-      <li>Access your personal information</li>
-      <li>Correct or delete your information</li>
-      <li>Opt-out of marketing communications</li>
-      <li>Request a copy of your data</li>
-    </ul>
-    <p>To exercise these rights, <a href="mailto:chris@astronomic.com">email us</a>.</p>
-
-    <h3>Children's Privacy</h3>
-    <p>Our services are not intended for individuals under 18. We do not knowingly collect information from children.</p>
-
-    <h3>Changes to This Policy</h3>
-    <p>We may update this policy at any time. We will notify you of significant changes via email or website notice.</p>
-
-    <h3>Contact</h3>
-    <p>Questions about privacy? <a href="mailto:chris@astronomic.com">Email us</a>.</p>
-
-    <div class="last-updated">
-      Last updated: May 2026
+<header class="policy-header" data-screen-label="Privacy Header">
+  <div class="policy-header__inner">
+    <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> What we collect, why, and how long</span>
+    <h1>Privacy <em>Policy</em>.</h1>
+    <div class="policy-meta">
+      <div class="policy-meta__item"><strong>Last updated</strong><span>May 14, 2026</span></div>
+      <div class="policy-meta__item"><strong>Effective</strong><span>May 14, 2026</span></div>
+      <div class="policy-meta__item"><strong>Reading time</strong><span>~ 7 minutes</span></div>
+      <div class="policy-meta__item"><strong>Controller</strong><span>Doubles, LLC (San Francisco)</span></div>
     </div>
   </div>
-</div>
+</header>
 
-<footer>
+<section class="policy" data-screen-label="Privacy Body">
   <div class="container">
-    <div class="footer-grid">
+    <div class="policy__grid">
+
+      <nav class="policy__toc" aria-label="Table of contents">
+        <div class="policy__toc-label">In this document</div>
+        <ol>
+          <li><a href="#collect" class="is-active">What we collect</a></li>
+          <li><a href="#why">Why we collect it</a></li>
+          <li><a href="#sharing">Who sees it</a></li>
+          <li><a href="#retention">How long we keep it</a></li>
+          <li><a href="#cookies">Cookies &amp; analytics</a></li>
+          <li><a href="#rights">Your rights</a></li>
+          <li><a href="#children">Children &amp; age</a></li>
+          <li><a href="#contact">Contact &amp; changes</a></li>
+        </ol>
+      </nav>
+
+      <article class="prose">
+
+        <div class="tldr">
+          <div class="tldr__label">In one breath</div>
+          <p>We collect what we need to curate the room and run the event — nothing more. We don't sell your data, ever. You can ask us to delete everything we have at any time, and we will, within 30 days.</p>
+        </div>
+
+        <!-- 01 What we collect -->
+        <h2 id="collect"><span class="num">01</span> What we <em>collect</em>.</h2>
+        <p>Doubles is a curated event business — not an ad-tech company. We collect what we need to evaluate your application, charge the right amount, get you to the venue, and follow up afterward. The full inventory is below.</p>
+
+        <h3>Data we collect directly from you.</h3>
+
+        <div class="data-table">
+          <div class="data-table__head">
+            <div>Field</div>
+            <div>What it is</div>
+            <div>Where from</div>
+            <div>Retention</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Identity</div>
+            <div data-label="What it is">Name, age, gender (self-described)</div>
+            <div data-label="Where from">Application</div>
+            <div data-label="Retention">2 years</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Contact</div>
+            <div data-label="What it is">Email, mobile (optional)</div>
+            <div data-label="Where from">Application</div>
+            <div data-label="Retention">Until you unsubscribe</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Professional</div>
+            <div data-label="What it is">Role, current company, LinkedIn, Instagram</div>
+            <div data-label="Where from">Application</div>
+            <div data-label="Retention">2 years</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Curation notes</div>
+            <div data-label="What it is">Your "why," friend reference, our internal notes</div>
+            <div data-label="Where from">Application + our review</div>
+            <div data-label="Retention">2 years</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Health &amp; access</div>
+            <div data-label="What it is">Dietary needs, accessibility requests</div>
+            <div data-label="Where from">Application</div>
+            <div data-label="Retention">14 days post-event</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Payment</div>
+            <div data-label="What it is">Card last-4, brand, billing zip (full card not stored)</div>
+            <div data-label="Where from">Payment provider</div>
+            <div data-label="Retention">7 years (tax)</div>
+          </div>
+
+          <div class="data-table__row">
+            <div class="data-table__field" data-label="Field">Event photos</div>
+            <div data-label="What it is">Photos in which you appear identifiably</div>
+            <div data-label="Where from">Our photographer</div>
+            <div data-label="Retention">Until you opt out</div>
+          </div>
+        </div>
+
+        <h3>Data we collect automatically.</h3>
+        <p>When you visit doubles.singles, we automatically receive standard server logs (IP address, user agent, referrer) and anonymized analytics. We do not use third-party advertising trackers, and we do not maintain advertising profiles. See <a href="#cookies">§05 Cookies &amp; analytics</a>.</p>
+
+        <!-- 02 Why -->
+        <h2 id="why"><span class="num">02</span> Why we <em>collect</em> it.</h2>
+        <p>Each piece of data has a specific purpose, listed below. We don't collect anything "in case we need it later."</p>
+        <ul>
+          <li><strong>Identity &amp; contact</strong> — so we can review your application, email you a decision, and let you know when the venue address is shared.</li>
+          <li><strong>Professional</strong> — to confirm eligibility and curate a mix of founders, investors, and operators in the room.</li>
+          <li><strong>Curation notes</strong> — so we don't ask you the same questions volume after volume, and so we can curate the mix thoughtfully on the night.</li>
+          <li><strong>Health &amp; access</strong> — so the kitchen can plan for your needs and the venue can welcome you in.</li>
+          <li><strong>Payment</strong> — to charge for the event and meet our tax obligations.</li>
+          <li><strong>Photos</strong> — to remember each volume, share atmosphere with the next round of applicants, and tell stories in the Doubles Dispatch.</li>
+        </ul>
+
+        <div class="rights-card">
+          <div class="rights-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <div>
+            <h4>What we'll never do.</h4>
+            <p>We do not sell your data, rent it, monetize it through ads, or share it with venture capitalists, recruiters, dating apps, or any third party not strictly required to run the event.</p>
+          </div>
+        </div>
+
+        <!-- 03 Sharing -->
+        <h2 id="sharing"><span class="num">03</span> Who <em>sees it</em>.</h2>
+        <p>Three groups of people see your data, in narrow and specific ways.</p>
+
+        <h3>The Doubles team.</h3>
+        <p>Our small founding team reviews every application and sees the full record. Roughly five people, all signed to confidentiality.</p>
+
+        <h3>Necessary service providers.</h3>
+        <p>We rely on a small set of tools to run Doubles. Each has access only to the data they need for their specific function:</p>
+        <ul>
+          <li><strong>Stripe</strong> — payment processing. Sees card data and amount. Card numbers are tokenized; we never see the full PAN.</li>
+          <li><strong>Postmark</strong> — transactional email. Sees email address and message content.</li>
+          <li><strong>Notion</strong> — internal application review. Sees the application content and our notes.</li>
+          <li><strong>Vercel</strong> — website hosting. Sees server logs only.</li>
+        </ul>
+        <p>Each provider is independently bound by its own privacy commitments and security practices. Switching to or away from any provider is announced in the changelog at the bottom of this page.</p>
+
+        <h3>Other Doubles guests.</h3>
+        <p>Your name, role, and (optionally) social handles appear on a printed dossier shared with confirmed guests two days before the event, so people know who's in the room. We do not share email, phone, or curation notes. The dossier is collected and destroyed at the end of the night.</p>
+
+        <!-- 04 Retention -->
+        <h2 id="retention"><span class="num">04</span> How long we <em>keep it</em>.</h2>
+        <p>Retention windows are listed in the data table in §01. The summary:</p>
+        <ul>
+          <li><strong>Most application data</strong> is kept for 2 years from your last application, so we can re-review you for future volumes without you re-doing the form.</li>
+          <li><strong>Health &amp; accessibility info</strong> is deleted within 14 days of the event — it serves no purpose afterward.</li>
+          <li><strong>Payment records</strong> are kept for 7 years to meet IRS recordkeeping requirements. After that, they are deleted in our next quarterly purge.</li>
+          <li><strong>Newsletter subscriptions</strong> are kept until you unsubscribe. One click does it.</li>
+        </ul>
+
+        <h3>What happens if I just want everything gone?</h3>
+        <p>Email <a href="mailto:privacy@doubles.singles">privacy@doubles.singles</a>. We confirm receipt within 48 hours and complete deletion within 30 days. The only exception is payment records still inside the 7-year tax window — those we are legally required to retain.</p>
+
+        <!-- 05 Cookies -->
+        <h2 id="cookies"><span class="num">05</span> Cookies &amp; <em>analytics</em>.</h2>
+        <p>Doubles uses one functional cookie (session) and one privacy-respecting analytics tool (Plausible). We do not use Google Analytics, advertising pixels, retargeting scripts, or third-party cookies.</p>
+        <p>Plausible is cookieless and aggregates pageviews without tracking individual users. Their privacy practices are documented at <a href="https://plausible.io/data-policy" target="_blank" rel="noopener">plausible.io/data-policy</a>.</p>
+
+        <p>If you'd rather no analytics at all, set your browser's "Do Not Track" header — we respect it. We will also publish a self-hosted opt-out toggle once we have one we trust.</p>
+
+        <!-- 06 Rights -->
+        <h2 id="rights"><span class="num">06</span> Your <em>rights</em>.</h2>
+        <p>You can ask us, at any time, to:</p>
+        <ul>
+          <li><strong>Show you</strong> a copy of all data we hold about you (a "subject access request"). We send it within 30 days, by encrypted email.</li>
+          <li><strong>Correct</strong> any field that's wrong — including curation notes we wrote about you.</li>
+          <li><strong>Delete</strong> your record, except payment records inside the legal retention window.</li>
+          <li><strong>Stop processing</strong> your data while you decide what you want — we'll pause review and outreach immediately.</li>
+          <li><strong>Take your data elsewhere</strong> in a portable format (JSON), if that's useful.</li>
+        </ul>
+
+        <p>California residents have additional rights under the CCPA; EU/UK residents have additional rights under GDPR. We honor all of them on request, regardless of where you live — the team will do the same thing whether you cite the California Consumer Privacy Act or not.</p>
+
+        <div class="rights-card">
+          <div class="rights-card__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="9"/>
+              <path d="M12 8v4"/>
+              <circle cx="12" cy="16" r="0.5" fill="currentColor"/>
+            </svg>
+          </div>
+          <div>
+            <h4>One email handles all of this.</h4>
+            <p><a href="mailto:privacy@doubles.singles">privacy@doubles.singles</a> — for any request above. A founder responds personally within 48 hours. We don't use ticket systems for privacy.</p>
+          </div>
+        </div>
+
+        <!-- 07 Children -->
+        <h2 id="children"><span class="num">07</span> Children &amp; <em>age</em>.</h2>
+        <p>Doubles is intended for adults aged 21 and over. We do not knowingly collect data from anyone under 18. If you believe a minor has submitted information through the Site, email <a href="mailto:privacy@doubles.singles">privacy@doubles.singles</a> and we will delete it within seven days.</p>
+
+        <!-- 08 Contact -->
+        <h2 id="contact"><span class="num">08</span> Contact &amp; <em>changes</em>.</h2>
+        <p>We update this Privacy Policy occasionally — when we change tools, retention windows, or our data practices in any material way. Material changes are emailed to current applicants and confirmed guests at least 14 days before they take effect, and recorded in the changelog below.</p>
+
+        <p>For any privacy question or request: <a href="mailto:privacy@doubles.singles">privacy@doubles.singles</a>.</p>
+        <p>For general questions: see the <a href="contact.html">Contact page</a>.</p>
+
+        <div class="changelog">
+          <div class="changelog__head">Revision history</div>
+          <ol class="changelog__list" style="list-style: none; padding: 0;">
+            <li class="changelog__entry">
+              <span class="date">May 14, 2026</span>
+              <span class="note">Initial version, published ahead of Vol. 01 Founding Launch.</span>
+            </li>
+            <li class="changelog__entry">
+              <span class="date">Forthcoming</span>
+              <span class="note">Self-hosted analytics opt-out toggle (planned for Q3 2026).</span>
+            </li>
+          </ol>
+        </div>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="related" data-screen-label="Related policies">
+  <div class="related__inner">
+    <div class="related__head">
       <div>
-        <h4 style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; opacity: 0.7; margin-bottom: 16px;">Community</h4>
-        <ul style="list-style: none; margin: 0; padding: 0;">
-          <li style="margin-bottom: 12px;"><a href="#" style="color: var(--cream); opacity: 0.8;">What's Next</a></li>
-          <li style="margin-bottom: 12px;"><a href="/code-of-conduct" style="color: var(--cream); opacity: 0.8;">Event Code</a></li>
-          <li><a href="mailto:chris@astronomic.com" style="color: var(--cream); opacity: 0.8;">Contact</a></li>
+        <span class="eyebrow eyebrow--coral"><span class="ball"></span> Doubles · Legal</span>
+        <h2>The other <em>documents</em>.</h2>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-soft); max-width: 32ch; line-height: 1.6;">
+        Three short policies. Read them once and you'll know everything we're committing to.
+      </p>
+    </div>
+    <div class="related__grid">
+      <a class="related__card" href="code-of-conduct.html">
+        <span class="related__card-num">01 / 03</span>
+        <h3>Code of <em>Conduct</em>.</h3>
+        <p>The behavior that keeps the room worth showing up for.</p>
+        <span class="related__card-link">Read code <span class="arrow">→</span></span>
+      </a>
+      <a class="related__card" href="terms.html">
+        <span class="related__card-num">02 / 03</span>
+        <h3>Terms of <em>Service</em>.</h3>
+        <p>The basic agreement between you and Doubles, LLC — applications, payments, refunds.</p>
+        <span class="related__card-link">Read terms <span class="arrow">→</span></span>
+      </a>
+      <article class="related__card is-current">
+        <span class="related__card-num">03 / 03</span>
+        <h3>Privacy <em>Policy</em>.</h3>
+        <p>What data we collect, why we collect it, and how long we keep it.</p>
+        <span class="related__card-link">You're here</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
-      <div>
-        <h4 style="font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; margin: 0; opacity: 0.7; margin-bottom: 16px;">Legal</h4>
-        <ul style="list-style: none; margin: 0; padding: 0;">
-          <li style="margin-bottom: 12px;"><a href="/terms" style="color: var(--cream); opacity: 0.8;">Terms</a></li>
-          <li><a href="/privacy" style="color: var(--cream); opacity: 0.8;">Privacy</a></li>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
         </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
       </div>
     </div>
-    <div style="text-align: center; padding-top: 40px; border-top: 1px solid rgba(245,241,232,0.1); font-size: 12px; opacity: 0.6;">
-      <p>&copy; 2026 Doubles</p>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
     </div>
   </div>
 </footer>
+
+<script>
+  (function() {
+    const ids = ['collect', 'why', 'sharing', 'retention', 'cookies', 'rights', 'children', 'contact'];
+    const links = ids.map(id => document.querySelector(`.policy__toc a[href="#${id}"]`));
+    const sections = ids.map(id => document.getElementById(id));
+    function update() {
+      let active = 0;
+      const y = window.scrollY + 180;
+      for (let i = 0; i < sections.length; i++) if (sections[i].offsetTop <= y) active = i;
+      links.forEach((a, i) => a.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
 
 </body>
 </html>

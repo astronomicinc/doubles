@@ -3,339 +3,682 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<meta name="description" content="FAQ about Doubles dating events. Learn about the bring-a-friend format, approval process, pricing, dress code, and how it works." />
-<meta property="og:title" content="FAQ — Doubles Dating Events" />
-<meta property="og:description" content="Questions about Doubles? We answer everything: format, approval, pricing, dress code, and more." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://doubles.singles/faq" />
-<meta name="twitter:card" content="summary" />
-<title>FAQ — Frequently Asked Questions</title>
+<title>FAQ — Doubles</title>
+<meta name="description" content="Everything you might want to know before applying. Doubles event FAQ." />
+
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-MZ4BPXHTY0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-MZ4BPXHTY0');
-</script>
+<link rel="stylesheet" href="assets/doubles.css" />
 
-<link rel="stylesheet" href="main.css">
+<style>
+  /* Page header — teal with court grid */
+  .page-header {
+    background: var(--teal);
+    color: var(--cream);
+    padding: clamp(110px, 16vh, 180px) 0 clamp(70px, 10vh, 110px);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(245, 241, 232, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 241, 232, 0.04) 1px, transparent 1px);
+    background-size: 120px 120px;
+  }
+  .page-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 8vw, 124px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 14ch;
+  }
+  .page-header__sub {
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 0;
+    max-width: 40ch;
+    padding-bottom: 12px;
+  }
+  @media (max-width: 800px) {
+    .page-header__inner { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* FAQ layout: category sidebar + accordion column */
+  .faq {
+    background: var(--cream);
+    padding: var(--section-pad-sm) 0;
+  }
+  .faq__grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .faq__grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  /* Category nav (sticky) */
+  .faq__nav {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 8px;
+  }
+  @media (max-width: 1000px) {
+    .faq__nav {
+      position: static;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+  }
+  .faq__nav a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink-soft);
+    transition: background 0.15s, color 0.15s;
+  }
+  .faq__nav a:hover { background: var(--cream-warm); color: var(--ink); }
+  .faq__nav a.is-active {
+    background: var(--ink);
+    color: var(--cream);
+  }
+  .faq__nav a .count {
+    font-family: var(--serif);
+    font-size: 14px;
+    color: var(--coral);
+  }
+  .faq__nav a.is-active .count { color: var(--ball); }
+
+  /* Category group */
+  .faq__cat {
+    margin-bottom: clamp(48px, 8vh, 80px);
+    scroll-margin-top: 100px;
+  }
+  .faq__cat-head {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .faq__cat-head .num {
+    font-family: var(--serif);
+    font-size: 56px;
+    font-weight: var(--w-serif-regular);
+    color: var(--teal);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .faq__cat-head h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: var(--w-serif-regular);
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .faq__cat-head h2 em { color: var(--coral); }
+  .faq__cat-head .count {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Accordion item */
+  .faq__item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq__item summary {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding: 24px 0;
+    cursor: pointer;
+    list-style: none;
+    transition: color 0.15s;
+  }
+  .faq__item summary::-webkit-details-marker { display: none; }
+  .faq__item summary::marker { content: ''; }
+  .faq__item summary:hover { color: var(--teal); }
+  .faq__q {
+    font-family: var(--serif);
+    font-size: clamp(20px, 1.6vw, 24px);
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .faq__icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: background 0.15s, border-color 0.15s, transform 0.2s;
+  }
+  .faq__icon::before {
+    content: '';
+    width: 10px; height: 1px;
+    background: var(--ink);
+  }
+  .faq__icon::after {
+    content: '';
+    width: 1px; height: 10px;
+    background: var(--ink);
+    margin-left: -5.5px;
+    transition: transform 0.2s;
+  }
+  .faq__item[open] .faq__icon {
+    background: var(--ball);
+    border-color: var(--ball);
+  }
+  .faq__item[open] .faq__icon::after {
+    transform: scaleY(0);
+  }
+  .faq__a {
+    padding: 0 64px 28px 0;
+    color: var(--ink-soft);
+    font-size: 16px;
+    line-height: 1.65;
+  }
+  .faq__a p { margin: 0 0 12px; }
+  .faq__a p:last-child { margin-bottom: 0; }
+  .faq__a a { color: var(--teal); border-bottom: 1px solid var(--teal); }
+  .faq__a a:hover { color: var(--coral); border-color: var(--coral); }
+
+  /* Bottom CTA card */
+  .faq-cta {
+    background: var(--navy);
+    color: var(--cream);
+    padding: var(--section-pad-sm) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .faq-cta::before {
+    content: '';
+    position: absolute;
+    right: -160px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 480px; height: 480px;
+    border: 1px solid rgba(212, 247, 72, 0.16);
+    border-radius: 50%;
+  }
+  .faq-cta__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+  }
+  .faq-cta h2 {
+    font-size: clamp(36px, 4.6vw, 64px);
+    font-weight: var(--w-serif-regular);
+    color: var(--cream);
+    line-height: 1.05;
+  }
+  .faq-cta h2 em { color: var(--ball); }
+  .faq-cta p {
+    margin: 18px 0 0;
+    color: rgba(245, 241, 232, 0.75);
+    line-height: 1.65;
+    max-width: 44ch;
+  }
+  .faq-cta__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .faq-cta__actions .note {
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+  }
+  @media (max-width: 800px) {
+    .faq-cta__inner { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ============================================================
-     NAV
-     ============================================================ -->
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
 <nav class="nav" data-screen-label="Nav">
-  <div class="nav-inner">
-    <a href="/" class="logo" aria-label="Doubles">
-      <span class="logo-dot" aria-hidden="true"></span>
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
       <span>DOUBLES</span>
     </a>
-    <ul class="nav-links">
-      <li><a href="/events">Events</a></li>
-      <li><a href="/application">Apply</a></li>
-      <li><a href="/volley">Volley</a></li>
-      <li><a href="/about">About</a></li>
-      <li><a href="/faq">FAQ</a></li>
-      <li><a href="/contact">Contact</a></li>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html" aria-current="page">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
-    <a href="https://luma.com/doubles-singles?k=c" class="btn btn-coral nav-cta">
+    <a href="apply.html" class="btn btn--coral btn--sm">
       Join the list <span class="arrow">→</span>
     </a>
   </div>
 </nav>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
-<header class="hero">
-  <div class="hero-content">
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+<header class="page-header" data-screen-label="FAQ Header">
+  <div class="page-header__inner">
     <div>
-      <h1>Questions? <em>We've got answers.</em></h1>
+      <span class="eyebrow"><span class="ball"></span> Everything you might want to know</span>
+      <h1>Frequently <em>asked</em>.</h1>
     </div>
+    <p class="page-header__sub">
+      The questions we get most, from applicants and first-timers. Don't see yours? <a href="contact.html" style="color: var(--ball); border-bottom: 1px solid rgba(212,247,72,0.5);">Drop us a line</a>.
+    </p>
   </div>
 </header>
 
-<!-- ============================================================
-     FAQ
-     ============================================================ -->
-<section class="faq-section">
-  <div class="faq-container">
-    <div class="faq-grid">
+<!-- =========================================================
+     FAQ — categories + accordions
+     ========================================================= -->
+<section class="faq" data-screen-label="FAQ Body">
+  <div class="container">
+    <div class="faq__grid">
 
-      <!-- Format & Mechanics -->
-      <div class="faq-category">
-        <h3>Format & Mechanics</h3>
+      <!-- ===== Category nav ===== -->
+      <nav class="faq__nav" aria-label="FAQ categories">
+        <a href="#applying" class="is-active">Applying <span class="count">06</span></a>
+        <a href="#the-night">The night <span class="count">05</span></a>
+        <a href="#your-friend">Your friend <span class="count">04</span></a>
+        <a href="#logistics">Logistics <span class="count">04</span></a>
+        <a href="#money">Money &amp; cancellations <span class="count">03</span></a>
+      </nav>
 
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">What exactly is the bring-a-friend format?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              You apply individually, but when you're approved, you bring a single friend of the opposite sex. That friend also vouches for you (their reputation is on the line too). This creates a 2-for-1 dynamic: 15 pairs instead of 30 individuals, which completely changes how people interact. You arrive with your wingperson, not alone.
+      <!-- ===== FAQ content ===== -->
+      <div>
+
+        <!-- ----- Applying ----- -->
+        <section id="applying" class="faq__cat">
+          <header class="faq__cat-head">
+            <span class="num">01</span>
+            <h2>Applying to <em>Doubles</em>.</h2>
+            <span class="count">06 questions</span>
+          </header>
+
+          <details class="faq__item" open>
+            <summary>
+              <span class="faq__q">Who is Doubles for?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Doubles is built for experienced founders, investors, and senior operators in SF who are tired of dating apps. The room is single, ambitious, and selective about how it spends its evenings.</p>
+              <p>We're not impressed by titles. We're impressed by people you'd actually want to sit next to at dinner.</p>
             </div>
-          </div>
-        </div>
+          </details>
 
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">How many people attend each event?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Exactly 30 people. That's 15 pairs. We cap it because it's small enough to remember faces and big enough to create chemistry. Bigger feels like a mixer. Smaller feels exclusive to the point of awkwardness.
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">How selective is it, really?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>About one in four applicants are invited to a given volume. Most rejections aren't "no" forever — they're "not this room." We re-review applicants for every subsequent event and reach out when the mix is right.</p>
             </div>
-          </div>
-        </div>
+          </details>
 
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">What happens during the event?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Check-in from 7:00–7:20 PM. Light mingling and introductions. Then we do some gentle mixing (sometimes structured, sometimes not). Catered bites and cocktails throughout. Curated music. The whole thing wraps by 11:00 PM. No name tags. No forced games. Just 30 interesting people in one beautiful room.
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">How long does the application take?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Under three minutes if you've already lined up the friend you want to bring. Your friend gets a short version of the same questionnaire by email after you apply.</p>
             </div>
-          </div>
-        </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">When will I hear back?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Within 48 hours. If we need a day longer, we'll email you. We don't ghost applicants.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Do I need a referral?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>No, but they help — particularly for Vol. 01. If a current applicant or past attendee vouched for you, mention them in the application. We weight referrals heavily.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Can I apply solo and have you match me a partner?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Not for Vol. 01 — the doubles format is the whole point of the founding event. Starting with Vol. 02 we'll experiment with a small number of "singles seats" each volume, capped at four people.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- ----- The night ----- -->
+        <section id="the-night" class="faq__cat">
+          <header class="faq__cat-head">
+            <span class="num">02</span>
+            <h2>The <em>night</em> itself.</h2>
+            <span class="count">05 questions</span>
+          </header>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What actually happens at a Doubles event?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Doors at 6 with 30 minutes of welcome drinks &amp; networking. The fireside (15 min) at 6:30, the Q&amp;A (45 min) at 6:45, an open-buffet dinner party at 7:30, and we wind down by 9. <a href="volley.html">Full timeline →</a></p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What's The Volley?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>A thirty-minute fireside chat that opens every Doubles event. We hand-pick a founder, investor, or operator with a story worth sharing. No slides, no keynote — just real questions and audience Q&amp;A. It's how we get the room loose without anyone having to perform.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What's the dress code?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Smart casual. Think: nice shirt, no sneakers, no full suits. The venues are beautiful — dress like you'd like to be photographed in the kitchen.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Are there name tags?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>No. Name tags signal the wrong kind of event. You'll learn names the way you would at any good dinner party — by asking.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Are photos taken? Will I show up online?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>We capture a few atmospheric shots — wide rooms, table settings, the speaker — but no candid guest photos without consent. Anything featuring you specifically gets your sign-off before publication.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- ----- Your friend ----- -->
+        <section id="your-friend" class="faq__cat">
+          <header class="faq__cat-head">
+            <span class="num">03</span>
+            <h2>Bringing your <em>friend</em>.</h2>
+            <span class="count">04 questions</span>
+          </header>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Why do I have to bring someone?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>The doubles format is what makes the night work. Everyone arrives with a wingperson they trust, which lowers the social temperature instantly. It's how we engineer "you walk in with an ally" instead of "you walk in alone."</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Does my friend have to be the opposite sex?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>For Vol. 01, yes — we're piloting the founding format heterosexual. Vol. 02 onwards we'll be running same-sex and queer-friendly volumes; you can opt into the volume that fits.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What if my friend doesn't get accepted?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Sometimes that happens — applications are reviewed independently. We'll let you both know, and you're welcome to apply again with a different partner. We do not penalize the original applicant.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Can two friends apply and bring each other?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Yes — that's the most common case. One of you applies first and lists the other; the second person gets the friend-side questionnaire and we close the loop.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- ----- Logistics ----- -->
+        <section id="logistics" class="faq__cat">
+          <header class="faq__cat-head">
+            <span class="num">04</span>
+            <h2>Logistics &amp; <em>access</em>.</h2>
+            <span class="count">04 questions</span>
+          </header>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Where is it held?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>In the homes of SF founders we trust — Twin Peaks, Pacific Heights, Russian Hill so far. The exact address is shared with confirmed guests two days before the event.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">How do I get there?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Most guests rideshare. Street parking is available but limited; we don't have valet. If you'd like a ride home included, that's a perk for Founding Members starting Vol. 02.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">Is the venue accessible?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>We confirm accessibility on a per-venue basis. There's an accessibility field on your application — fill it in and we'll proactively confirm or reroute. We've reassigned a venue once already to accommodate a guest.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What about dietary needs?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Every menu has a vegetarian path by default. Allergies, kosher, halal, and other restrictions: tell us on the application and we'll confirm with the kitchen.</p>
+            </div>
+          </details>
+        </section>
+
+        <!-- ----- Money ----- -->
+        <section id="money" class="faq__cat">
+          <header class="faq__cat-head">
+            <span class="num">05</span>
+            <h2>Money &amp; <em>cancellations</em>.</h2>
+            <span class="count">03 questions</span>
+          </header>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">How much does a Doubles event cost?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Vol. 01 is $145 per person and covers catering, drinks, the speaker fee, and the venue. We are not for profit on the founding volume — we're building the room.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">When am I charged?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Only after both you and your friend are confirmed. If either of you is declined, no card is charged.</p>
+            </div>
+          </details>
+
+          <details class="faq__item">
+            <summary>
+              <span class="faq__q">What's the refund policy?</span>
+              <span class="faq__icon" aria-hidden="true"></span>
+            </summary>
+            <div class="faq__a">
+              <p>Full refund up to 7 days before the event. 50% inside 7 days. No refund inside 48 hours — but you can transfer your seat to another vetted single you'd vouch for, subject to our review.</p>
+            </div>
+          </details>
+        </section>
+
       </div>
-
-      <!-- Approval Process -->
-      <div class="faq-category">
-        <h3>Approval Process</h3>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">How do you decide who gets approved?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              We look for people who are accomplished (post-exit founders, executives, investors—people with taste), kind (no flakes or jerks), and genuinely interested in meeting someone. We also balance the room: gender balance, age range, professional backgrounds. It's not scientific. It's human judgment.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">How long does the approval process take?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              We review applications and respond within 48 hours. If you're approved, you can register immediately and bring your friend. If we decline, we'll tell you why (usually just "not the right vibe this round") and you can apply again.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">What if I get rejected?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              It happens. And it's not personal. Sometimes we're looking for someone who fits a specific gap in the room. Try again next month—we host regularly, and sometimes the vibe just lines up better at a different event.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Pricing & Logistics -->
-      <div class="faq-category">
-        <h3>Pricing & Logistics</h3>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">How much does it cost?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              $110 per person. That covers catered food and drinks, venue, music, and all the logistics. If you're bringing a friend, it's $220 for both of you. Payment is due when you register.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">What's included in the ticket?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Everything: seasonal small plates from a local kitchen, a curated wine and cocktail selection, non-alcoholic beverages, music, and access to an intimate evening designed for connection. There's nothing you have to buy on top.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">What's the dress code?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Smart casual. Think: nice jeans and a blazer, or a dress, or tailored pants and a nice shirt. No sneakers. No t-shirts with logos. This is a nice house, and we're trying to be intentional about the vibe.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">Can I bring someone I just met?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              The friend needs to be someone you'd actually vouch for. Someone you know, trust, and think is a good person. Someone whose judgment you respect. Not a stranger you just met. Your reputation is on the line.
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Other Questions -->
-      <div class="faq-category">
-        <h3>Other Questions</h3>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">Is there a waitlist?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Yes. If an event fills up, you can join the waitlist. We run events regularly, and waitlist members often get first access to upcoming ones.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">Can I go to multiple events?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Absolutely. Some people love the experience and come back. We keep track of repeat attendees (we call them "doubles members"), and they often get early access to new events and venues.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">Is this for single people only?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              Yes. This is for people actively looking to meet someone. If you're in a relationship, this isn't for you.
-            </div>
-          </div>
-        </div>
-
-        <div class="faq-item">
-          <div class="faq-question">
-            <span class="faq-question-text">How do I ask more questions?</span>
-            <span class="faq-toggle">+</span>
-          </div>
-          <div class="faq-answer">
-            <div class="faq-answer-text">
-              <a href="/contact" style="color: var(--teal); text-decoration: underline;">Get in touch with us here</a>. We read every message and try to respond within 24 hours.
-            </div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
-<footer class="footer">
-  <div class="container">
-    <div class="foot-grid">
+<!-- =========================================================
+     CTA STRIP — "Still have questions"
+     ========================================================= -->
+<section class="faq-cta" data-screen-label="FAQ CTA">
+  <div class="faq-cta__inner">
+    <div>
+      <span class="eyebrow"><span class="ball"></span> Still wondering?</span>
+      <h2 style="margin-top: 18px;">Ask us <em>directly</em>.</h2>
+      <p>
+        We answer every email from a real human within a day or two. If you'd rather just see the night for yourself, the application is the fastest path.
+      </p>
+    </div>
+    <div class="faq-cta__actions">
+      <a href="apply.html" class="btn btn--coral">Apply for Vol. 01 <span class="arrow">→</span></a>
+      <a href="contact.html" class="btn btn--ghost">Email us instead <span class="arrow">→</span></a>
+      <span class="note">Founders read every reply</span>
+    </div>
+  </div>
+</section>
 
-      <div class="foot-brand">
-        <a href="/" class="logo">
-          <span class="logo-dot" aria-hidden="true"></span>
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
           <span>DOUBLES</span>
         </a>
-        <p>"Good players. Better together."</p>
-        <div class="socials">
-          <a href="#" aria-label="Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-              <rect x="3" y="3" width="18" height="18" rx="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
-            </svg>
-          </a>
-          <a href="#" aria-label="Twitter">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/>
-            </svg>
-          </a>
-          <a href="#" aria-label="Facebook">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5 3.66 9.15 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.92 3.78-3.92 1.1 0 2.24.2 2.24.2v2.47H15.2c-1.24 0-1.63.78-1.63 1.57v1.88h2.78l-.44 2.91h-2.34V22c4.78-.79 8.44-4.94 8.44-9.94z"/>
-            </svg>
-          </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
         </div>
       </div>
-
-      <div class="foot-col">
-        <h4>Events</h4>
+      <div class="footer__col">
+        <h4>Community</h4>
         <ul>
-          <li><a href="index.html#events">Next event</a></li>
-          <li><a href="#">Past events</a></li>
-          <li><a href="#">Host with us</a></li>
-          <li><a href="#">Sponsor</a></li>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
-
-      <div class="foot-col">
-        <h4>Company</h4>
+      <div class="footer__col">
+        <h4>Legal</h4>
         <ul>
-          <li><a href="/about">About</a></li>
-          <li><a href="#">Press</a></li>
-          <li><a href="#">Careers</a></li>
-          <li><a href="/contact">Contact</a></li>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
         </ul>
       </div>
-
-      <div class="foot-col">
-        <h4>Info</h4>
-        <ul>
-          <li><a href="index.html#how">How it works</a></li>
-          <li><a href="/faq">FAQ</a></li>
-          <li><a href="#">Code of conduct</a></li>
-          <li><a href="#">Privacy</a></li>
-        </ul>
-      </div>
-
-      <div class="newsletter">
+      <div class="footer__newsletter">
         <h4>The Doubles Dispatch</h4>
         <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
-        <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
-          <input type="email" name="newsletter-email" placeholder="your@email.com" required aria-label="Email"/>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
           <button type="submit">Join <span class="arrow">→</span></button>
         </form>
       </div>
-
     </div>
-
-    <div class="foot-bottom">
+    <div class="footer__bottom">
       <span>© 2026 Doubles, LLC</span>
       <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
       <span>Made in San Francisco</span>
@@ -344,13 +687,23 @@
 </footer>
 
 <script>
-// Simple accordion functionality for FAQ
-document.querySelectorAll('.faq-item').forEach(item => {
-  const question = item.querySelector('.faq-question');
-  question.addEventListener('click', () => {
-    item.classList.toggle('open');
-  });
-});
+  // Sync the sticky category nav with scroll position
+  (function() {
+    const cats = ['applying', 'the-night', 'your-friend', 'logistics', 'money'];
+    const navLinks = cats.map(id => document.querySelector(`.faq__nav a[href="#${id}"]`));
+    const sections = cats.map(id => document.getElementById(id));
+
+    function update() {
+      let active = 0;
+      const scrollY = window.scrollY + 200;
+      for (let i = 0; i < sections.length; i++) {
+        if (sections[i].offsetTop <= scrollY) active = i;
+      }
+      navLinks.forEach((a, i) => a.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
 </script>
 
 </body>
