@@ -1,17 +1,20 @@
 {
   "rewrites": [
+    { "source": "/volley", "destination": "/volley.html" },
+    { "source": "/events", "destination": "/events.html" },
+    { "source": "/application", "destination": "/application.html" },
+    { "source": "/apply", "destination": "/apply.html" },
     { "source": "/about", "destination": "/about.html" },
     { "source": "/faq", "destination": "/faq.html" },
     { "source": "/contact", "destination": "/contact.html" },
-    { "source": "/events", "destination": "/events.html" },
-    { "source": "/application", "destination": "/application.html" },
+    { "source": "/code-of-conduct", "destination": "/code-of-conduct.html" },
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
     { "source": "/blog", "destination": "/blog.html" },
     { "source": "/blog/dating-apps-failed-founders", "destination": "/blog-1.html" },
     { "source": "/blog/community-ambitious", "destination": "/blog-2.html" },
     { "source": "/blog/future-dating-tech", "destination": "/blog-3.html" },
-    { "source": "/code-of-conduct", "destination": "/code-of-conduct.html" },
-    { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/volley", "destination": "/volley.html" }
+    { "source": "/how-it-works", "destination": "/how-it-works.html" },
+    { "source": "/testimonials", "destination": "/testimonials.html" }
   ]
 }
