@@ -11,6 +11,7 @@
     { "source": "/blog/future-dating-tech", "destination": "/blog-3.html" },
     { "source": "/code-of-conduct", "destination": "/code-of-conduct.html" },
     { "source": "/privacy", "destination": "/privacy.html" },
-    { "source": "/terms", "destination": "/terms.html" }
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/volley", "destination": "/volley.html" }
   ]
 }
