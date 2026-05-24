@@ -937,6 +937,21 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(27,90,107,0.1);
 }
 
+/* Waitlist form - inline form styling */
+.waitlist-form {
+  display: inline;
+}
+
+.waitlist-input {
+  width: 140px !important;
+  padding: 12px 12px !important;
+  font-size: 12px !important;
+  border: 1px solid var(--line) !important;
+  border-radius: 6px !important;
+  margin-bottom: 0 !important;
+  vertical-align: middle;
+}
+
 /* ============================================================
    TIMELINE (Application process)
    ============================================================ */
@@ -1255,7 +1270,7 @@ footer a {
 }
 
 /* ============================================================
-   UTILITIES
+   UTILITIES & SPACING CLASSES
    ============================================================ */
 .text-center {
   text-align: center;
@@ -1285,6 +1300,7 @@ footer a {
   background: var(--cream);
 }
 
+/* Spacing utilities - replace inline margin-top styles */
 .mt {
   margin-top: 40px;
 }
@@ -1293,12 +1309,53 @@ footer a {
   margin-bottom: 40px;
 }
 
+.mt-sm {
+  margin-top: 14px;
+}
+
+.mt-md {
+  margin-top: 24px;
+}
+
 .mt-lg {
+  margin-top: 40px;
+}
+
+.mt-xl {
   margin-top: 80px;
 }
 
 .mb-lg {
   margin-bottom: 80px;
+}
+
+/* Container variants */
+.container-sm {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+.container-md {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* Footer grid layout - replaces inline display: grid */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 48px;
+  max-width: 900px;
+  margin: 0 auto 40px;
+}
+
+@media (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
 }
 
 /* ============================================================
