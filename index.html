@@ -1019,8 +1019,19 @@ h1, h2, h3, h4 {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
 }
 .newsletter button:hover { background: var(--coral-deep); }
+.newsletter button .arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+.newsletter button:hover .arrow { transform: translateX(4px); }
 
 .foot-bottom {
   display: flex;
