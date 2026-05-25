@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Manage your seat · Vol. 01 · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Reuse the flow shell vocabulary */
+  body { background: var(--cream); }
+
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(70px, 11vh, 130px) 0 clamp(40px, 6vh, 70px);
+    position: relative; overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute; top: -60%; right: -10%;
+    width: 80%; aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative; z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(40px, 5.4vw, 84px);
+    line-height: 1.02; letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 20px;
+    max-width: 52ch;
+  }
+
+  .summary-strip {
+    margin-top: 32px;
+    padding: 18px 22px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid rgba(245, 241, 232, 0.12);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    font-size: 12.5px;
+  }
+  @media (max-width: 700px) { .summary-strip { grid-template-columns: repeat(2, 1fr); } }
+  .summary-strip__item .label {
+    display: block;
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+    margin-bottom: 6px;
+  }
+  .summary-strip__item .value {
+    font-family: var(--serif);
+    font-style: italic; font-size: 17px;
+    color: var(--cream);
+    font-weight: var(--w-serif-medium);
+  }
+  .summary-strip__item .value em { color: var(--ball); font-style: italic; }
+
+  /* Body grid */
+  .ms-body {
+    padding: clamp(60px, 9vh, 100px) 0 var(--section-pad-sm);
+  }
+  .ms-body__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  /* Action card */
+  .action {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .action__head {
+    padding: 26px 32px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .action__icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    color: var(--coral);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .action__icon svg { width: 20px; height: 20px; }
+  .action--danger .action__icon { background: rgba(255, 107, 107, 0.14); color: var(--coral-deep); }
+  .action__title {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .action__title em { color: var(--coral); font-style: italic; }
+  .action__sub {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .action__body {
+    padding: 26px 32px;
+  }
+  .action__body p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .action__body p:last-of-type { margin-bottom: 0; }
+  .action__body strong { font-weight: var(--w-sans-bold); }
+  .action__body em { color: var(--coral); font-style: italic; font-family: var(--serif); }
+
+  /* Field row for the swap form */
+  .swap-form {
+    margin-top: 20px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .swap-row {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .swap-row label {
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .swap-row input,
+  .swap-row textarea {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 12px 14px;
+  }
+  .swap-row input:focus, .swap-row textarea:focus {
+    outline: none; border-color: var(--teal); background: white;
+  }
+  .swap-row textarea { resize: vertical; min-height: 90px; line-height: 1.55; }
+
+  /* Current friend mini-card */
+  .current-friend {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    margin-top: 4px;
+  }
+  .current-friend__avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--ball);
+    font-family: var(--serif); font-style: italic; font-size: 17px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .current-friend__info {
+    font-size: 14px;
+    color: var(--ink);
+  }
+  .current-friend__info strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    margin-bottom: 2px;
+  }
+  .current-friend__info small {
+    color: var(--ink-soft);
+    font-size: 12.5px;
+  }
+
+  /* Action bar */
+  .action__footer {
+    padding: 20px 32px;
+    background: var(--cream-warm);
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .action__footer .note {
+    flex: 1;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    min-width: 200px;
+  }
+  .btn-action {
+    padding: 12px 22px;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .btn-action--primary { background: var(--coral); color: white; }
+  .btn-action--primary:hover { background: var(--coral-deep); transform: translateY(-1px); }
+  .btn-action--ghost { background: white; color: var(--ink-soft); border-color: var(--line); }
+  .btn-action--ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+  .btn-action--danger { background: white; color: var(--coral-deep); border-color: var(--coral); }
+  .btn-action--danger:hover { background: rgba(255, 107, 107, 0.08); }
+
+  /* Cancel policy box */
+  .cancel-policy {
+    margin-top: 16px;
+    padding: 16px 18px;
+    background: rgba(212, 247, 72, 0.18);
+    border-left: 2px solid var(--teal);
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .cancel-policy strong { font-weight: var(--w-sans-bold); }
+  .cancel-policy__when {
+    font-family: var(--serif);
+    font-style: italic;
+    color: var(--teal);
+    font-weight: var(--w-serif-medium);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm">My status <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <header class="flow-header" data-screen-label="Manage Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Manage your seat</span>
+      <h1>Life <em>happens</em>. Here's the door.</h1>
+      <p class="flow-header__sub">
+        Swap your +1 or cancel your seat. Both are free up to 72 hours before. After that, we'll do our best, but the seat is yours to give away.
+      </p>
+
+      <div class="summary-strip">
+        <div class="summary-strip__item">
+          <span class="label">Date</span>
+          <span class="value">Sat, <em>June 21</em></span>
+        </div>
+        <div class="summary-strip__item">
+          <span class="label">Charged</span>
+          <span class="value">$145</span>
+        </div>
+        <div class="summary-strip__item">
+          <span class="label">Free until</span>
+          <span class="value"><em>June 18</em>, 6 PM</span>
+        </div>
+        <div class="summary-strip__item">
+          <span class="label">Time left</span>
+          <span class="value">25 days</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="ms-body" data-screen-label="Manage Body">
+    <div class="ms-body__inner">
+
+      <!-- ===== SWAP +1 ===== -->
+      <article class="action">
+        <div class="action__head">
+          <div class="action__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 3h5v5M4 20l16-16M21 16v5h-5M15 15l6 6M4 4l5 5"/></svg>
+          </div>
+          <div>
+            <div class="action__title">Swap your <em>+1</em>.</div>
+            <div class="action__sub">Replace Alex with someone else. New invite + vouch + payment hold.</div>
+          </div>
+        </div>
+
+        <div class="action__body">
+          <p>Right now your +1 is:</p>
+          <div class="current-friend">
+            <div class="current-friend__avatar">AM</div>
+            <div class="current-friend__info">
+              <strong>Alex Mendoza</strong>
+              <small>alex@mendoza.studio · accepted, paid</small>
+            </div>
+          </div>
+
+          <p style="margin-top: 18px;">If you swap, Alex's seat is released and their $145 is refunded. We email them a short, gracious note so it doesn't come from nowhere. Your new +1 goes through the same friend invitation flow — short questionnaire, $145 hold — and we re-check the pair before confirming.</p>
+
+          <div class="swap-form">
+            <div class="swap-row">
+              <label for="swap-name">New friend's full name</label>
+              <input id="swap-name" type="text" placeholder="e.g. Hugh Park"/>
+            </div>
+            <div class="swap-row">
+              <label for="swap-email">Their email</label>
+              <input id="swap-email" type="email" placeholder="they@email.com"/>
+            </div>
+            <div class="swap-row">
+              <label for="swap-vouch">Your vouch (one or two sentences)</label>
+              <textarea id="swap-vouch" placeholder="Why this person? What makes them a good doubles partner?"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="action__footer">
+          <span class="note">Alex will be emailed within the minute. Your new +1 has 5 days to respond.</span>
+          <button type="button" class="btn-action btn-action--primary">Send swap request <span style="font-size: 14px;">→</span></button>
+        </div>
+      </article>
+
+      <!-- ===== CANCEL ===== -->
+      <article class="action action--danger">
+        <div class="action__head">
+          <div class="action__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>
+          </div>
+          <div>
+            <div class="action__title">Cancel your <em>seat</em>.</div>
+            <div class="action__sub">Both you and Alex are released. Full refund if you cancel before June 18.</div>
+          </div>
+        </div>
+
+        <div class="action__body">
+          <p>If you cancel, both your seat and Alex's are released. Alex gets a short, gracious email so they hear it from us, not from silence. Two seats freed at this point will be offered to pairs from the waitlist.</p>
+
+          <div class="cancel-policy">
+            <strong>Cancellation policy.</strong><br/>
+            Full refund until <span class="cancel-policy__when">June 18, 6 PM</span> (72 hours before doors). After that, we'll do our best with the waitlist, but we can't promise a refund — the kitchen and venue are committed by then. <strong>If something serious has happened, just reply to your acceptance email.</strong> We're human.
+          </div>
+
+          <p style="margin-top: 18px; font-size: 13.5px; color: var(--ink-soft);">You're still in our pool for Vol. 02 — auto-rolling, no re-apply.</p>
+        </div>
+
+        <div class="action__footer">
+          <span class="note">Refund processed within 5 business days. Both of you are released.</span>
+          <button type="button" class="btn-action btn-action--danger">Cancel my seat</button>
+        </div>
+      </article>
+
+      <!-- ===== UPDATE PREFERENCES ===== -->
+      <article class="action">
+        <div class="action__head">
+          <div class="action__icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+          <div>
+            <div class="action__title">Update your <em>preferences</em>.</div>
+            <div class="action__sub">Dietary, photo consent, day-of SMS. Always editable.</div>
+          </div>
+        </div>
+
+        <div class="action__body" style="padding-bottom: 8px;">
+          <p>Smaller tweaks — what the kitchen plans around, whether we text you the morning of, whether you're OK in wide-shot photos. These all live on your seat page.</p>
+        </div>
+
+        <div class="action__footer">
+          <span class="note">Saves automatically. No deadline.</span>
+          <a href="accepted.html" class="btn-action btn-action--ghost">Open seat page <span style="font-size: 14px;">→</span></a>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

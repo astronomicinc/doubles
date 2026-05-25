@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Vol. 01 · The night we had — Doubles</title>
+<meta name="description" content="A recap of Vol. 01 — the Founding Launch. The room, the Volley, the night." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body { background: var(--cream); }
+
+  /* =========================================================
+     RECAP — editorial. Bigger type, fewer rules, photography
+     forward. Goal: make new applicants want to be in the next
+     room. The speaker is finally revealed here; the address
+     is named for the first time.
+     ========================================================= */
+
+  /* Header — magazine-cover energy */
+  .recap-hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 140px) 0 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .recap-hero::before {
+    content: '';
+    position: absolute; top: -40%; right: -10%;
+    width: 60%; aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .recap-hero__inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .recap-hero__crumb {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ball);
+    margin-bottom: 24px;
+  }
+  .recap-hero__crumb a { color: rgba(245, 241, 232, 0.55); border-bottom: 1px solid transparent; }
+  .recap-hero__crumb a:hover { color: var(--ball); border-color: var(--ball); }
+  .recap-hero__crumb .sep { color: rgba(245, 241, 232, 0.25); }
+
+  .recap-hero h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(60px, 9vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.035em;
+    color: var(--cream);
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+  .recap-hero h1 em { color: var(--ball); font-style: italic; }
+
+  .recap-hero__strap {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 28px 0;
+    margin-top: 40px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.14);
+    flex-wrap: wrap;
+  }
+  .recap-hero__strap-item .label {
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+    margin-bottom: 6px;
+  }
+  .recap-hero__strap-item .value {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 1.7vw, 22px);
+    color: var(--cream);
+  }
+  .recap-hero__strap-item .value em { color: var(--ball); font-style: italic; }
+
+  /* Big hero image placeholder */
+  .recap-hero__photo {
+    margin-top: 50px;
+    aspect-ratio: 16 / 9;
+    background:
+      linear-gradient(140deg, rgba(255, 107, 107, 0.16), rgba(20, 39, 45, 0)),
+      linear-gradient(40deg, rgba(212, 247, 72, 0.16), transparent),
+      var(--navy);
+    border-radius: var(--r-card) var(--r-card) 0 0;
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .recap-hero__photo::after {
+    content: 'wide-shot from the room';
+    position: absolute;
+    bottom: 18px; left: 22px;
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.35);
+  }
+  .recap-hero__photo svg {
+    width: 56px; height: 56px;
+    color: rgba(245, 241, 232, 0.18);
+  }
+
+  /* By the numbers band */
+  .by-numbers {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(50px, 7vh, 80px) 0;
+  }
+  .by-numbers__inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .by-numbers .eyebrow {
+    color: var(--ball);
+    margin-bottom: 22px;
+  }
+  .by-numbers__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+  }
+  @media (max-width: 800px) {
+    .by-numbers__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  .bn-cell .num {
+    font-family: var(--serif);
+    font-size: clamp(56px, 7vw, 96px);
+    line-height: 0.9;
+    color: var(--ball);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em;
+  }
+  .bn-cell .num em { color: var(--coral); font-style: italic; }
+  .bn-cell .label {
+    margin-top: 14px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+  }
+  .bn-cell .sub {
+    margin-top: 6px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14.5px;
+    color: rgba(245, 241, 232, 0.7);
+    line-height: 1.4;
+  }
+
+  /* ===== SPEAKER REVEAL ===== */
+  .speaker {
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .speaker__inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .speaker__grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .speaker__grid { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .speaker__photo {
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(140deg, rgba(212, 247, 72, 0.18), rgba(255, 107, 107, 0.04)),
+      var(--cream-warm);
+    border-radius: var(--r-card);
+    display: flex;
+    align-items: center; justify-content: center;
+    color: var(--coral);
+    font-family: var(--serif); font-style: italic;
+    font-size: 76px;
+    letter-spacing: -0.02em;
+  }
+  .speaker .eyebrow { color: var(--coral); margin-bottom: 14px; }
+  .speaker h2 {
+    font-family: var(--serif);
+    font-size: clamp(40px, 5vw, 76px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .speaker h2 em { color: var(--coral); font-style: italic; }
+  .speaker__credential {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+    margin-bottom: 26px;
+  }
+  .speaker__topic {
+    background: var(--cream-warm);
+    border-left: 2px solid var(--coral);
+    padding: 22px 26px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    margin-bottom: 24px;
+  }
+  .speaker__topic-label {
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 10px;
+  }
+  .speaker__topic-line {
+    font-family: var(--serif); font-style: italic;
+    font-size: 22px; line-height: 1.4; color: var(--ink);
+  }
+  .speaker__body p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .speaker__body p em { color: var(--coral); font-style: italic; font-family: var(--serif); }
+
+  /* ===== PULL QUOTE — love-story moment ===== */
+  .moment {
+    background: var(--cream-warm);
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .moment__inner {
+    max-width: 880px; margin: 0 auto;
+    padding: 0 var(--gutter);
+    text-align: center;
+  }
+  .moment .eyebrow { color: var(--coral); margin-bottom: 24px; }
+  .moment__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(28px, 3.6vw, 50px);
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin: 0 0 32px;
+    text-wrap: balance;
+  }
+  .moment__quote::before { content: '"'; color: var(--coral); }
+  .moment__quote::after  { content: '"'; color: var(--coral); }
+  .moment__attr {
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .moment__attr strong { color: var(--coral); font-weight: var(--w-sans-bold); }
+
+  /* ===== PHOTO GRID ===== */
+  .gallery {
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .gallery__inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .gallery__head {
+    display: flex; align-items: end;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 32px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+  .gallery h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+  .gallery h2 em { color: var(--coral); font-style: italic; }
+  .gallery__count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 180px;
+    gap: 14px;
+  }
+  @media (max-width: 800px) {
+    .gallery__grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-auto-rows: 140px;
+    }
+  }
+  .photo {
+    border-radius: var(--r-card);
+    background:
+      linear-gradient(140deg, rgba(20, 39, 45, 0.06), rgba(212, 247, 72, 0.06)),
+      var(--cream-warm);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    padding: 14px;
+  }
+  .photo::after {
+    content: attr(data-caption);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .photo--wide { grid-column: span 3; }
+  .photo--tall { grid-row: span 2; }
+  .photo--accent {
+    background:
+      linear-gradient(140deg, rgba(255, 107, 107, 0.18), rgba(20, 39, 45, 0)),
+      var(--navy);
+  }
+  .photo--accent::after { color: rgba(245, 241, 232, 0.6); }
+  .photo--ball {
+    background:
+      linear-gradient(140deg, rgba(212, 247, 72, 0.28), rgba(20, 39, 45, 0)),
+      var(--navy);
+  }
+  .photo--ball::after { color: rgba(245, 241, 232, 0.6); }
+  @media (max-width: 800px) {
+    .photo--wide { grid-column: span 2; }
+    .photo--tall { grid-row: span 1; }
+  }
+
+  /* ===== NIGHT IN QUOTES — overheard ===== */
+  .overheard {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .overheard__inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .overheard .eyebrow { color: var(--ball); margin-bottom: 14px; }
+  .overheard h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--cream);
+    margin-bottom: 50px;
+  }
+  .overheard h2 em { color: var(--ball); font-style: italic; }
+  .overheard__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 800px) { .overheard__grid { grid-template-columns: 1fr; } }
+  .quote-card {
+    padding: 28px;
+    background: rgba(245, 241, 232, 0.04);
+    border: 1px solid rgba(245, 241, 232, 0.1);
+    border-radius: var(--r-card);
+  }
+  .quote-card__line {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.5;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+  .quote-card__line::before { content: '"'; color: var(--ball); }
+  .quote-card__line::after  { content: '"'; color: var(--ball); }
+  .quote-card__attr {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+  }
+  .quote-card__attr strong { color: var(--ball); font-weight: var(--w-sans-bold); }
+
+  /* ===== APPLY CTA ===== */
+  .apply-cta {
+    padding: clamp(80px, 11vh, 130px) 0;
+    text-align: center;
+  }
+  .apply-cta__inner {
+    max-width: 800px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .apply-cta h2 {
+    font-family: var(--serif);
+    font-size: clamp(44px, 6vw, 92px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 22px;
+    text-wrap: balance;
+  }
+  .apply-cta h2 em { color: var(--coral); font-style: italic; }
+  .apply-cta p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    margin-bottom: 36px;
+    max-width: 32ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .apply-cta__actions {
+    display: flex; gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">Apply <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <header class="recap-hero" data-screen-label="Recap Hero">
+    <div class="recap-hero__inner">
+      <div class="recap-hero__crumb">
+        <a href="events.html">All volumes</a>
+        <span class="sep">/</span>
+        <span>Vol. 01</span>
+        <span class="sep">/</span>
+        <span style="color: var(--ball);">Recap</span>
+      </div>
+      <h1>The night we <em>had</em>.</h1>
+      <p style="font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; color: rgba(245, 241, 232, 0.78); max-width: 38ch; margin-top: 14px;">Vol. 01 · Founding Launch · Twin Peaks, San Francisco · Saturday, June 21.</p>
+
+      <div class="recap-hero__strap">
+        <div class="recap-hero__strap-item">
+          <div class="label">Volume</div>
+          <div class="value">Vol. <em>01</em></div>
+        </div>
+        <div class="recap-hero__strap-item">
+          <div class="label">Date</div>
+          <div class="value">Sat, June 21</div>
+        </div>
+        <div class="recap-hero__strap-item">
+          <div class="label">Venue</div>
+          <div class="value">A private home, <em>Twin Peaks</em></div>
+        </div>
+        <div class="recap-hero__strap-item">
+          <div class="label">Speaker</div>
+          <div class="value"><em>Maya Patel</em></div>
+        </div>
+      </div>
+
+      <div class="recap-hero__photo" aria-label="Wide shot of the room">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- BY THE NUMBERS -->
+  <section class="by-numbers" data-screen-label="By the numbers">
+    <div class="by-numbers__inner">
+      <span class="eyebrow"><span class="ball"></span> By the numbers</span>
+      <div class="by-numbers__grid">
+        <div class="bn-cell">
+          <div class="num">30</div>
+          <div class="label">In the room</div>
+          <div class="sub">15 pairs · half investors &amp; founders, half operators &amp; wildcards</div>
+        </div>
+        <div class="bn-cell">
+          <div class="num"><em>9</em></div>
+          <div class="label">Mutuals</div>
+          <div class="sub">4 dates · 5 professional intros</div>
+        </div>
+        <div class="bn-cell">
+          <div class="num">94%</div>
+          <div class="label">Stayed past nine</div>
+          <div class="sub">Two-thirds of those, past ten</div>
+        </div>
+        <div class="bn-cell">
+          <div class="num"><em>3:14</em></div>
+          <div class="label">Hours of conversation</div>
+          <div class="sub">Doors at 6, last guest out at 11:14</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SPEAKER REVEAL -->
+  <section class="speaker" data-screen-label="Speaker reveal">
+    <div class="speaker__inner">
+      <div class="speaker__grid">
+        <div class="speaker__photo" aria-hidden="true">MP</div>
+        <div class="speaker__body">
+          <span class="eyebrow"><span class="ball"></span> The opening Volley</span>
+          <h2>Maya <em>Patel</em>.</h2>
+          <div class="speaker__credential">Co-founder of Kestrel · Now at Outline Ventures</div>
+
+          <div class="speaker__topic">
+            <div class="speaker__topic-label">She talked about</div>
+            <div class="speaker__topic-line">"Building a team you'd still want to work with after the acquihire."</div>
+          </div>
+
+          <p>Maya walked in five minutes before doors, gave Di a hug, and changed the energy of the room by herself. The fireside ran fifteen minutes; the Q&amp;A pushed forty-eight. Three of the questions in that Q&amp;A turned into <em>dinner threads</em> at every table.</p>
+
+          <p>If you've been to a panel where the audience disappears into their phones — this wasn't that. Maya called on people by name, asked follow-ups, and at one point sat down on the floor of the living room because someone in the back was struggling to be heard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOVE-STORY PULL QUOTE -->
+  <section class="moment" data-screen-label="Quote moment">
+    <div class="moment__inner">
+      <span class="eyebrow"><span class="ball"></span> One story from the night</span>
+      <p class="moment__quote">We've been dating six weeks. Neither of us was looking for it. We were both looking for the room.</p>
+      <div class="moment__attr">A Vol. 01 attendee · <strong>shared with consent</strong></div>
+    </div>
+  </section>
+
+  <!-- PHOTO GALLERY -->
+  <section class="gallery" data-screen-label="Photo gallery">
+    <div class="gallery__inner">
+      <div class="gallery__head">
+        <div>
+          <span class="eyebrow"><span class="ball"></span> The night, in photos</span>
+          <h2>A <em>room</em>, in moments.</h2>
+        </div>
+        <div class="gallery__count">14 photos · wide shots only</div>
+      </div>
+
+      <div class="gallery__grid" aria-label="Photo grid">
+        <div class="photo photo--wide photo--accent" data-caption="6:14 PM · the first hour"></div>
+        <div class="photo photo--tall" data-caption="welcome pour"></div>
+        <div class="photo" data-caption="seating chart"></div>
+        <div class="photo" data-caption="kitchen prep"></div>
+        <div class="photo photo--ball" data-caption="the volley"></div>
+        <div class="photo" data-caption="Q&amp;A · row 2"></div>
+        <div class="photo photo--tall" data-caption="dinner table A"></div>
+        <div class="photo photo--wide" data-caption="reshuffle · 8:14"></div>
+        <div class="photo" data-caption="the corner sofa"></div>
+        <div class="photo" data-caption="laughter, mid-frame"></div>
+        <div class="photo photo--accent" data-caption="9:08 — winding down"></div>
+        <div class="photo" data-caption="last to leave"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OVERHEARD -->
+  <section class="overheard" data-screen-label="Overheard">
+    <div class="overheard__inner">
+      <span class="eyebrow"><span class="ball"></span> Overheard</span>
+      <h2>Lines from the <em>room</em>.</h2>
+
+      <div class="overheard__grid">
+        <div class="quote-card">
+          <p class="quote-card__line">Most dinners I leave with three business cards. Tonight I left with four numbers.</p>
+          <div class="quote-card__attr"><strong>A founder</strong> · 32 · second-time exit</div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-card__line">The Q&amp;A was the trick. By dinner I knew what to ask everyone.</p>
+          <div class="quote-card__attr"><strong>An investor</strong> · 35 · seed-stage GP</div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-card__line">My friend dragged me here. She owes me a dinner. I owe her a thank-you note.</p>
+          <div class="quote-card__attr"><strong>An operator</strong> · 29 · Series B PM</div>
+        </div>
+        <div class="quote-card">
+          <p class="quote-card__line">It's the only event I've been to where nobody asked me what I do until thirty minutes in.</p>
+          <div class="quote-card__attr"><strong>A founder</strong> · 34 · pre-seed</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APPLY CTA -->
+  <section class="apply-cta" data-screen-label="Apply CTA">
+    <div class="apply-cta__inner">
+      <span class="eyebrow"><span class="ball"></span> Vol. 02 · September 13</span>
+      <h2>Be in the <em>next</em> room.</h2>
+      <p>One application keeps you in our pool for every future volume. Bring a friend.</p>
+      <div class="apply-cta__actions">
+        <a class="btn btn--coral" href="apply.html">Apply for Vol. 02 <span class="arrow">→</span></a>
+        <a class="btn btn--ghost" href="events.html">See the calendar</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

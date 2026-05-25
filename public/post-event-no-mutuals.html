@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sparks · Vol. 01 · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body { background: var(--cream); min-height: 100vh; display: flex; flex-direction: column; }
+
+  main { flex: 1; }
+
+  /* Header — same shell vocab but no celebratory accents */
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 130px) 0 clamp(50px, 8vh, 90px);
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute; top: -60%; right: -10%;
+    width: 80%; aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6.4vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    text-wrap: balance;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(19px, 1.8vw, 24px);
+    line-height: 1.45;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 26px auto 0;
+    max-width: 40ch;
+  }
+
+  /* Body — long-form, calm */
+  .body {
+    padding: clamp(60px, 8vh, 100px) 0;
+  }
+  .body__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .body h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.2vw, 42px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 48px 0 18px;
+    text-wrap: balance;
+  }
+  .body h2 em { color: var(--coral); font-style: italic; }
+  .body h2:first-child { margin-top: 0; }
+  .body p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .body p.lead {
+    font-size: 19px;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .body p em { color: var(--coral); font-style: italic; font-family: var(--serif); }
+
+  /* Quiet "what we won't tell you" callout */
+  .callout {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 30px;
+    margin: 32px 0;
+  }
+  .callout__label {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .callout__label::before {
+    content: ''; width: 7px; height: 7px;
+    border-radius: 50%; background: var(--teal);
+  }
+  .callout p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* Picks summary card — what they picked, what happened */
+  .summary {
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    padding: 24px 26px;
+    margin: 28px 0;
+  }
+  .summary__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(20, 39, 45, 0.08);
+    gap: 18px;
+  }
+  .summary__row:last-child { border-bottom: none; }
+  .summary__row strong {
+    font-family: var(--sans);
+    font-weight: var(--w-sans-bold);
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .summary__row .num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink);
+  }
+  .summary__row .num em { color: var(--coral); font-style: italic; }
+  .summary__row .when {
+    font-size: 12px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .summary__row .when strong {
+    display: block;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  /* Action row */
+  .actions {
+    display: flex; gap: 12px;
+    flex-wrap: wrap;
+    margin: 38px 0 0;
+  }
+  .btn-big {
+    padding: 14px 24px;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-big--primary {
+    background: var(--coral); color: white;
+    box-shadow: var(--shadow-cta);
+  }
+  .btn-big--primary:hover { background: var(--coral-deep); transform: translateY(-1px); }
+  .btn-big--ghost {
+    background: white; color: var(--ink-soft);
+    border-color: var(--line);
+  }
+  .btn-big--ghost:hover { border-color: var(--ink-soft); color: var(--ink); }
+
+  /* Reframe section — the "why this isn't a referendum" message */
+  .reframe {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(50px, 7vh, 80px) 0;
+  }
+  .reframe__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    text-align: center;
+  }
+  .reframe__inner h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.4vw, 44px);
+    font-weight: var(--w-serif-regular);
+    color: var(--cream);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin-top: 14px;
+  }
+  .reframe__inner h2 em { color: var(--ball); font-style: italic; }
+  .reframe__inner p {
+    font-size: 16px;
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 22px auto 0;
+    max-width: 50ch;
+  }
+  .reframe__inner .eyebrow { color: var(--ball); }
+
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm">My status <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- =========================================================
+       HEADER — calm, not pitying
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="No Mutuals Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Tuesday morning</span>
+      <h1>Nothing <em>aligned</em> this time.</h1>
+      <p class="flow-header__sub">No mutuals from your Vol. 01 picks — and we want to be honest about what that does and doesn't mean.</p>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       BODY
+       ========================================================= -->
+  <section class="body" data-screen-label="No Mutuals Body">
+    <div class="body__inner">
+
+      <p class="lead">
+        You marked four people on Sunday morning. By Tuesday's window, none of those four had marked you back in the same way. So we have nothing to introduce.
+      </p>
+
+      <div class="summary">
+        <div class="summary__row">
+          <strong>Your date picks</strong>
+          <div class="num">2</div>
+          <div class="when"><strong>0 mutuals</strong>this round</div>
+        </div>
+        <div class="summary__row">
+          <strong>Your connect picks</strong>
+          <div class="num">2</div>
+          <div class="when"><strong>0 mutuals</strong>this round</div>
+        </div>
+        <div class="summary__row">
+          <strong>Total marked</strong>
+          <div class="num"><em>4</em> of 15</div>
+          <div class="when"><strong>Private</strong>never shared</div>
+        </div>
+      </div>
+
+      <h2>Things this <em>doesn't</em> mean.</h2>
+      <p>It doesn't mean nobody was thinking about you. It doesn't mean Sarah, James, or anyone you marked saw your pick and passed. <strong>They never saw your picks.</strong> Your one-way picks stay private forever — that's the contract.</p>
+
+      <p>It doesn't mean nobody at all marked you. Some people in the room might have picked you and we won't tell either of you, because the other side wasn't mutual. <em>That's the whole point of mutual-only.</em> Both sides have to show up before we say anything.</p>
+
+      <p>And it doesn't mean Vol. 01 was a wash. The room you sat in was the room. The conversations that happened, happened. A mutual is a bonus, not the goal.</p>
+
+      <div class="callout">
+        <div class="callout__label">A small honest thing</div>
+        <p>Across the founding volume, about half of attendees come away with at least one mutual. Half don't. We've been there, both ways — and the half without mutuals usually leave with something else: a new friend they wouldn't have met, a job lead, a question worth chasing.</p>
+      </div>
+
+      <h2>What <em>now</em>.</h2>
+
+      <p>The Tuesday window is closed for Vol. 01. If you'd like a professional intro to someone you met, we can still help — reply to your acceptance email with a name and a one-line "why" and we'll reach out as a normal warm intro, the old-fashioned way.</p>
+
+      <p>For Vol. 02 — you're auto-rolled into the next pool. <em>No re-apply.</em> The room composition shifts every quarter; people you'd click with might be in September's room and not have been in this one.</p>
+
+      <div class="actions">
+        <a href="contact.html" class="btn-big btn-big--ghost">Ask for a warm intro</a>
+        <a href="events.html" class="btn-big btn-big--primary">See Vol. 02 <span style="font-size: 14px;">→</span></a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       REFRAME — closing thought, dark band
+       ========================================================= -->
+  <section class="reframe" data-screen-label="Reframe">
+    <div class="reframe__inner">
+      <span class="eyebrow"><span class="ball"></span> One last note</span>
+      <h2>The night was <em>real</em>, either way.</h2>
+      <p>You showed up, you mingled, you asked questions, you laughed. That's the harder thing. The pairings are a downstream gift; the room itself is the work. See you in September.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

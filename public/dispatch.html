@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Dispatch — Doubles</title>
+<meta name="description" content="Quarterly notes from the floor — new events, new venues, the occasional love story." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body { background: var(--cream); }
+
+  /* Dispatch — masthead + magazine archive */
+  .masthead {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 140px) 0 clamp(50px, 8vh, 90px);
+    position: relative;
+    overflow: hidden;
+  }
+  .masthead::before {
+    content: '';
+    position: absolute; top: -40%; left: -10%;
+    width: 50%; aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .masthead__inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .masthead__lockup {
+    display: inline-block;
+    border-top: 1px solid rgba(245, 241, 232, 0.2);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.2);
+    padding: 14px 0;
+    margin-bottom: 32px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--ball);
+  }
+  .masthead h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(72px, 11vw, 200px);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    color: var(--cream);
+    margin-bottom: 32px;
+  }
+  .masthead h1 em { color: var(--ball); font-style: italic; }
+  .masthead__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.4;
+    color: rgba(245, 241, 232, 0.8);
+    max-width: 36ch;
+  }
+
+  /* Subscribe strip */
+  .subscribe {
+    margin-top: 50px;
+    padding: 22px 28px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid rgba(245, 241, 232, 0.14);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+  @media (max-width: 640px) { .subscribe { grid-template-columns: 1fr; } }
+  .subscribe__copy {
+    font-size: 13.5px;
+    color: rgba(245, 241, 232, 0.75);
+    line-height: 1.5;
+  }
+  .subscribe__copy strong {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--cream);
+    font-weight: var(--w-serif-medium);
+    margin-bottom: 4px;
+  }
+  .subscribe__form {
+    display: flex; gap: 8px;
+  }
+  .subscribe__form input {
+    background: rgba(245, 241, 232, 0.08);
+    border: 1px solid rgba(245, 241, 232, 0.16);
+    border-radius: var(--r-pill);
+    padding: 12px 18px;
+    color: var(--cream);
+    font-family: var(--sans);
+    font-size: 13.5px;
+    min-width: 220px;
+  }
+  .subscribe__form input::placeholder { color: rgba(245, 241, 232, 0.45); }
+  .subscribe__form input:focus { outline: none; border-color: var(--ball); }
+  .subscribe__form button {
+    padding: 12px 22px;
+    background: var(--ball);
+    color: var(--ink);
+    border: none;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  /* Issue feed */
+  .issues {
+    padding: clamp(60px, 8vh, 100px) 0;
+  }
+  .issues__inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+
+  .issues__head {
+    display: flex; align-items: center;
+    justify-content: space-between;
+    margin-bottom: 36px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .issues__head h2 {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .issues__count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--coral);
+  }
+
+  /* Featured (latest) issue card */
+  .issue--featured {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 50px;
+    align-items: stretch;
+    padding-bottom: 50px;
+    margin-bottom: 50px;
+    border-bottom: 1px solid var(--line);
+  }
+  @media (max-width: 800px) { .issue--featured { grid-template-columns: 1fr; gap: 28px; } }
+
+  .issue__hero {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--r-card);
+    background:
+      linear-gradient(140deg, rgba(255, 107, 107, 0.18), rgba(212, 247, 72, 0.1)),
+      var(--navy);
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    padding: 24px;
+    color: var(--ball);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 28px;
+  }
+  .issue--featured .issue__hero {
+    background:
+      linear-gradient(140deg, rgba(212, 247, 72, 0.3), rgba(20, 39, 45, 0)),
+      var(--ink);
+  }
+
+  .issue__body {
+    display: flex; flex-direction: column;
+    justify-content: center;
+  }
+  .issue__meta {
+    display: flex; gap: 14px;
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 18px;
+  }
+  .issue__meta__num { color: var(--coral); }
+  .issue__title {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+    text-wrap: balance;
+  }
+  .issue__title em { color: var(--coral); font-style: italic; }
+  .issue__dek {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .issue__sections {
+    display: flex; gap: 14px 24px;
+    flex-wrap: wrap;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    margin-bottom: 24px;
+    font-size: 12.5px;
+  }
+  .issue__sections span {
+    color: var(--ink);
+    font-weight: var(--w-sans-medium);
+  }
+  .issue__sections .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ball);
+    display: inline-block;
+    margin-right: 8px;
+    vertical-align: middle;
+  }
+  .issue__read {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    background: var(--ink);
+    color: var(--ball);
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.15s, transform 0.15s;
+    align-self: start;
+  }
+  .issue__read:hover { background: var(--navy); transform: translateY(-1px); }
+
+  /* Compact issue list */
+  .issue-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .issue-list { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .issue-list { grid-template-columns: 1fr; } }
+
+  .issue-card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s;
+  }
+  .issue-card:hover { transform: translateY(-3px); }
+  .issue-card:hover .issue-card__title { color: var(--coral); }
+
+  .issue-card__hero {
+    aspect-ratio: 4 / 3;
+    border-radius: var(--r-card);
+    display: flex;
+    align-items: end;
+    padding: 20px;
+    color: var(--ball);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 20px;
+    transition: filter 0.15s;
+  }
+  .issue-card:hover .issue-card__hero { filter: brightness(1.05); }
+  .issue-card__hero--01 {
+    background:
+      linear-gradient(140deg, rgba(212, 247, 72, 0.28), rgba(20, 39, 45, 0)),
+      var(--ink);
+  }
+  .issue-card__hero--00 {
+    background:
+      linear-gradient(140deg, rgba(255, 107, 107, 0.22), rgba(20, 39, 45, 0)),
+      var(--navy);
+  }
+  .issue-card__hero--neg {
+    background:
+      linear-gradient(140deg, rgba(27, 90, 107, 0.22), rgba(20, 39, 45, 0)),
+      var(--ink);
+  }
+  .issue-card__hero--neg2 {
+    background:
+      linear-gradient(140deg, rgba(245, 241, 232, 0.16), rgba(20, 39, 45, 0)),
+      var(--navy);
+  }
+  .issue-card__meta {
+    display: flex; gap: 12px;
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .issue-card__num { color: var(--coral); }
+  .issue-card__title {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+    transition: color 0.15s;
+  }
+  .issue-card__title em { color: var(--coral); font-style: italic; }
+  .issue-card__dek {
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  /* Categories rail */
+  .cats {
+    background: var(--cream-warm);
+    border-top: 1px solid var(--line);
+    padding: clamp(50px, 7vh, 80px) 0;
+  }
+  .cats__inner {
+    max-width: 1240px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .cats__head h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.8vw, 50px);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    color: var(--ink);
+    margin-top: 14px;
+    margin-bottom: 36px;
+  }
+  .cats__head h2 em { color: var(--coral); font-style: italic; }
+  .cats__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 800px) { .cats__grid { grid-template-columns: 1fr; } }
+  .cat {
+    padding: 26px 28px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+  .cat:hover { border-color: var(--coral); transform: translateY(-2px); }
+  .cat__count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+  .cat h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .cat h3 em { color: var(--coral); font-style: italic; }
+  .cat p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">Apply <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<header class="masthead" data-screen-label="Masthead">
+  <div class="masthead__inner">
+    <div class="masthead__lockup">A DOUBLES QUARTERLY</div>
+    <h1>The <em>Dispatch</em>.</h1>
+    <p class="masthead__sub">
+      Notes from the floor — what happened at the last volume, who's coming up,
+      the occasional love story. Sent four times a year, when there's
+      something worth saying.
+    </p>
+
+    <div class="subscribe">
+      <div class="subscribe__copy">
+        <strong>Get the next issue.</strong>
+        Four emails a year. No re-engagement campaigns, no funnels, no shilling.
+      </div>
+      <form class="subscribe__form" onsubmit="event.preventDefault();">
+        <input type="email" placeholder="your@email.com" aria-label="Email" required />
+        <button type="submit">Subscribe <span style="font-size: 14px;">→</span></button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<section class="issues" data-screen-label="Issues">
+  <div class="issues__inner">
+    <div class="issues__head">
+      <h2>Latest issue</h2>
+      <span class="issues__count">4 issues · since spring 2025</span>
+    </div>
+
+    <article class="issue issue--featured">
+      <div class="issue__hero">summer.25</div>
+      <div class="issue__body">
+        <div class="issue__meta">
+          <span class="issue__meta__num">Issue 04</span>
+          <span>Summer · 2025</span>
+          <span>9 min read</span>
+        </div>
+        <h2 class="issue__title">The night we <em>had</em>, and the one <em>coming up</em>.</h2>
+        <p class="issue__dek">Vol. 01 — the founding volume — in numbers, photos, and three overheard things. Plus a first look at Vol. 02 in September.</p>
+        <div class="issue__sections">
+          <span><span class="dot"></span> The recap</span>
+          <span><span class="dot"></span> A love story (with consent)</span>
+          <span><span class="dot"></span> What we got wrong</span>
+          <span><span class="dot"></span> Vol. 02 preview</span>
+        </div>
+        <a href="recap-vol-01.html" class="issue__read">Read issue 04 <span style="font-size: 14px;">→</span></a>
+      </div>
+    </article>
+
+    <h2 style="font-family: var(--sans); font-size: 11px; font-weight: var(--w-sans-bold); letter-spacing: 0.28em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 28px;">Earlier issues</h2>
+
+    <div class="issue-list">
+
+      <a class="issue-card" href="#">
+        <div class="issue-card__hero issue-card__hero--01">spring.25</div>
+        <div>
+          <div class="issue-card__meta">
+            <span class="issue-card__num">Issue 03</span>
+            <span>Spring · 2025</span>
+          </div>
+        </div>
+        <h3 class="issue-card__title">A founder's first <em>fireside</em>.</h3>
+        <p class="issue-card__dek">What it took to book our first speaker — three months, fourteen emails, one ghost — and why the asks got easier from there.</p>
+      </a>
+
+      <a class="issue-card" href="#">
+        <div class="issue-card__hero issue-card__hero--00">winter.24</div>
+        <div>
+          <div class="issue-card__meta">
+            <span class="issue-card__num">Issue 02</span>
+            <span>Winter · 2024</span>
+          </div>
+        </div>
+        <h3 class="issue-card__title">Why we said <em>no</em> to a sponsor.</h3>
+        <p class="issue-card__dek">A brand we admire wanted to put their logo on the napkins. We turned it down. Here's the math we used to do it.</p>
+      </a>
+
+      <a class="issue-card" href="#">
+        <div class="issue-card__hero issue-card__hero--neg">autumn.24</div>
+        <div>
+          <div class="issue-card__meta">
+            <span class="issue-card__num">Issue 01</span>
+            <span>Autumn · 2024</span>
+          </div>
+        </div>
+        <h3 class="issue-card__title">Three friends, <em>one founding volume</em>.</h3>
+        <p class="issue-card__dek">The first Dispatch, and the start of an idea. Why we're building Doubles, and the rooms we'd like to build it for.</p>
+      </a>
+
+      <a class="issue-card" href="#">
+        <div class="issue-card__hero issue-card__hero--neg2">prologue</div>
+        <div>
+          <div class="issue-card__meta">
+            <span class="issue-card__num">Issue 00</span>
+            <span>Summer · 2024</span>
+          </div>
+        </div>
+        <h3 class="issue-card__title">A <em>prologue</em>.</h3>
+        <p class="issue-card__dek">Before we had a name, a venue, a guest list. A pre-launch dinner with six friends and a working theory about what made it good.</p>
+      </a>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="cats" data-screen-label="Categories">
+  <div class="cats__inner">
+    <div class="cats__head">
+      <span class="eyebrow"><span class="ball"></span> By topic</span>
+      <h2>Three <em>threads</em>.</h2>
+    </div>
+
+    <div class="cats__grid">
+      <a class="cat" href="#">
+        <div class="cat__count">11 pieces</div>
+        <h3>The <em>format</em>.</h3>
+        <p>How we build a room. The Volley, the dinner, the small choices that change a night. Behind-the-scenes essays.</p>
+      </a>
+      <a class="cat" href="#">
+        <div class="cat__count">6 pieces</div>
+        <h3>The <em>stories</em>.</h3>
+        <p>Love stories, friendship stories, found-my-co-founder stories. Always with consent. Sometimes anonymous.</p>
+      </a>
+      <a class="cat" href="#">
+        <div class="cat__count">4 pieces</div>
+        <h3>The <em>craft</em>.</h3>
+        <p>What we got wrong. What we changed. What we'd do again. The working notes of a small business trying to do one thing well.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

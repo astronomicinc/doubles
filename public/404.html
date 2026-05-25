@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body {
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Huge background number — soft, off-canvas */
+  .ghost {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--serif);
+    font-size: clamp(360px, 60vw, 760px);
+    font-weight: var(--w-serif-regular);
+    color: var(--cream-warm);
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    user-select: none;
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
+  }
+
+  /* Ball — the swing-and-miss */
+  .ball-mark {
+    position: absolute;
+    top: 24%;
+    left: 65%;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--ball);
+    box-shadow: 0 8px 24px -6px rgba(212, 247, 72, 0.5);
+    z-index: 1;
+    animation: bounce 3.4s ease-in-out infinite;
+  }
+  .ball-mark::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(20, 39, 45, 0.15);
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-12px); }
+  }
+
+  .card {
+    text-align: center;
+    max-width: 540px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .card .eyebrow {
+    margin-bottom: 22px;
+  }
+
+  .card h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(40px, 5.4vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: balance;
+    margin-bottom: 22px;
+  }
+  .card h1 em { color: var(--coral); font-style: italic; }
+
+  .card p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 44ch;
+    margin: 0 auto 30px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-action {
+    padding: 14px 24px;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-action--primary {
+    background: var(--coral);
+    color: white;
+    box-shadow: var(--shadow-cta);
+  }
+  .btn-action--primary:hover {
+    background: var(--coral-deep);
+    transform: translateY(-1px);
+  }
+  .btn-action--ghost {
+    background: white;
+    color: var(--ink-soft);
+    border-color: var(--line);
+  }
+  .btn-action--ghost:hover {
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
+
+  /* Tiny redirect list */
+  .quick-links {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 20px 28px;
+    justify-content: center;
+    flex-wrap: wrap;
+    font-size: 11.5px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .quick-links a {
+    color: var(--ink-soft);
+    border-bottom: 1px solid transparent;
+    transition: all 0.15s;
+  }
+  .quick-links a:hover {
+    color: var(--coral);
+    border-color: var(--coral);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">Apply <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <div class="ghost" aria-hidden="true">404</div>
+  <div class="ball-mark" aria-hidden="true"></div>
+
+  <div class="card">
+    <span class="eyebrow"><span class="ball"></span> Out of bounds</span>
+    <h1>That ball went <em>long</em>.</h1>
+    <p>The page you were looking for isn't here. Could be a stale link, a typo, or a volume that hasn't been posted yet. Below are the rooms we have open.</p>
+
+    <div class="actions">
+      <a href="index.html" class="btn-action btn-action--primary">Back to the court <span style="font-size: 14px;">→</span></a>
+      <a href="contact.html" class="btn-action btn-action--ghost">Tell us what you wanted</a>
+    </div>
+
+    <div class="quick-links">
+      <a href="events.html">Events</a>
+      <a href="apply.html">Apply</a>
+      <a href="volley.html">The Volley</a>
+      <a href="about.html">About</a>
+      <a href="faq.html">FAQ</a>
+      <a href="status.html">My status</a>
+    </div>
+  </div>
+
+</main>
+
+</body>
+</html>

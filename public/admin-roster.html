@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Roster · Vol. 01 · Admin · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body { background: var(--cream); }
+
+  /* Admin shell (shared) */
+  .admin-bar {
+    background: var(--navy); color: var(--cream);
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  }
+  .admin-bar__inner {
+    max-width: 1480px; margin: 0 auto;
+    padding: 14px clamp(20px, 3vw, 36px);
+    display: grid; grid-template-columns: auto 1fr auto;
+    gap: 28px; align-items: center;
+  }
+  .admin-bar__logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cream);
+  }
+  .admin-bar__logo-dot { width: 9px; height: 9px; background: var(--ball); border-radius: 50%; }
+  .admin-bar__logo-tag {
+    font-family: var(--sans); font-size: 10px;
+    font-weight: var(--w-sans-bold); letter-spacing: 0.24em;
+    color: rgba(245, 241, 232, 0.55); text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(245, 241, 232, 0.18);
+    border-radius: var(--r-pill); margin-left: 4px;
+  }
+  .admin-nav { display: flex; gap: 8px; justify-self: center; }
+  .admin-nav a {
+    padding: 8px 16px; font-family: var(--sans);
+    font-size: 13px; font-weight: var(--w-sans-medium);
+    color: rgba(245, 241, 232, 0.65);
+    border-radius: var(--r-pill);
+    transition: background 0.15s, color 0.15s;
+  }
+  .admin-nav a:hover { color: var(--cream); background: rgba(245, 241, 232, 0.06); }
+  .admin-nav a.is-active {
+    color: var(--ink); background: var(--ball);
+    font-weight: var(--w-sans-bold);
+  }
+  .admin-bar__right { display: flex; align-items: center; gap: 14px; }
+  .admin-bar__avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--cream-warm); color: var(--coral);
+    font-family: var(--serif); font-style: italic; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .admin-bar__name { font-size: 12.5px; font-weight: var(--w-sans-medium); color: var(--cream); }
+
+  /* Page */
+  .admin-page {
+    max-width: 1480px; margin: 0 auto;
+    padding: clamp(28px, 4vh, 44px) clamp(20px, 3vw, 36px) clamp(60px, 8vh, 100px);
+  }
+  .page-head {
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 24px; align-items: end;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 28px;
+  }
+  .page-head h1 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.6vw, 48px);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em; line-height: 1;
+    color: var(--ink);
+  }
+  .page-head h1 em { color: var(--coral); font-style: italic; }
+  .page-head__sub { font-size: 13.5px; color: var(--ink-soft); margin-top: 6px; }
+
+  .actions-row {
+    display: flex; gap: 10px; flex-wrap: wrap;
+  }
+  .pill-btn {
+    padding: 9px 16px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s;
+  }
+  .pill-btn svg { width: 14px; height: 14px; }
+  .pill-btn:hover { border-color: var(--teal); color: var(--ink); }
+  .pill-btn--primary { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+  .pill-btn--primary:hover { background: var(--navy); color: var(--ball); }
+
+  /* Composition strip — the "room breakdown" */
+  .composition {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 28px;
+    margin-bottom: 22px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 900px) {
+    .composition { grid-template-columns: 1fr; gap: 20px; }
+  }
+  .composition__head h3 {
+    font-family: var(--sans);
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .composition__head .big {
+    font-family: var(--serif);
+    font-size: 36px;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .composition__head .big em { color: var(--coral); font-style: italic; }
+  .composition__head .sub {
+    font-size: 12px; color: var(--ink-soft); margin-top: 6px;
+  }
+
+  .comp-bar {
+    display: flex; height: 14px; border-radius: 8px;
+    overflow: hidden; background: var(--cream-warm);
+  }
+  .comp-bar__seg { height: 100%; transition: filter 0.15s; }
+  .comp-bar__seg:hover { filter: brightness(1.15); }
+  .comp-bar__seg--founders   { background: var(--teal); }
+  .comp-bar__seg--investors  { background: var(--coral); }
+  .comp-bar__seg--operators  { background: var(--ball); }
+  .comp-bar__seg--wildcards  { background: var(--ink); }
+  .comp-legend {
+    display: flex; gap: 18px; margin-top: 12px;
+    flex-wrap: wrap; font-size: 12px;
+  }
+  .comp-legend__item {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--ink-soft);
+  }
+  .comp-legend__dot {
+    width: 10px; height: 10px; border-radius: 50%; display: inline-block;
+  }
+  .comp-legend__item strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+
+  .composition__kitchen {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 1.4;
+    max-width: 24ch;
+    border-left: 2px solid var(--coral);
+    padding-left: 18px;
+  }
+  .composition__kitchen strong {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 6px;
+  }
+
+  /* Filter pills (shared) */
+  .filters {
+    display: flex; gap: 6px; flex-wrap: wrap;
+    margin-bottom: 18px; padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .filter-pill {
+    padding: 7px 14px;
+    font-family: var(--sans); font-size: 12.5px;
+    font-weight: var(--w-sans-medium); color: var(--ink-soft);
+    background: white; border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    cursor: pointer; transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .filter-pill:hover { border-color: var(--teal); color: var(--ink); }
+  .filter-pill.is-active {
+    background: var(--ink); color: var(--cream); border-color: var(--ink);
+  }
+  .filter-pill__count {
+    font-family: var(--serif); font-size: 12px;
+    color: var(--coral); font-style: italic;
+  }
+  .filter-pill.is-active .filter-pill__count { color: var(--ball); }
+  .filters__spacer { flex: 1; }
+  .filters__search {
+    padding: 8px 14px; background: white;
+    border: 1px solid var(--line); border-radius: var(--r-pill);
+    font-family: var(--sans); font-size: 13px;
+    color: var(--ink); min-width: 240px;
+  }
+  .filters__search:focus { outline: none; border-color: var(--teal); }
+
+  /* Roster table */
+  .roster {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .roster__head, .roster-row {
+    display: grid;
+    grid-template-columns: 60px 1.4fr 1fr 140px 180px 100px;
+    gap: 18px;
+    padding: 14px 24px;
+    align-items: center;
+  }
+  .roster__head {
+    background: var(--cream-warm);
+    border-bottom: 1px solid var(--line);
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .roster-row {
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.12s;
+    cursor: pointer;
+    color: inherit;
+  }
+  .roster-row:last-child { border-bottom: none; }
+  .roster-row:hover { background: var(--cream-warm); }
+  @media (max-width: 1100px) {
+    .roster__head, .roster-row {
+      grid-template-columns: 50px 1.4fr 1fr 140px 100px;
+    }
+    .roster__head .col-flags, .roster-row .col-flags { display: none; }
+  }
+  @media (max-width: 800px) {
+    .roster__head, .roster-row {
+      grid-template-columns: 50px 1fr 100px;
+    }
+    .roster__head .col-pair, .roster-row .col-pair,
+    .roster__head .col-role, .roster-row .col-role { display: none; }
+  }
+
+  .roster__seat {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-style: italic;
+    color: var(--teal);
+    line-height: 1;
+  }
+
+  .person-cell {
+    display: flex; align-items: center; gap: 12px;
+    min-width: 0;
+  }
+  .person-cell__avatar {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--cream-warm); color: var(--coral);
+    font-family: var(--serif); font-style: italic; font-size: 15px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .person-cell__avatar--friend { background: var(--ink); color: var(--ball); }
+  .person-cell__name {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .person-cell__sub {
+    font-size: 11.5px; color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .role-chip {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 4px 10px;
+    background: var(--cream-warm);
+    border-radius: var(--r-pill);
+    font-size: 11px; font-weight: var(--w-sans-medium);
+    color: var(--ink);
+  }
+  .role-chip__dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .flag-row {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .flag {
+    display: inline-flex; align-items: center;
+    padding: 3px 9px;
+    border-radius: var(--r-pill);
+    font-size: 10.5px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .flag--diet   { background: rgba(255, 165, 0, 0.18); color: #b85c00; }
+  .flag--photo  { background: rgba(212, 247, 72, 0.32); color: var(--teal); }
+  .flag--sms    { background: rgba(27, 90, 107, 0.12); color: var(--teal); }
+  .flag--allergy { background: rgba(255, 107, 107, 0.16); color: var(--coral-deep); }
+
+  .check-cell {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--ink-soft);
+  }
+  .check-cell__indicator {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .check-cell--in .check-cell__indicator {
+    background: var(--ball); border-color: var(--ball);
+    color: var(--ink);
+  }
+  .check-cell--in .check-cell__indicator svg { width: 9px; height: 9px; }
+
+  /* Section divider in the list */
+  .roster__divider {
+    padding: 14px 24px;
+    background: var(--cream-warm);
+    border-bottom: 1px solid var(--line);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .roster__divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header class="admin-bar">
+  <div class="admin-bar__inner">
+    <a href="admin-dashboard.html" class="admin-bar__logo">
+      <span class="admin-bar__logo-dot" aria-hidden="true"></span>
+      DOUBLES
+      <span class="admin-bar__logo-tag">Admin</span>
+    </a>
+    <nav class="admin-nav" aria-label="Admin sections">
+      <a href="admin-dashboard.html">Dashboard</a>
+      <a href="admin-inbox.html">Applications</a>
+      <a href="admin-roster.html" class="is-active">Roster</a>
+      <a href="admin-volumes.html">Volumes</a>
+      <a href="admin-intros.html">Intros</a>
+      <a href="#">Settings</a>
+    </nav>
+    <div class="admin-bar__right">
+      <div class="admin-bar__avatar" aria-hidden="true">D</div>
+      <span class="admin-bar__name">Di</span>
+    </div>
+  </div>
+</header>
+
+<main class="admin-page" data-screen-label="Roster">
+
+  <div class="page-head">
+    <div>
+      <h1>The <em>roster</em>.</h1>
+      <div class="page-head__sub">Vol. 01 · 22 of 30 confirmed · doors in 28 days</div>
+    </div>
+    <div class="actions-row">
+      <button class="pill-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Export CSV
+      </button>
+      <button class="pill-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg>
+        Kitchen sheet
+      </button>
+      <button class="pill-btn pill-btn--primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        Open door check-in
+      </button>
+    </div>
+  </div>
+
+  <!-- Composition strip -->
+  <section class="composition" aria-label="Room composition" data-screen-label="Composition">
+    <div class="composition__head">
+      <h3>Room composition</h3>
+      <div class="big"><em>22</em> of 30 seats</div>
+      <div class="sub">8 left · close at 25 to keep wait-list buffer</div>
+    </div>
+    <div>
+      <div class="comp-bar" aria-label="Seat distribution by role">
+        <span class="comp-bar__seg comp-bar__seg--founders" style="width: 41%;" title="Founders"></span>
+        <span class="comp-bar__seg comp-bar__seg--investors" style="width: 27%;" title="Investors"></span>
+        <span class="comp-bar__seg comp-bar__seg--operators" style="width: 23%;" title="Operators"></span>
+        <span class="comp-bar__seg comp-bar__seg--wildcards" style="width: 9%;" title="Wildcards"></span>
+        <span style="width: 27%; background: var(--cream-warm);"></span>
+      </div>
+      <div class="comp-legend">
+        <span class="comp-legend__item"><span class="comp-legend__dot" style="background: var(--teal);"></span> <strong>9</strong> Founders</span>
+        <span class="comp-legend__item"><span class="comp-legend__dot" style="background: var(--coral);"></span> <strong>6</strong> Investors</span>
+        <span class="comp-legend__item"><span class="comp-legend__dot" style="background: var(--ball);"></span> <strong>5</strong> Operators</span>
+        <span class="comp-legend__item"><span class="comp-legend__dot" style="background: var(--ink);"></span> <strong>2</strong> Wildcards</span>
+        <span class="comp-legend__item" style="opacity: 0.5;"><span class="comp-legend__dot" style="background: var(--cream-warm); border: 1px solid var(--line);"></span> <strong>8</strong> Open</span>
+      </div>
+    </div>
+    <div class="composition__kitchen">
+      <strong>Kitchen brief</strong>
+      4 pescatarian · 2 vegan · 1 severe nut allergy · 1 gluten-free
+    </div>
+  </section>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-pill is-active">All confirmed <span class="filter-pill__count">22</span></button>
+    <button class="filter-pill">Founders <span class="filter-pill__count">9</span></button>
+    <button class="filter-pill">Investors <span class="filter-pill__count">6</span></button>
+    <button class="filter-pill">Operators <span class="filter-pill__count">5</span></button>
+    <button class="filter-pill">Wildcards <span class="filter-pill__count">2</span></button>
+    <button class="filter-pill">Dietary flags <span class="filter-pill__count">7</span></button>
+    <div class="filters__spacer"></div>
+    <input class="filters__search" type="search" placeholder="Search name, company…"/>
+  </div>
+
+  <!-- Roster table -->
+  <div class="roster" data-screen-label="Roster table">
+
+    <div class="roster__head">
+      <div>Seat</div>
+      <div>Guest</div>
+      <div class="col-pair">+1 / Pair</div>
+      <div class="col-role">Role</div>
+      <div class="col-flags">Heads-up</div>
+      <div>Status</div>
+    </div>
+
+    <div class="roster__divider">Confirmed · 22 paid</div>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">07</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">SK</div>
+        <div>
+          <div class="person-cell__name">Sarah Kim</div>
+          <div class="person-cell__sub">Investor · Lightline · 34</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">TN</div>
+        <div class="person-cell__sub">Tom Nguyen · #21</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--coral);"></span> Investor</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--photo">Photo OK</span>
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">09</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">JP</div>
+        <div>
+          <div class="person-cell__name">James Park</div>
+          <div class="person-cell__sub">Exec · Stripe · 37</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">MR</div>
+        <div class="person-cell__sub">Maya Reyes · #15</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--ball);"></span> Operator</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">11</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">DC</div>
+        <div>
+          <div class="person-cell__name">David Chen</div>
+          <div class="person-cell__sub">Investor · Foundry · 36</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">EW</div>
+        <div class="person-cell__sub">Ella Watson · #18</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--coral);"></span> Investor</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--photo">Photo OK</span>
+      </div></div>
+      <div class="check-cell check-cell--in">
+        <span class="check-cell__indicator" aria-label="Arrived">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+        </span>
+        6:08 PM
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">14</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">JR</div>
+        <div>
+          <div class="person-cell__name">Jordan Rivers</div>
+          <div class="person-cell__sub">Founder · River &amp; Co. · 32</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">AM</div>
+        <div class="person-cell__sub">Alex Mendoza · #22</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--teal);"></span> Founder</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">17</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">RA</div>
+        <div>
+          <div class="person-cell__name">Ravi Aggarwal</div>
+          <div class="person-cell__sub">Founder · Verdant · 31</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">LS</div>
+        <div class="person-cell__sub">Lena Sokolov · #24</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--teal);"></span> Founder</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--diet">Vegan</span>
+        <span class="flag flag--photo">Photo OK</span>
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">19</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">PG</div>
+        <div>
+          <div class="person-cell__name">Pete Garcia</div>
+          <div class="person-cell__sub">Founder · Threadwork · 35</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">AL</div>
+        <div class="person-cell__sub">Annie Liu · #26</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--teal);"></span> Founder</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--diet">Pescatarian</span>
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell check-cell--in">
+        <span class="check-cell__indicator" aria-label="Arrived">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+        </span>
+        6:04 PM
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">21</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">TN</div>
+        <div>
+          <div class="person-cell__name">Tom Nguyen</div>
+          <div class="person-cell__sub">Founder · Compass Health · 33</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">SK</div>
+        <div class="person-cell__sub">Sarah Kim · #07</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--teal);"></span> Founder</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--allergy">Nut allergy</span>
+        <span class="flag flag--photo">Photo OK</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">22</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">AM</div>
+        <div>
+          <div class="person-cell__name">Alex Mendoza</div>
+          <div class="person-cell__sub">Founder · Mendoza Studio · 34</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">JR</div>
+        <div class="person-cell__sub">Jordan Rivers · #14</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--teal);"></span> Founder</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--diet">Pescatarian</span>
+        <span class="flag flag--photo">Photo OK</span>
+      </div></div>
+      <div class="check-cell">
+        <span class="check-cell__indicator" aria-label="Not arrived"></span>
+        Awaiting
+      </div>
+    </a>
+
+    <a class="roster-row" href="admin-application.html">
+      <div class="roster__seat">26</div>
+      <div class="person-cell">
+        <div class="person-cell__avatar">AL</div>
+        <div>
+          <div class="person-cell__name">Annie Liu</div>
+          <div class="person-cell__sub">Investor · a16z · 36</div>
+        </div>
+      </div>
+      <div class="person-cell col-pair">
+        <div class="person-cell__avatar person-cell__avatar--friend" style="width: 28px; height: 28px; font-size: 12px;">PG</div>
+        <div class="person-cell__sub">Pete Garcia · #19</div>
+      </div>
+      <div class="col-role"><span class="role-chip"><span class="role-chip__dot" style="background: var(--coral);"></span> Investor</span></div>
+      <div class="col-flags"><div class="flag-row">
+        <span class="flag flag--diet">Gluten-free</span>
+        <span class="flag flag--sms">SMS</span>
+      </div></div>
+      <div class="check-cell check-cell--in">
+        <span class="check-cell__indicator" aria-label="Arrived">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="m5 12 5 5L20 7"/></svg>
+        </span>
+        6:06 PM
+      </div>
+    </a>
+
+  </div>
+
+  <p style="margin-top: 18px; font-size: 12.5px; color: var(--ink-soft);">
+    Showing 9 of 22 · <a href="#" style="color: var(--teal); border-bottom: 1px solid var(--teal);">Load more →</a>
+  </p>
+
+</main>
+
+</body>
+</html>
