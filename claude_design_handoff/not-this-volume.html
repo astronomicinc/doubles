@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Not this volume — Doubles</title>
+<meta name="description" content="We won't be inviting you to Vol. 01. Here's what that means, and what comes next." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POST-FLOW SHELL — duplicated from application-submitted.
+     The rejection page is the tonal outlier: same navy header,
+     but the rest of the page sits on cream-warm rather than
+     cream, to feel a touch more held / less marketing-y.
+     ========================================================= */
+
+  .flow { min-height: 100vh; background: var(--cream); }
+
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(90px, 14vh, 150px) 0 clamp(60px, 9vh, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute;
+    top: -60%; right: -10%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 7.6vw, 112px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    max-width: 16ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.8);
+    margin-top: 28px;
+    max-width: 56ch;
+  }
+
+  /* Refund / status line under header */
+  .flow-header__chips {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .header-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    background: rgba(245, 241, 232, 0.06);
+    border: 1px solid rgba(245, 241, 232, 0.14);
+    border-radius: var(--r-pill);
+    font-size: 12.5px;
+    font-weight: var(--w-sans-medium);
+    color: rgba(245, 241, 232, 0.85);
+  }
+  .header-chip strong { color: var(--ball); font-weight: var(--w-sans-bold); }
+  .header-chip__dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ball);
+    box-shadow: 0 0 0 3px rgba(212, 247, 72, 0.18);
+  }
+
+  /* ----- BODY ----- */
+  .flow-body {
+    background: var(--cream-warm);
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .flow-body__inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .flow-body__inner h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 56px 0 18px;
+  }
+  .flow-body__inner h2 em { color: var(--coral); font-style: italic; }
+  .flow-body__inner h2:first-child { margin-top: 0; }
+  .flow-body__inner p {
+    font-size: 18px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 20px;
+  }
+  .flow-body__inner p.lead {
+    font-size: 21px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-style: italic;
+    line-height: 1.4;
+  }
+  .flow-body__inner em { color: var(--coral); font-style: italic; }
+
+  /* The promise list — what we'll do */
+  .promises {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(28px, 4vw, 40px);
+    margin: 32px 0;
+  }
+  .promises h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 22px;
+  }
+  .promises h3 em { color: var(--coral); font-style: italic; }
+  .promises ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .promises li {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 18px;
+    align-items: baseline;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .promises li::before {
+    content: '';
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--ball);
+    margin-top: 8px;
+  }
+  .promises li strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .promises li span {
+    color: var(--ink-soft);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Pull quote — a single line that sits between sections */
+  .single-line {
+    margin: 50px 0;
+    padding: 32px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(24px, 2.6vw, 34px);
+    line-height: 1.35;
+    color: var(--ink);
+    text-align: center;
+    max-width: 26ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .single-line em { color: var(--coral); font-style: italic; }
+
+  /* CTA row — quiet, two options */
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin: 40px 0 0;
+  }
+  @media (max-width: 640px) { .cta-row { grid-template-columns: 1fr; } }
+  .cta-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .cta-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .cta-card .label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+  .cta-card h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .cta-card h3 em { color: var(--coral); font-style: italic; }
+  .cta-card p {
+    font-size: 14px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .cta-card__link {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Signed-off block */
+  .signoff {
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .signoff__line {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink);
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+  .signoff__attr {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .signoff__attr strong { color: var(--coral); font-weight: var(--w-sans-bold); }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="events.html" class="btn btn--coral btn--sm">
+      Future volumes <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<main class="flow">
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="Not This Volume Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · A note from us</span>
+      <h1>Not <em>this</em> room.<br/>Not <em>no</em> forever.</h1>
+      <p class="flow-header__sub">
+        Hi Jordan — we read your application, talked it through, and we're
+        not inviting you and Alex to Vol. 01. We wanted to tell you
+        directly, with a real explanation of what that means and what
+        happens next, rather than a form letter.
+      </p>
+
+      <div class="flow-header__chips">
+        <span class="header-chip">
+          <span class="header-chip__dot" aria-hidden="true"></span>
+          Hold of <strong>$145</strong> released today
+        </span>
+        <span class="header-chip">
+          <span class="header-chip__dot" aria-hidden="true"></span>
+          You're <strong>auto-reviewed</strong> for Vol. 02
+        </span>
+        <span class="header-chip">
+          <span class="header-chip__dot" aria-hidden="true"></span>
+          <strong>No re-apply</strong> needed
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       BODY
+       ========================================================= -->
+  <section class="flow-body" data-screen-label="Not This Volume Body">
+    <div class="flow-body__inner">
+
+      <p class="lead">
+        Vol. 01 is thirty seats and the founding volume — the room is the
+        rest of the year's compass. We curate it tighter than every volume
+        that follows.
+      </p>
+
+      <p>
+        About <em>one in four</em> pairs were invited this round. The
+        reasons we couldn't make a seat for you and Alex aren't reasons
+        we can list line by line, because that's not how curation works.
+        It usually comes down to balance — the mix of industries, the
+        match of energies, the small-room math of thirty people who all
+        have to want to talk to each other.
+      </p>
+
+      <p>
+        We want to be clear about one thing: this isn't a quality
+        judgment. The applications we have to say no to in Vol. 01 are
+        almost always ones we want to say yes to later.
+      </p>
+
+      <h2>What <em>happens</em> now.</h2>
+
+      <div class="promises">
+        <h3>Three <em>concrete</em> things.</h3>
+        <ul>
+          <li>
+            <span>
+              <strong>The $145 hold drops off your card today.</strong>
+              You may see it disappear from your statement within five
+              business days, depending on your bank. Same for Alex.
+            </span>
+          </li>
+          <li>
+            <span>
+              <strong>You're already in the pool for Vol. 02.</strong>
+              One application covers all future volumes. We re-review
+              you automatically — no second form, no awkward follow-up
+              email. Vol. 02 is in September; you'll hear either way
+              by mid-August.
+            </span>
+          </li>
+          <li>
+            <span>
+              <strong>The Dispatch keeps you in the loop.</strong>
+              Quarterly notes from the floor — what happened at the
+              last volume, who's coming up, occasional love stories.
+              We'll add the email on your application unless you'd
+              rather we didn't.
+            </span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="single-line">
+        Most rejections aren't <em>no</em> forever. They're <em>not this room</em>.
+      </div>
+
+      <h2>If you want to <em>nudge</em> us.</h2>
+
+      <p>
+        We don't take "but here's why you should reconsider" emails — not
+        because we're precious about it, but because the curation logic
+        is balance-of-the-room, not individual merit. There's no edit
+        you can make to your application that would change Vol. 01.
+      </p>
+
+      <p>
+        What <em>does</em> help: between now and Vol. 02, if anything
+        material changes — a new project, a different friend you'd
+        bring, a move to SF if you're not here yet — reply to your
+        confirmation email and we'll update your file. That actually
+        moves the needle.
+      </p>
+
+      <h2>While you're <em>here</em>.</h2>
+
+      <div class="cta-row">
+        <a href="events.html" class="cta-card">
+          <span class="label">01 · The calendar</span>
+          <h3>See <em>future volumes</em>.</h3>
+          <p>Four volumes a year, each in a different SF home. Vol. 02 is in September — same room math, new mix.</p>
+          <span class="cta-card__link">Open the calendar <span style="font-size: 13px;">→</span></span>
+        </a>
+        <a href="about.html" class="cta-card">
+          <span class="label">02 · The story</span>
+          <h3>Read <em>about us</em>.</h3>
+          <p>Three friends, one founding volume, and a strong feeling that the dating event we wanted didn't exist yet.</p>
+          <span class="cta-card__link">Read about Doubles <span style="font-size: 13px;">→</span></span>
+        </a>
+      </div>
+
+      <div class="signoff">
+        <p class="signoff__line">
+          We're glad you applied. Curating a room means saying no to
+          people we'd otherwise love to have at dinner. We hope to see
+          you in September — and if not then, the one after.
+        </p>
+        <div class="signoff__attr">
+          With care, <strong>Di, Sam &amp; Theo</strong> · The Doubles founders
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

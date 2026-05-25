@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Email Templates · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     EMAIL SHOWCASE — internal design surface. Renders each of
+     the 10 transactional emails the system sends. Background
+     simulates "inbox" — a wash of warm grey so the white email
+     envelope reads as a real message.
+     ========================================================= */
+
+  body {
+    background: #d8d3c7;
+    color: var(--ink);
+  }
+
+  /* Showcase chrome */
+  .showcase-nav {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 14px 0;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+  }
+  .showcase-nav__inner {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 3vw, 36px);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .showcase-nav__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+  .showcase-nav__logo::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--ball);
+    border-radius: 50%;
+  }
+  .showcase-nav__tag {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+    padding: 4px 10px;
+    border: 1px solid rgba(245, 241, 232, 0.18);
+    border-radius: var(--r-pill);
+  }
+  .showcase-nav__list {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0; padding: 0;
+    overflow-x: auto;
+    flex: 1;
+  }
+  .showcase-nav__list a {
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    color: rgba(245, 241, 232, 0.55);
+    border-radius: var(--r-pill);
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+  .showcase-nav__list a:hover { color: var(--cream); background: rgba(245, 241, 232, 0.06); }
+
+  .showcase-intro {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 60px clamp(20px, 4vw, 40px) 30px;
+    text-align: center;
+  }
+  .showcase-intro h1 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .showcase-intro h1 em { color: var(--coral); font-style: italic; }
+  .showcase-intro p {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 58ch;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Email card row */
+  .email-row {
+    padding: 40px clamp(20px, 4vw, 40px) 60px;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .email-label {
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    padding-bottom: 12px;
+    border-bottom: 1px dashed rgba(20, 39, 45, 0.18);
+  }
+  .email-label__kind {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    padding: 4px 10px;
+    background: rgba(255, 107, 107, 0.12);
+    border-radius: var(--r-pill);
+  }
+  .email-label__trigger {
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .email-label__trigger strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+  .email-label__index {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    color: var(--ink-soft);
+  }
+
+  /* The email envelope — 600px wide, white card */
+  .email {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px -8px rgba(20, 39, 45, 0.14);
+    font-family: var(--sans);
+    color: var(--ink);
+  }
+
+  /* Email "to / from" header — mimics an inbox preview */
+  .email__envelope {
+    padding: 14px 28px;
+    background: var(--cream-warm);
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 8px 14px;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .email__envelope dt {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .email__envelope dd {
+    margin: 0;
+    color: var(--ink);
+    font-weight: var(--w-sans-medium);
+  }
+  .email__envelope__when {
+    grid-column: 3;
+    grid-row: 1 / span 3;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .email__subject {
+    padding: 18px 28px 22px;
+    border-bottom: 1px solid var(--line);
+    background: white;
+  }
+  .email__subject__label {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 6px;
+  }
+  .email__subject__line {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .email__subject__line em { color: var(--coral); font-style: italic; }
+  .email__preheader {
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Email body content */
+  .email__brand {
+    padding: 28px 32px 8px;
+    text-align: center;
+  }
+  .email__brand a {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: var(--serif);
+    font-size: 14px;
+    font-weight: var(--w-serif-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .email__brand a::before {
+    content: '';
+    width: 8px; height: 8px;
+    background: var(--ball);
+    border-radius: 50%;
+  }
+
+  .email__body {
+    padding: 28px 32px 8px;
+  }
+  .email__hello {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+  .email__h1 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 4vw, 38px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .email__h1 em { color: var(--coral); font-style: italic; }
+  .email__h1--dark { color: var(--cream); }
+  .email__h1--dark em { color: var(--ball); }
+  .email__p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .email__p strong { font-weight: var(--w-sans-bold); }
+  .email__p--small {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+
+  /* CTA button (image-friendly for email — uses block element) */
+  .email__cta {
+    display: block;
+    padding: 16px 28px;
+    background: var(--coral);
+    color: white;
+    text-align: center;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin: 24px auto;
+    text-decoration: none;
+    max-width: 360px;
+  }
+  .email__cta-row {
+    text-align: center;
+  }
+  .email__cta-meta {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    margin-top: -10px;
+    margin-bottom: 24px;
+  }
+
+  /* Info box — neutral grey block for logistics */
+  .email__box {
+    background: var(--cream-warm);
+    border-radius: 6px;
+    padding: 20px 22px;
+    margin: 20px 0;
+  }
+  .email__box dl {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px 14px;
+    margin: 0;
+    font-size: 13.5px;
+  }
+  .email__box dt {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 2px;
+  }
+  .email__box dd {
+    margin: 0;
+    color: var(--ink);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 15px;
+    font-weight: var(--w-serif-medium);
+  }
+
+  /* Dark inset — for "you're in" celebratory bands */
+  .email__inset-dark {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: 6px;
+    padding: 24px 22px;
+    margin: 20px 0;
+  }
+  .email__inset-dark .email__p { color: rgba(245, 241, 232, 0.78); margin-bottom: 12px; }
+  .email__inset-dark dl { display: grid; grid-template-columns: 90px 1fr; gap: 10px 14px; margin: 0; }
+  .email__inset-dark dt {
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5); padding-top: 2px;
+  }
+  .email__inset-dark dd {
+    margin: 0; color: var(--cream);
+    font-family: var(--serif); font-style: italic;
+    font-size: 15px; font-weight: var(--w-serif-medium);
+  }
+  .email__inset-dark dd em { color: var(--ball); }
+
+  /* Quote block — for vouches */
+  .email__quote {
+    border-left: 2px solid var(--coral);
+    background: var(--cream-warm);
+    padding: 18px 22px;
+    margin: 18px 0;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .email__quote::before { content: '"'; color: var(--coral); margin-right: 2px; }
+  .email__quote::after  { content: '"'; color: var(--coral); }
+  .email__quote-attr {
+    margin-top: 10px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Stepped list — for timelines */
+  .email__steps {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .email__step {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 14px;
+    align-items: baseline;
+  }
+  .email__step__when {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--teal);
+    font-weight: var(--w-serif-medium);
+  }
+  .email__step__what strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .email__step__what span {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+
+  .email__signoff {
+    margin-top: 24px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .email__signoff small {
+    display: block;
+    margin-top: 4px;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  /* Email footer */
+  .email__footer {
+    background: var(--cream-warm);
+    padding: 22px 32px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .email__footer__tag {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .email__footer__links {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .email__footer__links a {
+    color: var(--ink-soft);
+    border-bottom: 1px solid transparent;
+    margin: 0 6px;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .email__footer__links a:hover { color: var(--ink); border-color: var(--ink-soft); }
+  .email__footer__addr {
+    font-size: 11px;
+    color: var(--ink-soft);
+    margin-top: 12px;
+    line-height: 1.5;
+  }
+
+  /* SMS — phone mockup variant */
+  .sms-phone {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+    background: #1a1a1a;
+    border-radius: 36px;
+    padding: 12px;
+    box-shadow: 0 8px 32px -8px rgba(20, 39, 45, 0.3);
+  }
+  .sms-phone__screen {
+    background: #f2f2f7;
+    border-radius: 28px;
+    overflow: hidden;
+    padding: 14px 14px 30px;
+  }
+  .sms-phone__status {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    color: #000;
+    padding: 4px 12px 14px;
+  }
+  .sms-phone__header {
+    text-align: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #d0d0d4;
+    margin-bottom: 18px;
+  }
+  .sms-phone__sender {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--ball);
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 6px;
+  }
+  .sms-phone__name {
+    font-size: 12px;
+    color: #6b6b70;
+    font-weight: var(--w-sans-medium);
+  }
+  .sms-phone__bubble {
+    background: white;
+    border-radius: 18px;
+    padding: 12px 16px;
+    margin-bottom: 6px;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #000;
+    max-width: 80%;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  }
+  .sms-phone__bubble strong { font-weight: var(--w-sans-bold); }
+  .sms-phone__bubble a { color: #0070d4; }
+  .sms-phone__time {
+    font-size: 10px;
+    color: #8e8e93;
+    text-align: center;
+    margin: 6px 0 4px;
+    font-weight: var(--w-sans-bold);
+  }
+
+  /* small link list helper */
+  .email__small-row {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    font-size: 12px;
+    margin-top: 10px;
+    color: var(--ink-soft);
+  }
+  .email__small-row a {
+    color: var(--teal);
+    border-bottom: 1px solid var(--teal);
+  }
+
+  /* avatar pair for mutual match email */
+  .email__pair {
+    display: flex; justify-content: center;
+    gap: 14px; align-items: center;
+    margin: 18px 0;
+  }
+  .email__pair-avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    color: var(--coral);
+    font-family: var(--serif);
+    font-style: italic; font-size: 26px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .email__pair-avatar--right {
+    background: var(--ink);
+    color: var(--ball);
+  }
+  .email__pair-link {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--ball);
+    color: var(--ink);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .email__pair-link svg { width: 18px; height: 18px; }
+</style>
+</head>
+<body>
+
+<header class="showcase-nav" data-screen-label="Email Showcase Nav">
+  <div class="showcase-nav__inner">
+    <div class="showcase-nav__logo">DOUBLES</div>
+    <span class="showcase-nav__tag">Email templates</span>
+    <ul class="showcase-nav__list">
+      <li><a href="#e01">01 · Received</a></li>
+      <li><a href="#e02">02 · Invitation</a></li>
+      <li><a href="#e03">03 · Reminder</a></li>
+      <li><a href="#e04">04 · Submitted</a></li>
+      <li><a href="#e05">05 · Accepted</a></li>
+      <li><a href="#e06">06 · Not this</a></li>
+      <li><a href="#e07">07 · Address</a></li>
+      <li><a href="#e08">08 · Day-of</a></li>
+      <li><a href="#e09">09 · Sparks</a></li>
+      <li><a href="#e10">10 · Mutual</a></li>
+    </ul>
+  </div>
+</header>
+
+<section class="showcase-intro">
+  <h1>Ten <em>messages</em>. One conversation.</h1>
+  <p>Every transactional message the system sends — from "we got your application" through to "you both said yes." Each email reuses the same envelope so they feel like chapters of a single relationship, not bursts from a marketing machine. Designed at 600px wide, mobile-responsive, plays nicely in Gmail / Outlook / Apple Mail.</p>
+</section>
+
+<!-- =========================================================
+     01 · APPLICATION RECEIVED — to applicant
+     ========================================================= -->
+<div class="email-row" id="e01">
+  <div class="email-label">
+    <span class="email-label__kind">application_received</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> applicant submits apply.html · <strong>To:</strong> applicant</span>
+    <span class="email-label__index">01/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">2:48 PM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Got it, Jordan. Vol. 01 is in motion.</div>
+      <div class="email__preheader">Alex has 7 days to complete their side. Here's what to expect.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Jordan,</p>
+      <h2 class="email__h1">Your <em>application</em> is in.</h2>
+      <p class="email__p">We've got it, we've already emailed Alex to invite them, and we have a $145 hold on your card. Nothing else from you for now — the next move is Alex's.</p>
+
+      <ol class="email__steps">
+        <li class="email__step">
+          <span class="email__step__when">Right now</span>
+          <div class="email__step__what">
+            <strong>Alex gets an invite.</strong>
+            <span>Your vouch, a short questionnaire, and their own $145 hold. They have 7 days; we'll nudge them at 48 hours.</span>
+          </div>
+        </li>
+        <li class="email__step">
+          <span class="email__step__when">After both</span>
+          <div class="email__step__what">
+            <strong>We review the pair.</strong>
+            <span>Two of three founders look at both sides together. Decision in 48 hours.</span>
+          </div>
+        </li>
+        <li class="email__step">
+          <span class="email__step__when">If yes</span>
+          <div class="email__step__what">
+            <strong>Cards are charged. You're in.</strong>
+            <span>If we say no, the hold drops off your card within 5 business days. No charge.</span>
+          </div>
+        </li>
+      </ol>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">See full timeline <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">Bookmark it — we update it as Alex moves through.</div>
+      </div>
+
+      <p class="email__signoff">
+        Glad you applied.
+        <small>Di · for the Doubles team</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Doubles, not solos."</div>
+      <div class="email__footer__links">
+        <a href="#">Status</a> · <a href="#">Code of Conduct</a> · <a href="#">Email preferences</a>
+      </div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco · You're receiving this because you applied to Vol. 01.</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     02 · FRIEND INVITATION — to friend
+     ========================================================= -->
+<div class="email-row" id="e02">
+  <div class="email-label">
+    <span class="email-label__kind">friend_invitation</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> on applicant submit · <strong>To:</strong> friend</span>
+    <span class="email-label__index">02/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>alex@mendoza.studio</dd>
+      <span class="email__envelope__when">2:49 PM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Jordan thinks you should be <em>in the room</em>, Alex.</div>
+      <div class="email__preheader">A seat for Vol. 01 is held in your name. Here's what they said about you.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Alex,</p>
+      <p class="email__p">Your friend <strong>Jordan Rivers</strong> applied to Doubles — a curated dinner for thirty single founders, investors, and operators in SF — and they applied with you. There's a seat held in your name for Vol. 01, the Founding Launch, on Saturday June 21.</p>
+
+      <p class="email__p">Here's what they wrote about you:</p>
+
+      <div class="email__quote">
+        Alex is the smartest person I know who's also actually fun. We worked together on a fintech in 2022 — she'll out-curious anyone at the table.
+        <div class="email__quote-attr">Jordan Rivers · Co-founder, River &amp; Co.</div>
+      </div>
+
+      <p class="email__p">Five minutes to fill out your side, and a $145 hold on your card (refunded if we say no). We review the two of you together; you'll hear back 48 hours after you submit.</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Complete your side <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">Link expires in 7 days · doubles.singles/i/8XK2Q</div>
+      </div>
+
+      <p class="email__p email__p--small">First time hearing about us? The full story is at <a href="#" style="color: var(--teal); border-bottom: 1px solid var(--teal);">doubles.singles/about</a> — three friends, a quarterly dinner, the night opens with a fireside chat. Not an app, not a mixer.</p>
+
+      <p class="email__signoff">
+        Looking forward.
+        <small>Di · for the Doubles team</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Doubles, not solos."</div>
+      <div class="email__footer__links">
+        <a href="#">About</a> · <a href="#">FAQ</a> · <a href="#">Code of Conduct</a>
+      </div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco · You received this because Jordan Rivers applied with you. Not interested? <a href="#" style="color: var(--ink-soft);">Politely decline →</a></div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     03 · FRIEND REMINDER — to friend, T+48h
+     ========================================================= -->
+<div class="email-row" id="e03">
+  <div class="email-label">
+    <span class="email-label__kind">friend_reminder</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> 48h after invite, friend hasn't submitted · <strong>To:</strong> friend</span>
+    <span class="email-label__index">03/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Di &lt;di@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>alex@mendoza.studio</dd>
+      <span class="email__envelope__when">Tue 2:49 PM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Quick nudge — Jordan's waiting on you.</div>
+      <div class="email__preheader">Five minutes to complete your side of the Doubles application.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Alex,</p>
+      <p class="email__p">Friendly nudge: Jordan applied to Doubles two days ago and we're holding your seat for Vol. 01 until you complete your side. <strong>Five days left on the invite link.</strong></p>
+
+      <p class="email__p">It's a short form — five questions, a $145 hold on your card (refunded if we don't accept), and you're done.</p>
+
+      <div class="email__box">
+        <dl>
+          <dt>Link</dt><dd style="font-size: 13px;">doubles.singles/i/8XK2Q</dd>
+          <dt>Expires</dt><dd>5 days from now</dd>
+          <dt>Date</dt><dd>Sat, <em>June 21</em></dd>
+        </dl>
+      </div>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Complete your side <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">Or <a href="#" style="color: var(--teal); border-bottom: 1px solid var(--teal);">politely decline</a> — no hard feelings, Jordan will know.</div>
+      </div>
+
+      <p class="email__signoff">
+        Hope to see you.
+        <small>Di · Doubles</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Doubles, not solos."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco · This is the only reminder we send. You won't hear from us again on this invitation.</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     04 · FRIEND SUBMITTED — to applicant
+     ========================================================= -->
+<div class="email-row" id="e04">
+  <div class="email-label">
+    <span class="email-label__kind">friend_submitted</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> friend submits friend-invite.html · <strong>To:</strong> applicant</span>
+    <span class="email-label__index">04/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Wed 10:08 AM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Alex is <em>in</em>. We're reviewing the pair.</div>
+      <div class="email__preheader">Both sides submitted. Decision in 48 hours.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <h2 class="email__h1">Both <em>sides</em> are in.</h2>
+      <p class="email__p">Alex Mendoza completed their side at 10:08 this morning. We're reviewing the two of you as a pair — expect to hear back inside 48 hours.</p>
+
+      <div class="email__box">
+        <dl>
+          <dt>Pair</dt><dd>Jordan &amp; Alex</dd>
+          <dt>For</dt><dd>Vol. 01 — <em>Founding Launch</em></dd>
+          <dt>Decision</dt><dd>By <em>Friday, May 26</em></dd>
+        </dl>
+      </div>
+
+      <p class="email__p">About one in four pairs are invited per volume. Most rejections aren't "no" forever — they're "not this room." Either way, you'll hear directly from us within two days.</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">See full status <span style="font-size: 14px;">→</span></a>
+      </div>
+
+      <p class="email__signoff">
+        Thanks for the patience.
+        <small>The Doubles team</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Doubles, not solos."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     05 · ACCEPTED — to both
+     ========================================================= -->
+<div class="email-row" id="e05">
+  <div class="email-label">
+    <span class="email-label__kind">accepted</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> admin accepts pair · <strong>To:</strong> both (personalized)</span>
+    <span class="email-label__index">05/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Di &lt;di@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Fri 4:14 PM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">You're <em>in</em> for Vol. 01.</div>
+      <div class="email__preheader">Sat, June 21, 6–9 PM. Your card was charged $145.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Jordan,</p>
+      <h2 class="email__h1">Welcome to <em>Vol. 01</em>.</h2>
+      <p class="email__p">You and Alex are both in. Your card was charged $145, Alex's was too, and the room is being built around you.</p>
+
+      <div class="email__inset-dark">
+        <dl>
+          <dt>Date</dt><dd>Saturday, <em>June 21</em></dd>
+          <dt>Doors</dt><dd><em>6:00</em> PM</dd>
+          <dt>Wraps</dt><dd>9:00 PM</dd>
+          <dt>Where</dt><dd>Twin Peaks, SF</dd>
+          <dt>Address</dt><dd style="font-size: 13px; color: rgba(245, 241, 232, 0.6); font-style: normal; font-family: var(--sans);">Shared 48 hours before</dd>
+          <dt>Your seat</dt><dd>#14 of 30</dd>
+        </dl>
+      </div>
+
+      <p class="email__p">Everything you need for the night — preferences, calendar add, what to bring — is on your accepted page:</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Open your seat page <span style="font-size: 14px;">→</span></a>
+      </div>
+
+      <p class="email__p email__p--small">Need to swap Alex or cancel? You can do that any time up to 72 hours before — just reply to this email and we'll handle it.</p>
+
+      <p class="email__signoff">
+        Can't wait to host you.
+        <small>Di · Doubles</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Good people. Great matches."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     06 · NOT THIS VOLUME — to both
+     ========================================================= -->
+<div class="email-row" id="e06">
+  <div class="email-label">
+    <span class="email-label__kind">not_this_volume</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> admin rejects pair · <strong>To:</strong> both</span>
+    <span class="email-label__index">06/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Di &lt;di@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Fri 4:18 PM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Not Vol. 01 — but not <em>no</em> forever.</div>
+      <div class="email__preheader">Your $145 hold drops off today. You're auto-rolling for Vol. 02.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Jordan,</p>
+      <p class="email__p">We read your application with care, talked it through, and we're not inviting you and Alex to Vol. 01. We wanted to tell you directly.</p>
+
+      <p class="email__p">Vol. 01 is thirty seats and the founding volume — we curate it tighter than every volume that follows. About one in four pairs came through this round, which means we said no to a lot of applications we'd otherwise love to host. <strong>This isn't a quality judgment.</strong></p>
+
+      <div class="email__box">
+        <dl>
+          <dt>Hold</dt><dd>$145 · <em>released today</em></dd>
+          <dt>Vol. 02</dt><dd>You're <em>auto-rolling</em></dd>
+          <dt>Re-apply?</dt><dd style="font-style: normal; font-family: var(--sans); font-size: 14px;">Not needed</dd>
+        </dl>
+      </div>
+
+      <p class="email__p">One application keeps you in our pool for every future volume. We re-review automatically — no second form. If anything material changes between now and September (new project, different friend, move to SF), reply to this email and we'll update your file.</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#" style="background: var(--ink); color: var(--ball);">Read the full note <span style="font-size: 14px;">→</span></a>
+      </div>
+
+      <p class="email__signoff">
+        With care, hoping to see you at Vol. 02.
+        <small>Di, Sam &amp; Theo · The Doubles founders</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Doubles, not solos."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     07 · ADDRESS REVEAL — T-48h
+     ========================================================= -->
+<div class="email-row" id="e07">
+  <div class="email-label">
+    <span class="email-label__kind">address_reveal</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> 48h before event · <strong>To:</strong> confirmed attendees</span>
+    <span class="email-label__index">07/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Thu 8:00 AM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">The <em>address</em>. The night.</div>
+      <div class="email__preheader">Saturday: 2748 Pacific Avenue, doors at 6:00.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <h2 class="email__h1">Saturday, 6:00. <em>Here's where</em>.</h2>
+      <p class="email__p">Two days out. The address is yours now — please don't pass it on. The room is 30 people only.</p>
+
+      <div class="email__inset-dark">
+        <dl>
+          <dt>Address</dt><dd><em>2748 Pacific Avenue</em></dd>
+          <dt>Floor</dt><dd>4 · apt 4B</dd>
+          <dt>Neighborhood</dt><dd>Twin Peaks</dd>
+          <dt>Doors</dt><dd>6:00 PM sharp</dd>
+          <dt>Locked at</dt><dd>6:30 (fireside starts)</dd>
+        </dl>
+      </div>
+
+      <p class="email__p"><strong>When you arrive:</strong> tell the doorman you're here for the Doubles dinner. He'll point you to floor 4. Parking on Pacific between Spruce and Maple is easy; Uber drops at the corner.</p>
+
+      <p class="email__p"><strong>Doors lock at 6:30</strong> — when the fireside starts — so the speaker isn't interrupted. If you're cutting it close, text Di at (415) 555-2147 and we'll hold the door.</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Open your night brief <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">Map, parking, the founder hotline, the room composition.</div>
+      </div>
+
+      <p class="email__signoff">
+        See you Saturday.
+        <small>Di, Sam &amp; Theo</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Good people. Great matches."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco · The address in this email is private. Please don't share.</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     08 · DAY-OF SMS — morning of, opt-in only
+     ========================================================= -->
+<div class="email-row" id="e08">
+  <div class="email-label">
+    <span class="email-label__kind">day_of_sms</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> 10 AM day of, sms_consent=true · <strong>To:</strong> phone</span>
+    <span class="email-label__index">08/10</span>
+  </div>
+
+  <div class="sms-phone">
+    <div class="sms-phone__screen">
+      <div class="sms-phone__status">
+        <span>9:41</span>
+        <span>● ●●●●</span>
+      </div>
+      <div class="sms-phone__header">
+        <div class="sms-phone__sender">D</div>
+        <div class="sms-phone__name">Doubles · (415) 555-2147</div>
+      </div>
+      <div class="sms-phone__time">Saturday · 10:00 AM</div>
+      <div class="sms-phone__bubble">
+        <strong>Tonight.</strong> 6:00 PM at 2748 Pacific Ave, apt 4B, Twin Peaks. Doors lock at 6:30. Save my number — text here if anything goes sideways. — Di
+      </div>
+      <div class="sms-phone__bubble">
+        <strong>Brief:</strong> <a href="#">doubles.singles/n/8XK2Q</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     09 · SPARKS PROMPT — T+1
+     ========================================================= -->
+<div class="email-row" id="e09">
+  <div class="email-label">
+    <span class="email-label__kind">sparks_prompt</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> Sunday 9 AM after event · <strong>To:</strong> attendees</span>
+    <span class="email-label__index">09/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Sun 9:00 AM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">Sunday morning. Any <em>sparks</em>?</div>
+      <div class="email__preheader">Mark anyone you'd like to see again. Mutual interest only — we keep the rest private.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <p class="email__hello">Hi Jordan,</p>
+      <h2 class="email__h1">Last night was <em>the night</em>.</h2>
+      <p class="email__p">Before the room fades, take three minutes: mark anyone you'd like to see again — romantically (<em style="color: var(--coral); font-style: italic;">date</em>) or professionally (<em style="color: var(--teal); font-style: italic;">connect</em>). We only reveal mutual interest.</p>
+
+      <div class="email__box">
+        <dl>
+          <dt>Picks due</dt><dd>By <em>Wednesday</em></dd>
+          <dt>Mutuals shared</dt><dd>Tuesday morning</dd>
+          <dt>Privacy</dt><dd style="font-family: var(--sans); font-style: normal; font-size: 13.5px;">One-way picks are never shown</dd>
+        </dl>
+      </div>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Open sparks <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">15 people to consider · saves automatically</div>
+      </div>
+
+      <p class="email__signoff">
+        Hope it was a great night.
+        <small>Di, Sam &amp; Theo</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Good people. Great matches."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco</div>
+    </div>
+  </article>
+</div>
+
+<!-- =========================================================
+     10 · MUTUAL MATCH — both said yes
+     ========================================================= -->
+<div class="email-row" id="e10">
+  <div class="email-label">
+    <span class="email-label__kind">mutual_match</span>
+    <span class="email-label__trigger"><strong>Trigger:</strong> mutual computed Tuesday morning · <strong>To:</strong> both</span>
+    <span class="email-label__index">10/10</span>
+  </div>
+
+  <article class="email">
+    <dl class="email__envelope">
+      <dt>From</dt><dd>Doubles &lt;hello@doubles.singles&gt;</dd>
+      <dt>To</dt><dd>jordan@river.co</dd>
+      <span class="email__envelope__when">Tue 8:00 AM</span>
+    </dl>
+
+    <div class="email__subject">
+      <div class="email__subject__label">Subject</div>
+      <div class="email__subject__line">You both said <em>yes</em>.</div>
+      <div class="email__preheader">A mutual from Vol. 01 — David Chen.</div>
+    </div>
+
+    <div class="email__brand"><a href="#">DOUBLES</a></div>
+
+    <div class="email__body">
+      <h2 class="email__h1">A <em>mutual</em>.</h2>
+
+      <div class="email__pair">
+        <div class="email__pair-avatar">JR</div>
+        <div class="email__pair-link">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+        </div>
+        <div class="email__pair-avatar email__pair-avatar--right">DC</div>
+      </div>
+
+      <p class="email__p">You picked <strong>David Chen</strong> on Sunday morning. He picked you back yesterday. We held this until both sides showed up — and here you are.</p>
+
+      <div class="email__quote">
+        Made the founder across the table actually laugh — and asked Sarah the question that turned dinner. Curious, generous, my kind of room.
+        <div class="email__quote-attr">What David said about you</div>
+      </div>
+
+      <p class="email__p">Open your match to send the intro. We'll email both of you with each other's contact details, then step out.</p>
+
+      <div class="email__cta-row">
+        <a class="email__cta" href="#">Open the mutual <span style="font-size: 14px;">→</span></a>
+        <div class="email__cta-meta">You have 7 days to make the intro. Then it archives quietly.</div>
+      </div>
+
+      <p class="email__signoff">
+        Rooting for you.
+        <small>The Doubles team</small>
+      </p>
+    </div>
+
+    <div class="email__footer">
+      <div class="email__footer__tag">"Good people. Great matches."</div>
+      <div class="email__footer__addr">Doubles, LLC · San Francisco</div>
+    </div>
+  </article>
+</div>
+
+</body>
+</html>

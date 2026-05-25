@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Speak at Doubles — host a Volley</title>
+<meta name="description" content="If you're a founder, investor, or operator with a story worth sharing — and you'd like to spend an evening with thirty people who want to hear it — get in touch." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  body { background: var(--cream); }
+
+  /* Pitch hero */
+  .pitch {
+    background: var(--ink);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 140px) 0 clamp(60px, 9vh, 110px);
+    position: relative; overflow: hidden;
+  }
+  .pitch::before {
+    content: '';
+    position: absolute; top: -50%; right: -15%;
+    width: 60%; aspect-ratio: 1/1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .pitch__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative; z-index: 1;
+  }
+  .pitch__inner .eyebrow { color: var(--ball); margin-bottom: 24px; }
+  .pitch h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 8vw, 132px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-bottom: 28px;
+    text-wrap: balance;
+    max-width: 20ch;
+  }
+  .pitch h1 em { color: var(--ball); font-style: italic; }
+  .pitch__sub {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.45;
+    color: rgba(245, 241, 232, 0.85);
+    max-width: 50ch;
+    margin-bottom: 36px;
+  }
+
+  /* What the room looks like */
+  .what {
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .what__inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 800px) {
+    .what__inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+  .what h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+  .what h2 em { color: var(--coral); font-style: italic; }
+  .what__rows {
+    display: flex;
+    flex-direction: column;
+  }
+  .what-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    gap: 22px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .what-row:last-child { border-bottom: none; }
+  .what-row__label {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--coral);
+  }
+  .what-row__body strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .what-row__body span {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  /* Previous speakers (placeholder for when there are some) */
+  .prev {
+    background: var(--cream-warm);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: clamp(60px, 8vh, 100px) 0;
+  }
+  .prev__inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .prev .eyebrow { color: var(--coral); margin-bottom: 14px; }
+  .prev h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.8vw, 50px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 36px;
+  }
+  .prev h2 em { color: var(--coral); font-style: italic; }
+  .prev__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  @media (max-width: 800px) { .prev__list { grid-template-columns: 1fr; } }
+  .speaker-mini {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 24px;
+    display: flex; gap: 16px; align-items: center;
+  }
+  .speaker-mini__photo {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background:
+      linear-gradient(140deg, rgba(212, 247, 72, 0.2), rgba(255, 107, 107, 0.05)),
+      var(--cream-warm);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif); font-style: italic; font-size: 24px;
+    color: var(--coral);
+    flex-shrink: 0;
+  }
+  .speaker-mini__info strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .speaker-mini__info span {
+    display: block;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    margin-top: 3px;
+  }
+  .speaker-mini__info .vol {
+    margin-top: 8px;
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+  }
+
+  /* Form */
+  .form-wrap {
+    padding: clamp(70px, 10vh, 110px) 0;
+  }
+  .form-wrap__inner {
+    max-width: 720px; margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .form-wrap .eyebrow { margin-bottom: 14px; }
+  .form-wrap h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .form-wrap h2 em { color: var(--coral); font-style: italic; }
+  .form-wrap__lede {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin-bottom: 40px;
+    max-width: 56ch;
+  }
+
+  .speak-form {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(28px, 4vw, 42px);
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field--pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 600px) { .field--pair { grid-template-columns: 1fr; } }
+
+  .field label {
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .field .req { color: var(--coral); }
+  .field .help {
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin: -2px 0 4px;
+    line-height: 1.5;
+  }
+  .field input, .field textarea {
+    font-family: var(--sans);
+    font-size: 15px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 13px 16px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .field input:focus, .field textarea:focus {
+    outline: none; border-color: var(--teal); background: white;
+  }
+  .field textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+
+  .form-submit-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .form-submit-row .note {
+    flex: 1;
+    font-size: 13px;
+    color: var(--ink-soft);
+    min-width: 220px;
+  }
+  .form-submit-row .note strong {
+    color: var(--ink);
+    font-weight: var(--w-sans-bold);
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">Apply <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<main>
+
+  <header class="pitch" data-screen-label="Speaker Pitch">
+    <div class="pitch__inner">
+      <span class="eyebrow"><span class="ball"></span> Speak at Doubles</span>
+      <h1>An hour. <em>Thirty</em> people you'd want to host.</h1>
+      <p class="pitch__sub">
+        If you've built something real — sold it, scaled it, walked away
+        from it, learned hard things from it — and you'd like to spend an
+        evening with thirty curious people who want to hear it, this page
+        is for you.
+      </p>
+    </div>
+  </header>
+
+  <section class="what" data-screen-label="What you'd be doing">
+    <div class="what__inner">
+      <div>
+        <span class="eyebrow"><span class="ball"></span> The ask</span>
+        <h2>One hour. <em>Off the record.</em> In a private home.</h2>
+        <p style="margin-top: 20px; font-size: 16px; line-height: 1.65; color: var(--ink-soft);">No slides. No livestream. No press in the room. Just thirty hand-curated founders, investors, and operators who want to ask you real questions.</p>
+      </div>
+      <div class="what__rows">
+
+        <div class="what-row">
+          <span class="what-row__label">6:30</span>
+          <div class="what-row__body">
+            <strong>15-minute fireside.</strong>
+            <span>One of our founders in conversation with you. Your story, your call on the angle.</span>
+          </div>
+        </div>
+
+        <div class="what-row">
+          <span class="what-row__label">6:45</span>
+          <div class="what-row__body">
+            <strong>45-minute Q&amp;A.</strong>
+            <span>The room asks. You answer however candidly feels right. Chatham House — nothing leaves the room.</span>
+          </div>
+        </div>
+
+        <div class="what-row">
+          <span class="what-row__label">7:30</span>
+          <div class="what-row__body">
+            <strong>Stay for dinner.</strong>
+            <span>Optional. Most of our speakers stay. The room becomes yours to mingle in.</span>
+          </div>
+        </div>
+
+        <div class="what-row">
+          <span class="what-row__label">9:00</span>
+          <div class="what-row__body">
+            <strong>You're home by ten.</strong>
+            <span>Or you're at the after-conversation in the corner until 11. Either way, your time is yours.</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="prev" data-screen-label="Previous speakers">
+    <div class="prev__inner">
+      <span class="eyebrow"><span class="ball"></span> Some past speakers</span>
+      <h2>People who've <em>hosted a Volley</em>.</h2>
+
+      <div class="prev__list">
+        <div class="speaker-mini">
+          <div class="speaker-mini__photo">MP</div>
+          <div class="speaker-mini__info">
+            <strong>Maya Patel</strong>
+            <span>Co-founder, Kestrel · now at Outline Ventures</span>
+            <div class="vol">Vol. 01</div>
+          </div>
+        </div>
+        <div class="speaker-mini" style="opacity: 0.5;">
+          <div class="speaker-mini__photo">—</div>
+          <div class="speaker-mini__info">
+            <strong>To be announced</strong>
+            <span>Vol. 02 · September 13</span>
+            <div class="vol">Vol. 02</div>
+          </div>
+        </div>
+        <div class="speaker-mini" style="opacity: 0.5;">
+          <div class="speaker-mini__photo">—</div>
+          <div class="speaker-mini__info">
+            <strong>To be announced</strong>
+            <span>Vol. 03 · November 8</span>
+            <div class="vol">Vol. 03</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="form-wrap" data-screen-label="Speaker form">
+    <div class="form-wrap__inner">
+      <span class="eyebrow"><span class="ball"></span> Get in touch</span>
+      <h2>Tell us who you are. <em>We'll write back.</em></h2>
+      <p class="form-wrap__lede">A founder reads every submission within a day. We respond to all of them, yes or no.</p>
+
+      <form class="speak-form" onsubmit="event.preventDefault(); alert('Demo only.');">
+
+        <div class="field--pair">
+          <div class="field">
+            <label for="sp-name">Your name <span class="req">*</span></label>
+            <input id="sp-name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="sp-email">Email <span class="req">*</span></label>
+            <input id="sp-email" type="email" required />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="sp-current">What you're best known for <span class="req">*</span></label>
+          <p class="help">One sentence. Company, fund, what you built.</p>
+          <input id="sp-current" type="text" placeholder="Co-founder of Kestrel (acq. 2022), now investing at Outline." required />
+        </div>
+
+        <div class="field">
+          <label for="sp-story">A story you'd like to tell <span class="req">*</span></label>
+          <p class="help">What's the thread you'd open the Volley with? A lesson, a moment, a hard call you'd talk through. Two or three sentences is plenty.</p>
+          <textarea id="sp-story" required placeholder="The thing I keep coming back to is what happened the week we almost shut down. We had three offers on the table and I made the wrong call on which one to take. The post-mortem on that decision shaped how I run companies now."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="sp-when">Which volume would you consider?</label>
+          <p class="help">All Doubles volumes are Saturday evenings, 6–9 PM, in San Francisco.</p>
+          <input id="sp-when" type="text" placeholder="Vol. 02 (Sept 13), Vol. 03 (Nov 8), Vol. 04 (Feb 14, '27) — pick one or leave blank" />
+        </div>
+
+        <div class="field">
+          <label for="sp-link">Anything for context</label>
+          <p class="help">Optional. A talk you've given, a piece you've written, a podcast where you sound like yourself.</p>
+          <input id="sp-link" type="url" placeholder="https://…" />
+        </div>
+
+        <div class="form-submit-row">
+          <span class="note"><strong>Read by Di, Sam, or Theo.</strong> Reply within a day, no exceptions.</span>
+          <button type="submit" class="btn btn--coral">Send it <span class="arrow">→</span></button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor.</p>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

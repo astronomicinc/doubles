@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Any sparks? — Vol. 01 · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Customer-facing post-event flow. Same shell vocab as
+     application-submitted etc. */
+
+  body { background: var(--cream); padding-bottom: 110px; }
+
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(80px, 12vh, 130px) 0 clamp(50px, 8vh, 90px);
+    position: relative; overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute; top: -60%; right: -10%;
+    width: 80%; aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative; z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(54px, 7.4vw, 108px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    max-width: 18ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 24px;
+    max-width: 52ch;
+  }
+
+  /* Privacy callout in the header */
+  .privacy-card {
+    margin-top: 40px;
+    padding: 22px 26px;
+    background: rgba(245, 241, 232, 0.05);
+    border: 1px solid rgba(245, 241, 232, 0.14);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 18px;
+    max-width: 720px;
+  }
+  .privacy-card__icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: rgba(212, 247, 72, 0.16);
+    color: var(--ball);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .privacy-card__icon svg { width: 18px; height: 18px; }
+  .privacy-card__body strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin-bottom: 4px;
+  }
+  .privacy-card__body p {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(245, 241, 232, 0.72);
+    margin: 0;
+  }
+
+  /* ===== HOW IT WORKS ===== */
+  .how {
+    padding: clamp(50px, 7vh, 80px) 0 clamp(30px, 4vh, 50px);
+  }
+  .how__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .how__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 800px) { .how__grid { grid-template-columns: 1fr; } }
+  .how__step {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 24px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .how__num {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--coral);
+  }
+  .how__step h3 {
+    font-family: var(--serif);
+    font-size: 20px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .how__step p {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+
+  /* ===== ROOM GRID ===== */
+  .room {
+    padding: clamp(40px, 6vh, 70px) 0;
+  }
+  .room__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .room__head {
+    display: flex; align-items: baseline;
+    justify-content: space-between; gap: 24px;
+    margin-bottom: 28px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .room__head h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .room__head h2 em { color: var(--coral); font-style: italic; }
+  .room__head .count {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-soft);
+  }
+  .room__head .count strong { color: var(--coral); }
+
+  .legend {
+    display: flex; gap: 20px; flex-wrap: wrap;
+    margin-bottom: 28px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+  .legend__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend__icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .legend__icon svg { width: 11px; height: 11px; }
+  .legend__icon--date { color: var(--coral); }
+  .legend__icon--connect { color: var(--teal); }
+
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  @media (max-width: 900px) { .tiles { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .tiles { grid-template-columns: 1fr; } }
+
+  .tile {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 24px 24px 20px;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    position: relative;
+  }
+  .tile:hover { border-color: var(--teal); box-shadow: var(--shadow-card); }
+  .tile.is-date-picked { border-color: var(--coral); }
+  .tile.is-connect-picked { border-color: var(--teal); }
+  .tile.is-date-picked.is-connect-picked { border-color: var(--ink); }
+
+  .tile__head {
+    display: flex; align-items: center; gap: 14px;
+  }
+  .tile__avatar {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    color: var(--coral);
+    font-family: var(--serif);
+    font-style: italic; font-size: 22px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .tile__id {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .tile__name {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.15;
+    margin-top: 2px;
+  }
+  .tile__role {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  .tile__memory {
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    padding: 12px 14px;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.45;
+    color: var(--ink);
+  }
+  .tile__memory::before {
+    content: '"'; color: var(--coral); font-size: 18px;
+    margin-right: 1px;
+  }
+  .tile__memory::after  { content: '"'; color: var(--coral); }
+
+  .tile__actions {
+    display: flex; gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .interest-btn {
+    flex: 1;
+    padding: 10px 12px;
+    border-radius: var(--r-card);
+    background: white;
+    border: 1px solid var(--line);
+    font-family: var(--sans);
+    font-size: 11.5px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .interest-btn svg { width: 14px; height: 14px; }
+  .interest-btn:hover { border-color: var(--teal); color: var(--ink); }
+  .interest-btn--date.is-active {
+    background: var(--coral);
+    border-color: var(--coral);
+    color: white;
+  }
+  .interest-btn--connect.is-active {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: var(--cream);
+  }
+
+  /* ===== SUBMIT BAR ===== */
+  .submit-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px -16px rgba(0,0,0,0.1);
+    z-index: 40;
+    padding: 16px clamp(20px, 3vw, 36px);
+  }
+  .submit-bar__inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .submit-bar__summary {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .summary-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .summary-chip--date {
+    background: rgba(255, 107, 107, 0.12);
+    color: var(--coral-deep);
+  }
+  .summary-chip--connect {
+    background: rgba(212, 247, 72, 0.32);
+    color: var(--teal);
+  }
+  .summary-chip strong {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-style: italic;
+    font-weight: var(--w-serif-medium);
+  }
+  .submit-bar__btn {
+    padding: 14px 26px;
+    border-radius: var(--r-pill);
+    background: var(--coral);
+    color: white;
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    box-shadow: var(--shadow-cta);
+    transition: background 0.15s, transform 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .submit-bar__btn:hover {
+    background: var(--coral-deep);
+    transform: translateY(-1px);
+  }
+
+  /* Nav (shared) */
+  /* uses .nav from doubles.css */
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm">My status <span class="arrow">→</span></a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+<header class="flow-header" data-screen-label="Sparks Header">
+  <div class="flow-header__inner">
+    <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · The morning after</span>
+    <h1>Sunday morning. <em>Any sparks?</em></h1>
+    <p class="flow-header__sub">
+      Last night was the night. Before the room fades, take three minutes:
+      mark anyone you'd like to see again, romantically or
+      professionally. We only reveal mutual interest — and we keep the
+      rest entirely private.
+    </p>
+
+    <div class="privacy-card">
+      <div class="privacy-card__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <rect x="3" y="11" width="18" height="11" rx="2"/>
+          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+        </svg>
+      </div>
+      <div class="privacy-card__body">
+        <strong>One-way. Quiet. Mutual-only.</strong>
+        <p>Your picks are visible to no one — not the team, not the other person, not in any future audit. We compute mutual matches automatically, and only then introduce the two of you. If the feeling isn't shared, nothing happens. Nothing is shown. You can edit your picks until Wednesday.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     HOW IT WORKS
+     ========================================================= -->
+<section class="how" data-screen-label="How it works">
+  <div class="how__inner">
+    <div class="how__grid">
+      <div class="how__step">
+        <span class="how__num">01</span>
+        <h3>Mark interest, two flavors.</h3>
+        <p>Tap <em style="color: var(--coral); font-style: italic;">date</em> on anyone you'd like to see again romantically. Tap <em style="color: var(--teal); font-style: italic;">connect</em> on anyone you'd like an introduction to professionally. Both, neither, or one — your call per person.</p>
+      </div>
+      <div class="how__step">
+        <span class="how__num">02</span>
+        <h3>We wait for mutuality.</h3>
+        <p>Tuesday morning, we compute matches. Where you both said <em style="color: var(--coral); font-style: italic;">date</em>, we tell you both. Where you both said <em style="color: var(--teal); font-style: italic;">connect</em>, we make the email intro. One-way doesn't unlock anything.</p>
+      </div>
+      <div class="how__step">
+        <span class="how__num">03</span>
+        <h3>You take it from there.</h3>
+        <p>We hand off your emails (and only your emails) and step out. The first message is yours to write. No app, no thread, no algorithm. Just a warm intro from people you actually broke bread with.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     ROOM GRID
+     ========================================================= -->
+<section class="room" data-screen-label="Room Grid">
+  <div class="room__inner">
+
+    <div class="room__head">
+      <h2>The <em>fifteen</em> people across the room from you.</h2>
+      <span class="count"><strong>2</strong> picked so far · saves automatically</span>
+    </div>
+
+    <div class="legend">
+      <span class="legend__item">
+        <span class="legend__icon legend__icon--date">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+        </span>
+        <strong style="color: var(--ink); font-weight: var(--w-sans-medium);">Date</strong> · romantic interest
+      </span>
+      <span class="legend__item">
+        <span class="legend__icon legend__icon--connect">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+        </span>
+        <strong style="color: var(--ink); font-weight: var(--w-sans-medium);">Connect</strong> · professional intro
+      </span>
+    </div>
+
+    <div class="tiles">
+
+      <!-- Tile 1 -->
+      <article class="tile is-date-picked">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">DC</div>
+          <div>
+            <span class="tile__id">Seat 14</span>
+            <div class="tile__name">David Chen</div>
+            <div class="tile__role">Investor · Foundry Ventures · 36</div>
+          </div>
+        </div>
+        <div class="tile__memory">Asked the speaker the question about who they fired and rehired. Sat at your end of the buffet table.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date is-active" type="button" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 2 -->
+      <article class="tile">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">TN</div>
+          <div>
+            <span class="tile__id">Seat 21</span>
+            <div class="tile__name">Tom Nguyen</div>
+            <div class="tile__role">Founder · Compass Health · 33</div>
+          </div>
+        </div>
+        <div class="tile__memory">Quit Google last year to build something in healthcare. Told the story about his sister; you cried a little.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 3 -->
+      <article class="tile is-connect-picked">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">JP</div>
+          <div>
+            <span class="tile__id">Seat 09</span>
+            <div class="tile__name">James Park</div>
+            <div class="tile__role">Exec · Stripe · 37</div>
+          </div>
+        </div>
+        <div class="tile__memory">You bonded over the design of the venue stairs. He mentioned a project he's quietly leaving Stripe for.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect is-active" type="button" aria-pressed="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 4 -->
+      <article class="tile">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">RA</div>
+          <div>
+            <span class="tile__id">Seat 17</span>
+            <div class="tile__name">Ravi Aggarwal</div>
+            <div class="tile__role">Founder · Verdant · 31</div>
+          </div>
+        </div>
+        <div class="tile__memory">Came alone after his +1 cancelled. Told the table about quitting law school to start a soil-tech company.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 5 -->
+      <article class="tile">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">NF</div>
+          <div>
+            <span class="tile__id">Seat 05</span>
+            <div class="tile__name">Nico Ferreira</div>
+            <div class="tile__role">Operator · Notion · 34</div>
+          </div>
+        </div>
+        <div class="tile__memory">Tall, easy laugh. Asked the smartest question of the Q&amp;A — the one about who you become after the exit.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+      <!-- Tile 6 -->
+      <article class="tile">
+        <div class="tile__head">
+          <div class="tile__avatar" aria-hidden="true">PG</div>
+          <div>
+            <span class="tile__id">Seat 19</span>
+            <div class="tile__name">Pete Garcia</div>
+            <div class="tile__role">Founder · Threadwork · 35</div>
+          </div>
+        </div>
+        <div class="tile__memory">Was at the door with you at 6:00 sharp. Played in Annie's pickup chess game in the corner near the window.</div>
+        <div class="tile__actions">
+          <button class="interest-btn interest-btn--date" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+            Date
+          </button>
+          <button class="interest-btn interest-btn--connect" type="button" aria-pressed="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+            Connect
+          </button>
+        </div>
+      </article>
+
+    </div>
+
+    <p style="margin-top: 28px; font-size: 13px; color: var(--ink-soft); text-align: center;">
+      9 more · keep scrolling or <a href="#" style="color: var(--teal); border-bottom: 1px solid var(--teal);">jump to the rest →</a>
+    </p>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     SUBMIT BAR
+     ========================================================= -->
+<aside class="submit-bar" role="region" aria-label="Save selections">
+  <div class="submit-bar__inner">
+    <div class="submit-bar__summary">
+      <span class="summary-chip summary-chip--date">
+        <svg viewBox="0 0 24 24" fill="currentColor" style="width: 12px; height: 12px;"><path d="M12 21s-6.5-4.4-9-8.3C1 9.3 2.6 5 6.3 5c2 0 3.5 1.1 4.7 2.7C12.2 6.1 13.7 5 15.7 5c3.7 0 5.3 4.3 3.3 7.7-2.5 3.9-9 8.3-9 8.3z"/></svg>
+        <strong>1</strong> date pick
+      </span>
+      <span class="summary-chip summary-chip--connect">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="width: 12px; height: 12px;"><path d="M4 12h16M16 8l4 4-4 4M8 16l-4-4 4-4"/></svg>
+        <strong>1</strong> connect pick
+      </span>
+      <span style="font-size: 12px;">Mutuals revealed <strong style="color: var(--ink); font-weight: var(--w-sans-bold);">Tuesday morning</strong></span>
+    </div>
+    <button class="submit-bar__btn" type="button">
+      Done for now <span style="font-size: 14px;">→</span>
+    </button>
+  </div>
+</aside>
+
+</body>
+</html>

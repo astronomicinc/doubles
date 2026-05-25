@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Application Status — Doubles</title>
+<meta name="description" content="Check where your Doubles application stands." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POST-FLOW SHELL — same vocab as application-submitted etc.
+     Status has two interesting axes:
+       - mode:  "no-account" (magic URL)  vs  "light-account" (login)
+       - state: "gate" (not yet in)       vs  "authed" (status visible)
+     Both axes wire into Tweaks below.
+     ========================================================= */
+
+  .flow { min-height: 100vh; background: var(--cream); }
+
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(70px, 11vh, 130px) 0 clamp(50px, 8vh, 90px);
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute;
+    top: -60%; right: -10%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6.8vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 18ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 22px;
+    max-width: 52ch;
+  }
+
+  /* Mode badge in the header — varies between magic-URL and account */
+  .mode-strip {
+    margin-top: 36px;
+    padding: 14px 20px;
+    background: rgba(245, 241, 232, 0.04);
+    border: 1px solid rgba(245, 241, 232, 0.12);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: center;
+    font-size: 13px;
+    color: rgba(245, 241, 232, 0.85);
+  }
+  .mode-strip__icon {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: rgba(212, 247, 72, 0.1);
+    color: var(--ball);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .mode-strip__icon svg { width: 14px; height: 14px; }
+  .mode-strip__label strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin-bottom: 2px;
+  }
+  .mode-strip__action {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ball);
+    cursor: pointer;
+  }
+  @media (max-width: 600px) {
+    .mode-strip { grid-template-columns: 1fr; gap: 10px; }
+    .mode-strip__action { text-align: left; }
+  }
+
+  /* ===== GATE VARIANTS ===== */
+  .gate {
+    background: var(--cream);
+    padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm);
+  }
+  .gate__inner {
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .gate__card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(36px, 5vw, 52px);
+  }
+  .gate__eyebrow { margin-bottom: 14px; }
+  .gate__title {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3.2vw, 40px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.06;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+  .gate__title em { color: var(--coral); font-style: italic; }
+  .gate__lede {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin-bottom: 28px;
+  }
+  .gate__form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .gate__field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .gate__field label {
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .gate__field input {
+    font-family: var(--sans);
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 14px 16px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .gate__field input:focus {
+    outline: none;
+    border-color: var(--teal);
+    background: white;
+  }
+  .gate__submit {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 8px;
+  }
+  .gate__alt {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    padding-top: 22px;
+    margin-top: 22px;
+    border-top: 1px solid var(--line);
+  }
+  .gate__alt a {
+    color: var(--teal);
+    border-bottom: 1px solid var(--teal);
+    font-weight: var(--w-sans-medium);
+  }
+
+  /* ===== AUTHED — main status content ===== */
+  .authed {
+    padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm);
+  }
+  .authed__grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .authed__grid { grid-template-columns: 1fr; gap: 50px; }
+  }
+  .authed__main { max-width: 64ch; }
+
+  /* Big status banner — varies by current status */
+  .big-status {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(32px, 4vw, 44px);
+    margin-bottom: 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .big-status::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: var(--coral);
+  }
+  .big-status--accepted::before { background: var(--ball); }
+  .big-status--rejected::before { background: var(--ink-soft); }
+  .big-status__eyebrow {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .big-status--accepted .big-status__eyebrow { color: var(--teal); }
+  .big-status__eyebrow::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.18);
+  }
+  .big-status--accepted .big-status__eyebrow::before {
+    box-shadow: 0 0 0 4px rgba(212, 247, 72, 0.18);
+    background: var(--ball);
+  }
+  .big-status h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.6vw, 50px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .big-status h2 em { color: var(--coral); font-style: italic; }
+  .big-status p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .big-status__actions {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .pill-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--cream-warm);
+    color: var(--ink);
+    border-radius: var(--r-pill);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: background 0.15s;
+  }
+  .pill-link:hover { background: var(--line); }
+
+  /* Status strip — re-using same vocab as application-submitted */
+  .status-strip {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 36px;
+  }
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+    padding-top: 18px;
+  }
+  .status-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--line);
+  }
+  .status-step--done::before    { background: var(--ball); }
+  .status-step--current::before { background: var(--coral); }
+  .status-step__label {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .status-step--done .status-step__label    { color: var(--teal); }
+  .status-step--current .status-step__label { color: var(--coral); }
+  .status-step__title {
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.25;
+  }
+  .status-step__meta {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.4;
+  }
+  @media (max-width: 700px) { .status-strip { grid-template-columns: repeat(2, 1fr); } }
+
+  /* History section */
+  .history {
+    margin-top: 48px;
+    padding-top: 36px;
+    border-top: 1px solid var(--line);
+  }
+  .history__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .history__head h3 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .history__head h3 em { color: var(--coral); font-style: italic; }
+  .history__head .meta {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .history__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .history__item {
+    display: grid;
+    grid-template-columns: 80px 1fr auto;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: center;
+  }
+  .history__vol {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    font-style: italic;
+    color: var(--teal);
+  }
+  .history__title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .history__title small {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 12.5px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink-soft);
+    margin-top: 4px;
+  }
+  .history__tag {
+    font-size: 10.5px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: var(--r-pill);
+  }
+  .history__tag--pending  { background: rgba(255, 107, 107, 0.12); color: var(--coral-deep); }
+  .history__tag--accepted { background: rgba(212, 247, 72, 0.25); color: var(--teal); }
+  .history__tag--passed   { background: var(--cream-warm); color: var(--ink-soft); }
+  @media (max-width: 640px) {
+    .history__item { grid-template-columns: 1fr; gap: 8px; }
+    .history__vol  { font-size: 14px; }
+  }
+
+  /* Sidebar */
+  .flow-side {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  @media (max-width: 1000px) { .flow-side { position: static; } }
+
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 28px;
+  }
+  .side-card--dark { background: var(--ink); color: var(--cream); border-color: transparent; }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    line-height: 1.2;
+    margin-top: 12px;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em { color: var(--coral); font-style: italic; }
+  .side-card--dark h4 em { color: var(--ball); }
+  .side-meta {
+    margin: 18px 0 0;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 10px 14px;
+    font-size: 14px;
+  }
+  .side-meta dt {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+  .side-card--dark .side-meta dt { color: rgba(245, 241, 232, 0.5); }
+  .side-card:not(.side-card--dark) .side-meta dt { color: var(--ink-soft); }
+  .side-meta dd {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin: 0;
+  }
+  .side-card:not(.side-card--dark) .side-meta dd { color: var(--ink); }
+  .side-list {
+    list-style: none; padding: 0; margin: 16px 0 0;
+    display: flex; flex-direction: column; gap: 10px;
+    font-size: 13.5px; line-height: 1.55; color: var(--ink-soft);
+  }
+  .side-list li { display: flex; gap: 10px; align-items: baseline; }
+  .side-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ball);
+    flex-shrink: 0;
+  }
+
+  /* ===== TWEAKS PANEL — minimal vanilla impl ===== */
+  .tweaks {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 320px;
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: var(--r-card);
+    box-shadow: 0 24px 60px -20px rgba(0,0,0,0.4);
+    padding: 22px;
+    z-index: 100;
+    display: none;
+    font-family: var(--sans);
+    border: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .tweaks.is-open { display: block; }
+  .tweaks__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .tweaks__title {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+  }
+  .tweaks__close {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: rgba(245, 241, 232, 0.08);
+    color: var(--cream);
+    border: none;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .tweaks__close:hover { background: rgba(245, 241, 232, 0.16); }
+  .tweaks__section {
+    margin-bottom: 18px;
+  }
+  .tweaks__label {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ball);
+    margin-bottom: 8px;
+  }
+  .tweaks__seg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    background: rgba(245, 241, 232, 0.06);
+    padding: 4px;
+    border-radius: var(--r-pill);
+  }
+  .tweaks__seg button {
+    background: transparent;
+    border: none;
+    color: rgba(245, 241, 232, 0.65);
+    font-size: 12px;
+    font-weight: var(--w-sans-medium);
+    padding: 8px 10px;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .tweaks__seg button.is-active {
+    background: var(--ball);
+    color: var(--ink);
+    font-weight: var(--w-sans-bold);
+  }
+  .tweaks__hint {
+    font-size: 12px;
+    line-height: 1.5;
+    color: rgba(245, 241, 232, 0.55);
+    border-top: 1px solid rgba(245, 241, 232, 0.12);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+
+  /* ===== TWEAK-DRIVEN VISIBILITY ===== */
+  body[data-state="gate"] .authed { display: none; }
+  body[data-state="authed"] .gate { display: none; }
+
+  body[data-mode="no-account"] .for-account { display: none; }
+  body[data-mode="light-account"] .for-no-account { display: none; }
+
+</style>
+</head>
+<body data-mode="no-account" data-state="authed">
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm" aria-current="page">
+      Check status <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<main class="flow">
+
+  <!-- =========================================================
+       HEADER — varies by mode + state
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="Status Header">
+    <div class="flow-header__inner">
+
+      <!-- Eyebrow & H1 -->
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span>
+        <span class="for-no-account">Vol. 01 · Your status link</span>
+        <span class="for-account">Vol. 01 · Signed in as jordan@river.co</span>
+      </span>
+
+      <!-- AUTHED H1 -->
+      <span data-show-if="state=authed">
+        <h1>Here's where <em>you stand</em>, Jordan.</h1>
+        <p class="flow-header__sub">
+          <span class="for-no-account">
+            This page is bookmarked to your unique status URL — anyone with
+            the link can see this. Don't share it. We don't use passwords;
+            this is your one durable handle to the application.
+          </span>
+          <span class="for-account">
+            Signed in via magic link. You can see your current application,
+            past volumes, and reapply with one click. We'll log you out
+            after 30 days of inactivity.
+          </span>
+        </p>
+      </span>
+
+      <!-- GATE H1 -->
+      <span data-show-if="state=gate">
+        <h1 class="for-no-account">Look up your <em>application</em>.</h1>
+        <h1 class="for-account">Sign in to <em>your</em> status.</h1>
+        <p class="flow-header__sub">
+          <span class="for-no-account">
+            Enter the email you applied with. We'll email you a personal
+            status link that opens this page directly. The link is good
+            for 30 days, then we send a fresh one.
+          </span>
+          <span class="for-account">
+            We'll send a magic link to your inbox — no password to remember.
+            Click the link from your phone or laptop and you're in. The
+            session stays open for 30 days on the device you sign in from.
+          </span>
+        </p>
+      </span>
+
+      <!-- Mode strip — small badge showing which auth model is active -->
+      <div class="mode-strip">
+        <div class="mode-strip__icon">
+          <svg class="for-no-account" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <path d="M10 17l-4-4 4-4M14 7l4 4-4 4"/>
+            <path d="M3 13h6M15 11h6"/>
+          </svg>
+          <svg class="for-account" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M3 21c0-4.4 4-8 9-8s9 3.6 9 8"/>
+          </svg>
+        </div>
+        <div class="mode-strip__label">
+          <strong class="for-no-account">No account · magic URL</strong>
+          <strong class="for-account">Light account · magic link</strong>
+          <span class="for-no-account">Your status link is your handle. No password, no profile.</span>
+          <span class="for-account">Email-based login. No password to remember, but you can return.</span>
+        </div>
+        <div class="mode-strip__action">
+          <span class="for-no-account">Resend my link →</span>
+          <span class="for-account">Sign out →</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       GATE — shown when state=gate
+       ========================================================= -->
+  <section class="gate" data-screen-label="Status Gate">
+    <div class="gate__inner">
+      <div class="gate__card">
+
+        <!-- No-account gate -->
+        <div class="for-no-account">
+          <span class="eyebrow gate__eyebrow"><span class="ball"></span> One field, one email</span>
+          <h2 class="gate__title">Get your <em>status link</em>.</h2>
+          <p class="gate__lede">
+            Enter the email you applied with. We'll send a personal
+            status URL to your inbox in under a minute. No password to
+            create, no account to manage.
+          </p>
+          <form class="gate__form" onsubmit="event.preventDefault(); alert('Demo only — a magic URL would be emailed.');">
+            <div class="gate__field">
+              <label for="g-email-1">Your email</label>
+              <input id="g-email-1" type="email" placeholder="jordan@river.co" required />
+            </div>
+            <div class="gate__submit">
+              <button type="submit" class="btn btn--coral">Email me a link <span class="arrow">→</span></button>
+              <span style="font-size: 12px; color: var(--ink-soft); font-weight: var(--w-sans-medium);">
+                <span class="ball-dot"></span> Link is good for 30 days
+              </span>
+            </div>
+          </form>
+          <div class="gate__alt">
+            Forgot which email? We probably have you under the one
+            you use professionally. Or just <a href="contact.html">email us</a> — a founder
+            will find your file inside a day.
+          </div>
+        </div>
+
+        <!-- Light-account gate -->
+        <div class="for-account">
+          <span class="eyebrow gate__eyebrow"><span class="ball"></span> No password · magic link</span>
+          <h2 class="gate__title">Sign <em>in</em>.</h2>
+          <p class="gate__lede">
+            Enter your email and we'll send a sign-in link to your
+            inbox. Click it from any device and you'll be signed in
+            for 30 days. We never ask you to make a password.
+          </p>
+          <form class="gate__form" onsubmit="event.preventDefault(); alert('Demo only — a magic sign-in link would be emailed.');">
+            <div class="gate__field">
+              <label for="g-email-2">Your email</label>
+              <input id="g-email-2" type="email" placeholder="jordan@river.co" required />
+            </div>
+            <div class="gate__submit">
+              <button type="submit" class="btn btn--coral">Send sign-in link <span class="arrow">→</span></button>
+              <span style="font-size: 12px; color: var(--ink-soft); font-weight: var(--w-sans-medium);">
+                <span class="ball-dot"></span> No password required
+              </span>
+            </div>
+          </form>
+          <div class="gate__alt">
+            First time here? <a href="apply.html">Apply to a volume</a> first —
+            accounts are created automatically when we receive your
+            application.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       AUTHED — shown when state=authed
+       ========================================================= -->
+  <section class="authed" data-screen-label="Status Authed">
+    <div class="container">
+      <div class="authed__grid">
+
+        <!-- ===== MAIN ===== -->
+        <div class="authed__main">
+
+          <div class="big-status">
+            <div class="big-status__eyebrow">Current application · Pending</div>
+            <h2>Waiting on <em>Alex</em>.</h2>
+            <p>
+              Your side is in. We sent Alex Mendoza an invitation
+              <strong>4 hours ago</strong> — they have until June 1 to
+              complete their questionnaire. As soon as we have both, we
+              review together inside 48 hours.
+            </p>
+            <div class="big-status__actions">
+              <a class="pill-link" href="#">
+                <span class="ball-dot" style="background: var(--coral); width: 6px; height: 6px; border-radius: 50%;"></span>
+                Resend invite to Alex
+              </a>
+              <a class="pill-link" href="application-submitted.html">
+                See full timeline →
+              </a>
+            </div>
+          </div>
+
+          <div class="status-strip" aria-label="Application progress">
+            <div class="status-step status-step--done">
+              <span class="status-step__label">01 · Done</span>
+              <span class="status-step__title">You applied</span>
+              <span class="status-step__meta">May 24 · 2:47 PM</span>
+            </div>
+            <div class="status-step status-step--current">
+              <span class="status-step__label">02 · In progress</span>
+              <span class="status-step__title">Alex completes</span>
+              <span class="status-step__meta">Invited 4 hours ago</span>
+            </div>
+            <div class="status-step">
+              <span class="status-step__label">03 · Up next</span>
+              <span class="status-step__title">48-hour review</span>
+              <span class="status-step__meta">Begins when both apps are in</span>
+            </div>
+            <div class="status-step">
+              <span class="status-step__label">04 · Then</span>
+              <span class="status-step__title">Decision &amp; charge</span>
+              <span class="status-step__meta">$145 held, charged only if yes</span>
+            </div>
+          </div>
+
+          <div class="history">
+            <div class="history__head">
+              <h3>Your <em>history</em>.</h3>
+              <span class="meta">One application · auto-reviewed each volume</span>
+            </div>
+
+            <ul class="history__list">
+              <li class="history__item">
+                <span class="history__vol">Vol. 01</span>
+                <div class="history__title">
+                  Founding Launch
+                  <small>Jun 21 · Twin Peaks</small>
+                </div>
+                <span class="history__tag history__tag--pending">Pending review</span>
+              </li>
+              <li class="history__item">
+                <span class="history__vol">Vol. 02</span>
+                <div class="history__title">
+                  Late Summer (TBA)
+                  <small>Sep 2026 · auto-reviewed if Vol. 01 is a pass</small>
+                </div>
+                <span class="history__tag history__tag--passed">Auto-rolling</span>
+              </li>
+            </ul>
+
+            <p style="font-size: 13.5px; color: var(--ink-soft); margin-top: 22px; line-height: 1.55;">
+              We don't make you reapply for each volume — one application
+              keeps you in our pool for the season. If anything material
+              changes (new project, different friend, move), reply to your
+              confirmation email and we'll update your file.
+            </p>
+          </div>
+        </div>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="flow-side" aria-label="Your application">
+
+          <div class="side-card side-card--dark">
+            <span class="eyebrow"><span class="ball"></span> Applying for</span>
+            <h4 style="margin-top: 14px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+            <dl class="side-meta">
+              <dt>Date</dt><dd>Sat, June 21</dd>
+              <dt>Time</dt><dd>6:00 — 9:00 PM</dd>
+              <dt>Where</dt><dd>Twin Peaks</dd>
+              <dt>Hold</dt><dd>$145</dd>
+            </dl>
+          </div>
+
+          <div class="side-card">
+            <h4>Your <em>+1</em>.</h4>
+            <dl class="side-meta" style="grid-template-columns: 1fr;">
+              <dt style="padding-top: 0;">Name</dt>
+              <dd>Alex Mendoza</dd>
+              <dt style="padding-top: 0; margin-top: 8px;">Email</dt>
+              <dd style="font-size: 14px;">alex@mendoza.studio</dd>
+              <dt style="padding-top: 0; margin-top: 8px;">Status</dt>
+              <dd style="color: var(--coral);">Invited · awaiting</dd>
+            </dl>
+            <a href="#" style="display: inline-block; margin-top: 18px; font-size: 11px; font-weight: var(--w-sans-bold); letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal); border-bottom: 1px solid var(--teal);">
+              Edit details →
+            </a>
+          </div>
+
+          <div class="side-card">
+            <h4>While you <em>wait</em>.</h4>
+            <ul class="side-list">
+              <li><a href="about.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">About Doubles</a></li>
+              <li><a href="volley.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">The Volley format</a></li>
+              <li><a href="code-of-conduct.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">Code of conduct</a></li>
+              <li><a href="faq.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">FAQ</a></li>
+            </ul>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     TWEAKS PANEL — toggleable from the toolbar
+     ========================================================= -->
+<aside class="tweaks" id="tweaks" aria-label="Tweaks panel">
+  <div class="tweaks__head">
+    <span class="tweaks__title">Tweaks</span>
+    <button class="tweaks__close" id="tweaks-close" aria-label="Close">×</button>
+  </div>
+
+  <div class="tweaks__section">
+    <div class="tweaks__label">Auth model</div>
+    <div class="tweaks__seg" id="tw-mode" role="radiogroup">
+      <button data-val="no-account" class="is-active">No account</button>
+      <button data-val="light-account">Light account</button>
+    </div>
+  </div>
+
+  <div class="tweaks__section">
+    <div class="tweaks__label">View state</div>
+    <div class="tweaks__seg" id="tw-state" role="radiogroup">
+      <button data-val="authed" class="is-active">Authed</button>
+      <button data-val="gate">Gate</button>
+    </div>
+  </div>
+
+  <div class="tweaks__hint">
+    Toggle to compare the two account directions. <strong style="color: var(--ball);">No account</strong> = personal status URL only. <strong style="color: var(--ball);">Light account</strong> = magic-link login + history.
+  </div>
+</aside>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // -------- Tweaks toolbar integration --------
+  // Wire up the Tweaks panel for switching auth model + view state.
+  // Follows the host protocol: register listener FIRST, then announce.
+  (function() {
+    const panel = document.getElementById('tweaks');
+    const closeBtn = document.getElementById('tweaks-close');
+    const body = document.body;
+
+    function setMode(val) {
+      body.setAttribute('data-mode', val);
+      document.querySelectorAll('#tw-mode button').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.val === val);
+      });
+    }
+    function setState(val) {
+      body.setAttribute('data-state', val);
+      document.querySelectorAll('#tw-state button').forEach(b => {
+        b.classList.toggle('is-active', b.dataset.val === val);
+      });
+    }
+
+    document.querySelectorAll('#tw-mode button').forEach(b => {
+      b.addEventListener('click', () => setMode(b.dataset.val));
+    });
+    document.querySelectorAll('#tw-state button').forEach(b => {
+      b.addEventListener('click', () => setState(b.dataset.val));
+    });
+
+    function open()  { panel.classList.add('is-open'); }
+    function close() {
+      panel.classList.remove('is-open');
+      window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+    }
+    closeBtn.addEventListener('click', close);
+
+    window.addEventListener('message', (e) => {
+      if (!e.data || typeof e.data !== 'object') return;
+      if (e.data.type === '__activate_edit_mode')   open();
+      if (e.data.type === '__deactivate_edit_mode') close();
+    });
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+  })();
+
+  // -------- Show/hide blocks driven by data-state attr --------
+  // The <span data-show-if="state=authed"> wrappers hide themselves
+  // when the body's data-state doesn't match.
+  (function() {
+    function update() {
+      const state = document.body.getAttribute('data-state');
+      document.querySelectorAll('[data-show-if]').forEach(el => {
+        const cond = el.getAttribute('data-show-if'); // e.g. "state=authed"
+        const [key, val] = cond.split('=');
+        const match = (key === 'state' && state === val);
+        el.style.display = match ? '' : 'none';
+      });
+    }
+    // Re-run whenever body attrs change
+    new MutationObserver(update).observe(document.body, { attributes: true, attributeFilter: ['data-state'] });
+    update();
+  })();
+</script>
+
+</body>
+</html>

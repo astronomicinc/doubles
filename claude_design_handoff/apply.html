@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Apply — Doubles</title>
+<meta name="description" content="Apply for the next Doubles event. Bring a friend. We review every application in 48 hours." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Page header — half-bleed photo + dark gradient */
+  .page-header {
+    position: relative;
+    background: var(--teal-deep);
+    color: var(--cream);
+    padding: clamp(80px, 11vh, 120px) 0 clamp(40px, 6vh, 60px);
+    overflow: hidden;
+  }
+  .page-header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url('assets/venue-pacific-heights.webp');
+    background-size: cover;
+    background-position: center;
+    filter: saturate(0.9) brightness(0.55);
+  }
+  .page-header::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(20,39,45,0.55) 0%, rgba(20,39,45,0.85) 100%);
+  }
+  .page-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6.4vw, 92px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 14ch;
+  }
+  .page-header h1 em { color: var(--ball); }
+  .page-header__sub {
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 0;
+    max-width: 40ch;
+    padding-bottom: 12px;
+  }
+  @media (max-width: 800px) {
+    .page-header__inner { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* Main layout: form + sidebar */
+  .apply {
+    background: var(--cream);
+    padding: var(--section-pad-sm) 0;
+  }
+  .apply__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .apply__grid { grid-template-columns: 1fr; gap: 48px; }
+  }
+
+  /* Steps progress */
+  .steps-progress {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .steps-progress__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .steps-progress__item .num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-size: 15px;
+    color: var(--ink-soft);
+  }
+  .steps-progress__item--active { color: var(--teal); }
+  .steps-progress__item--active .num {
+    background: var(--ball);
+    border-color: var(--ball);
+    color: var(--ink);
+  }
+  .steps-progress__sep {
+    flex: 1;
+    min-width: 24px;
+    height: 1px;
+    background: var(--line);
+  }
+
+  /* Form */
+  .form {
+    background: white;
+    border-radius: var(--r-card);
+    border: 1px solid var(--line);
+    padding: clamp(32px, 4vw, 52px);
+    display: flex;
+    flex-direction: column;
+    gap: 38px;
+    box-shadow: var(--shadow-card);
+  }
+  .form__group { display: flex; flex-direction: column; gap: 18px; }
+  .form__group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .form__group-head .num {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: var(--w-serif-regular);
+    color: var(--teal);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .form__group-head h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.1;
+  }
+  .form__group-head .hint {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field--pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 600px) { .field--pair { grid-template-columns: 1fr; } }
+
+  .field label {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .field label .req { color: var(--coral); margin-left: 4px; }
+  .field .help {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: -2px 0 4px;
+  }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="url"],
+  .field input[type="number"],
+  .field select,
+  .field textarea {
+    font-family: var(--sans);
+    font-weight: var(--w-sans-body);
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+  .field textarea { min-height: 110px; resize: vertical; line-height: 1.5; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    background: white;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(27, 90, 107, 0.12);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgba(20, 39, 45, 0.35); }
+
+  /* Radio chips */
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    background: var(--cream-warm);
+    font-size: 13px;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .chip:hover { background: white; }
+  .chip:has(input:checked) {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+  .chip .ball-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--ball);
+    border-radius: 50%;
+  }
+
+  /* Friend block — subtle divider treatment */
+  .friend-block {
+    background: var(--cream-warm);
+    border-radius: 10px;
+    padding: 26px;
+    border: 1px dashed rgba(27, 90, 107, 0.25);
+  }
+  .friend-block__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .friend-block__head .icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal);
+  }
+  .friend-block__head .icon svg { width: 22px; height: 22px; }
+  .friend-block__head h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+  }
+  .friend-block__head p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .friend-block__fields { display: flex; flex-direction: column; gap: 16px; }
+
+  /* Submit bar */
+  .form__submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 12px;
+  }
+  .form__submit .meta {
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .form__submit .meta .ball-dot { width: 6px; height: 6px; }
+
+  /* Sidebar */
+  .apply__side {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    position: sticky;
+    top: 100px;
+  }
+  @media (max-width: 1000px) {
+    .apply__side { position: static; }
+  }
+
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 30px;
+  }
+  .side-card--dark {
+    background: var(--navy);
+    border-color: transparent;
+    color: var(--cream);
+  }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em {
+    font-style: italic;
+    color: var(--coral);
+  }
+  .side-card--dark h4 em { color: var(--ball); }
+  .side-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .side-card--dark p { color: rgba(245, 241, 232, 0.75); }
+
+  .side-list {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .side-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+  .side-list li .ball-dot {
+    margin-top: 6px;
+    flex-shrink: 0;
+  }
+  .side-card--dark .side-list li { color: rgba(245, 241, 232, 0.78); }
+
+  .side-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 18px;
+    margin-top: 16px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    font-size: 13px;
+  }
+  .side-meta dt {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+    padding-top: 2px;
+  }
+  .side-meta dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 16px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html" aria-current="page">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+<header class="page-header" data-screen-label="Apply Header">
+  <div class="page-header__inner">
+    <div>
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Founding Launch · Sat, Jun 21</span>
+      <h1>Apply for <em>Vol. 01</em>.</h1>
+    </div>
+    <p class="page-header__sub">
+      Three minutes of questions, then we'll review your application within 48 hours. Bring the friend you'd trust to set you up — we'll need a few details about them too.
+    </p>
+  </div>
+</header>
+
+<!-- =========================================================
+     APPLY — form + sidebar
+     ========================================================= -->
+<section class="apply" data-screen-label="Apply Form">
+  <div class="container">
+
+    <div class="steps-progress" aria-label="Application progress">
+      <div class="steps-progress__item steps-progress__item--active">
+        <span class="num">1</span> About you
+      </div>
+      <span class="steps-progress__sep"></span>
+      <div class="steps-progress__item">
+        <span class="num">2</span> Your friend
+      </div>
+      <span class="steps-progress__sep"></span>
+      <div class="steps-progress__item">
+        <span class="num">3</span> Review &amp; submit
+      </div>
+    </div>
+
+    <div class="apply__grid">
+
+      <!-- ========== FORM ========== -->
+      <form class="form" onsubmit="event.preventDefault(); alert('Demo only — wire this up to your form provider.');">
+
+        <!-- Section 1 — About you -->
+        <div class="form__group">
+          <div class="form__group-head">
+            <span class="num">01</span>
+            <h3>About you.</h3>
+            <span class="hint">All fields required</span>
+          </div>
+
+          <div class="field--pair">
+            <div class="field">
+              <label for="name">Full name <span class="req">*</span></label>
+              <input id="name" name="name" type="text" placeholder="Jordan Rivers" required />
+            </div>
+            <div class="field">
+              <label for="age">Age <span class="req">*</span></label>
+              <input id="age" name="age" type="number" min="21" max="80" placeholder="32" required />
+            </div>
+          </div>
+
+          <div class="field--pair">
+            <div class="field">
+              <label for="email">Email <span class="req">*</span></label>
+              <input id="email" name="email" type="email" placeholder="jordan@company.com" required />
+            </div>
+            <div class="field">
+              <label for="phone">Mobile</label>
+              <input id="phone" name="phone" type="text" placeholder="(415) 555 ·  ·  · " />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>What best describes you? <span class="req">*</span></label>
+            <p class="help">Pick one. We curate the room for a mix.</p>
+            <div class="chip-group" role="radiogroup">
+              <label class="chip"><input type="radio" name="role" value="founder" checked /><span class="ball-dot"></span> Founder / Operator</label>
+              <label class="chip"><input type="radio" name="role" value="investor" /><span class="ball-dot"></span> Investor / VC</label>
+              <label class="chip"><input type="radio" name="role" value="exec" /><span class="ball-dot"></span> Exec / Senior IC</label>
+              <label class="chip"><input type="radio" name="role" value="other" /><span class="ball-dot"></span> Other</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="work">What are you working on? <span class="req">*</span></label>
+            <p class="help">One sentence. What's your company / fund / current focus?</p>
+            <textarea id="work" name="work" placeholder="Co-founder of a fintech for restaurants, post-Series A, building in SF." required></textarea>
+          </div>
+
+          <div class="field--pair">
+            <div class="field">
+              <label for="linkedin">LinkedIn</label>
+              <input id="linkedin" name="linkedin" type="url" placeholder="linkedin.com/in/ · · · " />
+            </div>
+            <div class="field">
+              <label for="instagram">Instagram</label>
+              <input id="instagram" name="instagram" type="text" placeholder="@your.handle" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Who introduced you to Doubles?</label>
+            <p class="help">A name or a referral code, if you have one. If you found us yourself, leave blank.</p>
+            <input type="text" name="referrer" placeholder="Friend's name, or how you found us" />
+          </div>
+        </div>
+
+        <!-- Section 2 — Your friend -->
+        <div class="form__group">
+          <div class="form__group-head">
+            <span class="num">02</span>
+            <h3>Your <em style="color: var(--coral); font-style: italic;">friend</em>.</h3>
+            <span class="hint">Opposite sex, single</span>
+          </div>
+
+          <div class="friend-block">
+            <div class="friend-block__head">
+              <div class="icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <circle cx="8.5" cy="9" r="3"/><circle cx="15.5" cy="9" r="3"/>
+                  <path d="M3 19c0-2.7 2-5 5.5-5s5.5 2.3 5.5 5"/>
+                  <path d="M10 19c0-2.7 2-5 5.5-5s5.5 2.3 5.5 5"/>
+                </svg>
+              </div>
+              <div>
+                <h4>Bring your MVP.</h4>
+                <p>One you'd trust to set you up. Single, interesting, and opposite sex.</p>
+              </div>
+            </div>
+
+            <div class="friend-block__fields">
+              <div class="field--pair">
+                <div class="field">
+                  <label for="friend-name">Friend's name <span class="req">*</span></label>
+                  <input id="friend-name" name="friend-name" type="text" placeholder="Alex Mendoza" required />
+                </div>
+                <div class="field">
+                  <label for="friend-email">Friend's email <span class="req">*</span></label>
+                  <input id="friend-email" name="friend-email" type="email" placeholder="alex@company.com" required />
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Friend's role</label>
+                <div class="chip-group" role="radiogroup">
+                  <label class="chip"><input type="radio" name="friend-role" value="founder" checked /><span class="ball-dot"></span> Founder / Operator</label>
+                  <label class="chip"><input type="radio" name="friend-role" value="investor" /><span class="ball-dot"></span> Investor / VC</label>
+                  <label class="chip"><input type="radio" name="friend-role" value="exec" /><span class="ball-dot"></span> Exec / Senior IC</label>
+                  <label class="chip"><input type="radio" name="friend-role" value="other" /><span class="ball-dot"></span> Other</label>
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="friend-why">Why your friend? <span class="req">*</span></label>
+                <p class="help">Two sentences. Why is this person the one you'd vouch for?</p>
+                <textarea id="friend-why" name="friend-why" placeholder="Alex is the smartest person I know who's also actually fun. We worked together at..." required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3 — Bit more -->
+        <div class="form__group">
+          <div class="form__group-head">
+            <span class="num">03</span>
+            <h3>One last thing.</h3>
+            <span class="hint">Optional, but read</span>
+          </div>
+
+          <div class="field">
+            <label for="why-doubles">Why Doubles? <span class="req">*</span></label>
+            <p class="help">What are you hoping happens here? No wrong answer — we just want to know.</p>
+            <textarea id="why-doubles" name="why-doubles" placeholder="Honest answer: I'm tired of apps, and a few friends I trust said this is the move." required></textarea>
+          </div>
+
+          <div class="field">
+            <label>Dietary or accessibility notes</label>
+            <input type="text" name="dietary" placeholder="Vegetarian, severe nut allergy, etc." />
+          </div>
+        </div>
+
+        <div class="form__submit">
+          <button type="submit" class="btn btn--coral">Submit application <span class="arrow">→</span></button>
+          <span class="meta"><span class="ball-dot"></span> Reviewed in 48 hours</span>
+        </div>
+      </form>
+
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="apply__side" aria-label="What to expect">
+
+        <div class="side-card side-card--dark">
+          <span class="eyebrow"><span class="ball"></span> The founding volume</span>
+          <h4 style="margin-top: 16px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+          <dl class="side-meta">
+            <dt>Date</dt><dd>Sat, June 21</dd>
+            <dt>Time</dt><dd>6:00 — 9:00 PM</dd>
+            <dt>Where</dt><dd>Twin Peaks, SF</dd>
+            <dt>Seats</dt><dd>12 of 30 remain</dd>
+          </dl>
+        </div>
+
+        <div class="side-card">
+          <h4>What we <em>look for</em>.</h4>
+          <p>The room is hand-curated. We're not impressed by titles — we're looking for the kind of people you'd want to sit next to at dinner.</p>
+          <ul class="side-list">
+            <li><span class="ball-dot"></span> Genuine curiosity over a polished pitch</li>
+            <li><span class="ball-dot"></span> A real story behind your work</li>
+            <li><span class="ball-dot"></span> A friend whose taste you'd trust on anything</li>
+            <li><span class="ball-dot"></span> Single, and actually open to meeting someone</li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <h4>What happens <em>next</em>.</h4>
+          <ul class="side-list">
+            <li><span class="ball-dot"></span> We review your application within 48 hours</li>
+            <li><span class="ball-dot"></span> Your friend gets the same questionnaire by email</li>
+            <li><span class="ball-dot"></span> If accepted, we send the address two days out</li>
+            <li><span class="ball-dot"></span> Speaker for The Volley revealed at the door</li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

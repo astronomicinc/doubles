@@ -194,7 +194,7 @@ CREATE TABLE speaker_pitches (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   name text NOT NULL,
   email text NOT NULL,
-  current_role text,
+  role_title text,
   story_pitch text NOT NULL,
   preferred_volume text,
   context_link text,

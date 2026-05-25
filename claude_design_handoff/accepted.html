@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You're in for Vol. 01 — Doubles</title>
+<meta name="description" content="Your Doubles application was accepted. Here's everything you need for the night." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POST-FLOW SHELL — see application-submitted.html for the
+     canonical definitions.
+     ========================================================= */
+
+  .flow { min-height: 100vh; background: var(--cream); }
+
+  /* Header — accepted variant. Same navy base, but
+     a single ball-yellow accent rule across the top
+     and a louder eyebrow signals "this is the moment". */
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(90px, 14vh, 150px) 0 clamp(60px, 9vh, 100px);
+    position: relative;
+    overflow: hidden;
+    border-top: 3px solid var(--ball);
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute;
+    top: -60%; right: -10%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(60px, 8.6vw, 130px);
+    line-height: 0.94;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    max-width: 16ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 28px;
+    max-width: 52ch;
+  }
+
+  .flow-header__big-meta {
+    margin-top: 50px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+  }
+  .flow-header__big-meta__item .label {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+    margin-bottom: 8px;
+  }
+  .flow-header__big-meta__item .value {
+    font-family: var(--serif);
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    line-height: 1.15;
+    font-style: italic;
+  }
+  .flow-header__big-meta__item .value em { color: var(--ball); font-style: italic; }
+  @media (max-width: 800px) {
+    .flow-header__big-meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+  @media (max-width: 480px) {
+    .flow-header__big-meta { grid-template-columns: 1fr; }
+  }
+
+  /* ----- BODY ----- */
+  .flow-body {
+    padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm);
+  }
+  .flow-body__grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .flow-body__grid { grid-template-columns: 1fr; gap: 50px; }
+  }
+  .flow-body__main { max-width: 64ch; }
+
+  /* ----- BOTH OF YOU ARE IN ----- */
+  .both-in {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(28px, 4vw, 40px);
+    margin-bottom: 40px;
+  }
+  .both-in__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .both-in__head h2 {
+    font-family: var(--serif);
+    font-size: clamp(26px, 2.6vw, 36px);
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.15;
+  }
+  .both-in__head h2 em { color: var(--coral); font-style: italic; }
+  .both-in__head .meta {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  .both-in__pair {
+    display: grid;
+    grid-template-columns: 1fr 60px 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  @media (max-width: 640px) {
+    .both-in__pair { grid-template-columns: 1fr; }
+    .both-in__connector { display: none; }
+  }
+  .both-in__person {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+  }
+  .both-in__avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 21px;
+    color: var(--coral);
+    flex-shrink: 0;
+  }
+  .both-in__name {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .both-in__status {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .both-in__status::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ball);
+    flex-shrink: 0;
+    box-shadow: 0 0 0 3px rgba(212, 247, 72, 0.2);
+  }
+  .both-in__connector {
+    width: 60px;
+    height: 1px;
+    background: var(--line);
+    position: relative;
+    margin: 0 auto;
+  }
+  .both-in__connector::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--ball);
+    border: 3px solid white;
+    box-shadow: 0 0 0 1px var(--line);
+  }
+
+  /* ----- SECTION HEADINGS IN MAIN ----- */
+  .flow-body__main h2.flow-h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.6vw, 48px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 56px 0 18px;
+  }
+  .flow-body__main h2.flow-h2 em { color: var(--coral); font-style: italic; }
+  .flow-body__main h2.flow-h2:first-child { margin-top: 0; }
+  .flow-body__main p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .flow-body__main p.lead {
+    font-size: 19px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+
+  /* ----- THE NIGHT — schedule card ----- */
+  .night-card {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: var(--r-card);
+    padding: clamp(32px, 4vw, 48px);
+    margin: 24px 0 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .night-card::before {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -10%;
+    width: 60%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.05);
+    pointer-events: none;
+  }
+  .night-card__head {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.14);
+  }
+  .night-card__head h3 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 38px);
+    font-weight: var(--w-serif-regular);
+    color: var(--cream);
+    line-height: 1.1;
+  }
+  .night-card__head h3 em { color: var(--ball); font-style: italic; }
+  .night-card__timeline {
+    position: relative;
+    z-index: 1;
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .night-card__item {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+  .night-card__time {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    font-style: italic;
+    color: var(--ball);
+    line-height: 1.3;
+  }
+  .night-card__detail strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+  .night-card__detail span {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(245, 241, 232, 0.7);
+  }
+  @media (max-width: 640px) {
+    .night-card__item { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  /* ----- PREFERENCES — photo + sms + dietary update ----- */
+  .preferences {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(28px, 4vw, 36px);
+    margin: 16px 0 32px;
+  }
+  .preferences h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .preferences h3 em { color: var(--coral); font-style: italic; }
+  .preferences__sub {
+    font-size: 14.5px;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+  }
+  .pref-row {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .pref-row:first-of-type { border-top: none; padding-top: 4px; }
+  .pref-row input[type="checkbox"] {
+    margin-top: 4px;
+    width: 18px; height: 18px;
+    accent-color: var(--coral);
+    flex-shrink: 0;
+  }
+  .pref-row label {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .pref-row label strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .pref-row__input {
+    flex-shrink: 0;
+    width: 220px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    background: var(--cream);
+    border-radius: var(--r-card);
+    font-family: var(--sans);
+    font-size: 14px;
+    color: var(--ink);
+  }
+  @media (max-width: 640px) {
+    .pref-row { flex-wrap: wrap; }
+    .pref-row__input { width: 100%; }
+  }
+
+  /* ----- CODE OF CONDUCT REMINDER ----- */
+  .coc-reminder {
+    background: var(--cream-warm);
+    border-left: 2px solid var(--coral);
+    padding: 28px 32px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    margin: 16px 0 32px;
+  }
+  .coc-reminder__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--coral);
+    margin-bottom: 14px;
+  }
+  .coc-reminder__head::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+  }
+  .coc-reminder p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.45;
+    color: var(--ink);
+    margin: 0 0 16px;
+  }
+  .coc-reminder a {
+    color: var(--coral);
+    border-bottom: 1px solid var(--coral);
+    font-style: normal;
+    font-size: 13px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* ----- CALENDAR + SAVE ROW ----- */
+  .save-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 32px 0;
+  }
+  .save-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: border-color 0.15s, background 0.15s, transform 0.15s;
+  }
+  .save-btn:hover {
+    border-color: var(--teal);
+    background: var(--cream-warm);
+    transform: translateY(-1px);
+  }
+  .save-btn svg { width: 16px; height: 16px; color: var(--teal); }
+
+  /* ----- SIDEBAR ----- */
+  .flow-side {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  @media (max-width: 1000px) { .flow-side { position: static; } }
+
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 28px;
+  }
+  .side-card--dark { background: var(--ink); color: var(--cream); border-color: transparent; }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    line-height: 1.2;
+    margin-top: 12px;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em { color: var(--coral); font-style: italic; }
+  .side-card--dark h4 em { color: var(--ball); }
+  .side-meta {
+    margin: 18px 0 0;
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 10px 14px;
+    font-size: 14px;
+  }
+  .side-meta dt {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+  .side-card--dark .side-meta dt { color: rgba(245, 241, 232, 0.5); }
+  .side-card:not(.side-card--dark) .side-meta dt { color: var(--ink-soft); }
+  .side-meta dd {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin: 0;
+  }
+  .side-card:not(.side-card--dark) .side-meta dd { color: var(--ink); }
+
+  .side-list {
+    list-style: none; padding: 0; margin: 16px 0 0;
+    display: flex; flex-direction: column; gap: 10px;
+    font-size: 13.5px; line-height: 1.55; color: var(--ink-soft);
+  }
+  .side-list li { display: flex; gap: 10px; align-items: baseline; }
+  .side-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ball);
+    flex-shrink: 0;
+  }
+
+  .address-card {
+    background: linear-gradient(160deg, var(--teal-deep), var(--navy));
+    color: var(--cream);
+    border-radius: var(--r-card);
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  .address-card::after {
+    content: '';
+    position: absolute;
+    top: -40%; right: -30%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.1);
+  }
+  .address-card__eyebrow {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ball);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .address-card__eyebrow::before {
+    content: '';
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--ball);
+    box-shadow: 0 0 0 4px rgba(212, 247, 72, 0.18);
+  }
+  .address-card__title {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 10px;
+  }
+  .address-card__title em { color: var(--ball); font-style: italic; }
+  .address-card__detail {
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(245, 241, 232, 0.75);
+    position: relative;
+    z-index: 1;
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm">
+      Check status <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<main class="flow">
+
+  <!-- =========================================================
+       HEADER — the moment
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="Accepted Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Accepted · Saturday, June 21</span>
+      <h1>You're <em>in</em> for Vol. 01.</h1>
+      <p class="flow-header__sub">
+        Welcome to the founding volume, Jordan. Your card was charged
+        $145, your seat is locked, and Alex is in too. Everything you need
+        for the night is on this page — bookmark it.
+      </p>
+
+      <div class="flow-header__big-meta">
+        <div class="flow-header__big-meta__item">
+          <span class="label">When</span>
+          <span class="value">Sat, <em>June 21</em></span>
+        </div>
+        <div class="flow-header__big-meta__item">
+          <span class="label">Doors</span>
+          <span class="value"><em>6:00</em> PM</span>
+        </div>
+        <div class="flow-header__big-meta__item">
+          <span class="label">Neighborhood</span>
+          <span class="value">Twin Peaks</span>
+        </div>
+        <div class="flow-header__big-meta__item">
+          <span class="label">Seat</span>
+          <span class="value">#14 of 30</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       BODY
+       ========================================================= -->
+  <section class="flow-body" data-screen-label="Accepted Body">
+    <div class="container">
+      <div class="flow-body__grid">
+
+        <!-- ===== MAIN ===== -->
+        <div class="flow-body__main">
+
+          <!-- Both of you are in -->
+          <div class="both-in">
+            <div class="both-in__head">
+              <h2>Both of you are <em>in</em>.</h2>
+              <span class="meta">Pair · Accepted together</span>
+            </div>
+            <div class="both-in__pair">
+              <div class="both-in__person">
+                <div class="both-in__avatar" aria-hidden="true">JR</div>
+                <div>
+                  <div class="both-in__name">Jordan Rivers</div>
+                  <div class="both-in__status">You · Confirmed</div>
+                </div>
+              </div>
+              <div class="both-in__connector" aria-hidden="true"></div>
+              <div class="both-in__person">
+                <div class="both-in__avatar" aria-hidden="true">AM</div>
+                <div>
+                  <div class="both-in__name">Alex Mendoza</div>
+                  <div class="both-in__status">+1 · Confirmed</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h2 class="flow-h2">The <em>night</em>.</h2>
+          <p class="lead">
+            The full schedule. Show up at 6:00 — the first half-hour is networking. The fireside starts on time at 6:30, and the door locks then so it isn't interrupted.
+          </p>
+
+          <div class="night-card" aria-label="Night schedule">
+            <div class="night-card__head">
+              <h3>One <em>evening</em>, four moves.</h3>
+            </div>
+            <ul class="night-card__timeline">
+              <li class="night-card__item">
+                <span class="night-card__time">6:00 — 6:30</span>
+                <div class="night-card__detail">
+                  <strong>Doors &amp; mingling.</strong>
+                  <span>Upbeat jazz on the speakers, bay views through the wall of glass, a drink in your hand. Mingle and shake some hands before the room sits at 6:30.</span>
+                </div>
+              </li>
+              <li class="night-card__item">
+                <span class="night-card__time">6:30 — 6:45</span>
+                <div class="night-card__detail">
+                  <strong>The fireside.</strong>
+                  <span>A 15-minute opening chat with our speaker — the story, the lessons, the candor.</span>
+                </div>
+              </li>
+              <li class="night-card__item">
+                <span class="night-card__time">6:45 — 7:30</span>
+                <div class="night-card__detail">
+                  <strong>The Q&amp;A.</strong>
+                  <span>45 minutes for the room. Every question you hear is a thread you can pull on at dinner.</span>
+                </div>
+              </li>
+              <li class="night-card__item">
+                <span class="night-card__time">7:30 — 9:00</span>
+                <div class="night-card__detail">
+                  <strong>Open-buffet dinner.</strong>
+                  <span>Ninety minutes of grazing plates, hand-picked wine, and a room that moves. Alex floats off to find their own conversations — you should too.</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Calendar + save -->
+          <div class="save-row">
+            <a class="save-btn" href="#" download="doubles-vol01.ics">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <rect x="3" y="5" width="18" height="16" rx="2"/>
+                <path d="M3 9h18M8 3v4M16 3v4"/>
+              </svg>
+              Add to calendar
+            </a>
+            <a class="save-btn" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3"/>
+                <path d="M21 4v6h-6"/>
+              </svg>
+              Email me this page
+            </a>
+            <a class="save-btn" href="#">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/>
+                <path d="M16 6l-4-4-4 4M12 2v13"/>
+              </svg>
+              Share with Alex
+            </a>
+          </div>
+
+          <h2 class="flow-h2">A few <em>preferences</em>.</h2>
+          <p class="lead">
+            All optional, all editable any time before the night. Updates save automatically.
+          </p>
+
+          <div class="preferences">
+            <h3>Heads-up <em>controls</em>.</h3>
+            <p class="preferences__sub">
+              The night runs better when we know these in advance.
+            </p>
+
+            <div class="pref-row">
+              <input type="checkbox" id="p-photo" />
+              <label for="p-photo">
+                <strong>I'm OK appearing in wide-shot photography.</strong>
+                Candid solo shots will only be used with your written consent. The Volley itself may be recorded.
+              </label>
+            </div>
+
+            <div class="pref-row">
+              <input type="checkbox" id="p-sms" checked />
+              <label for="p-sms">
+                <strong>Text me the address on the morning of June 21.</strong>
+                One SMS to the number we have on file. We won't use it for anything else.
+              </label>
+            </div>
+
+            <div class="pref-row">
+              <input type="checkbox" id="p-room" />
+              <label for="p-room">
+                <strong>Send me the "who's in the room" preview 48 hours out.</strong>
+                Anonymized one-liner about the mix of guests. Sets expectations without spoiling anything.
+              </label>
+            </div>
+
+            <div class="pref-row">
+              <label for="p-dietary" style="display: flex; flex-direction: column; gap: 10px; flex: 1;">
+                <strong>Dietary or accessibility notes.</strong>
+                <span style="font-size: 14px; color: var(--ink-soft); font-family: var(--sans); font-weight: var(--w-sans-body); font-style: normal;">The kitchen plans around this. We'll match what we have on file.</span>
+              </label>
+              <input id="p-dietary" type="text" class="pref-row__input" placeholder="Vegetarian, nut allergy, etc." />
+            </div>
+          </div>
+
+          <h2 class="flow-h2">Before the <em>night</em>.</h2>
+
+          <div class="coc-reminder">
+            <div class="coc-reminder__head">A quick reminder</div>
+            <p>Treat the room like a friend's dinner party. Be curious, be kind, take "no" gracefully, and tell us if something feels off — we'll handle it.</p>
+            <a href="code-of-conduct.html">Read the full code <span style="margin-left: 4px;">→</span></a>
+          </div>
+
+          <p style="margin-top: 32px;">
+            If something changes between now and June 21 — you can't make
+            it, Alex can't make it, you need to swap your +1 — just reply
+            to your acceptance email. The full policy is on
+            <a href="terms.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">our terms page</a>;
+            in short: you can swap until 72 hours before, and you can
+            cancel for a full refund until then too.
+          </p>
+
+          <p style="margin-top: 16px; font-size: 14.5px; color: var(--ink-soft);">
+            Anything else? <a href="contact.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">Email us.</a>
+            A founder reads every message within a day.
+          </p>
+        </div>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="flow-side" aria-label="Your seat">
+
+          <div class="side-card side-card--dark">
+            <span class="eyebrow"><span class="ball"></span> Your seat</span>
+            <h4 style="margin-top: 14px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+            <dl class="side-meta">
+              <dt>Date</dt><dd>Sat, June 21</dd>
+              <dt>Doors</dt><dd>6:00 PM</dd>
+              <dt>Where</dt><dd>Twin Peaks, SF</dd>
+              <dt>Dress</dt><dd>Smart casual</dd>
+              <dt>Charged</dt><dd>$145 · May 28</dd>
+            </dl>
+          </div>
+
+          <div class="address-card">
+            <div class="address-card__eyebrow">Address held</div>
+            <div class="address-card__title">Shared <em>48 hours</em> before.</div>
+            <p class="address-card__detail">
+              We email you the exact address on Thursday, June 19. If you
+              opted into the morning-of SMS above, you'll also get a text
+              on the 21st. The neighborhood is Twin Peaks — close
+              parking is easy.
+            </p>
+          </div>
+
+          <div class="side-card">
+            <h4>What to <em>bring</em>.</h4>
+            <ul class="side-list">
+              <li>A real second question</li>
+              <li>Cash for the ride home (not strictly needed)</li>
+              <li>A genuine answer to "what are you working on?"</li>
+              <li>Curiosity, not a pitch deck</li>
+            </ul>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-top: 16px;">
+              The kitchen handles the rest.
+            </p>
+          </div>
+
+          <div class="side-card">
+            <h4>If <em>something</em> changes.</h4>
+            <ul class="side-list">
+              <li>Swap Alex for someone else — until 72 hours before</li>
+              <li>Cancel for a full refund — until 72 hours before</li>
+              <li>Inside 72 hours — we'll do our best, but the seat is yours to give away</li>
+            </ul>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-top: 16px;">
+              Reply to your acceptance email and we'll handle it within
+              the day.
+            </p>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

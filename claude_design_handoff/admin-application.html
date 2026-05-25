@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>App #247 · Admin · Doubles</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Reuse admin shell from admin-inbox.html */
+  body { background: var(--cream); padding-bottom: 96px; }
+
+  .admin-bar {
+    background: var(--navy);
+    color: var(--cream);
+    position: sticky; top: 0; z-index: 50;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  }
+  .admin-bar__inner {
+    max-width: 1480px;
+    margin: 0 auto;
+    padding: 14px clamp(20px, 3vw, 36px);
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 28px; align-items: center;
+  }
+  .admin-bar__logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--serif); font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cream);
+  }
+  .admin-bar__logo-dot { width: 9px; height: 9px; background: var(--ball); border-radius: 50%; }
+  .admin-bar__logo-tag {
+    font-family: var(--sans); font-size: 10px;
+    font-weight: var(--w-sans-bold); letter-spacing: 0.24em;
+    color: rgba(245, 241, 232, 0.55); text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(245, 241, 232, 0.18);
+    border-radius: var(--r-pill); margin-left: 4px;
+  }
+  .admin-nav { display: flex; gap: 8px; justify-self: center; }
+  .admin-nav a {
+    padding: 8px 16px; font-family: var(--sans);
+    font-size: 13px; font-weight: var(--w-sans-medium);
+    color: rgba(245, 241, 232, 0.65);
+    border-radius: var(--r-pill);
+    transition: background 0.15s, color 0.15s;
+  }
+  .admin-nav a:hover { color: var(--cream); background: rgba(245, 241, 232, 0.06); }
+  .admin-nav a.is-active {
+    color: var(--ink); background: var(--ball);
+    font-weight: var(--w-sans-bold);
+  }
+  .admin-bar__right { display: flex; align-items: center; gap: 14px; }
+  .admin-bar__avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    background: var(--cream-warm); color: var(--coral);
+    font-family: var(--serif); font-style: italic; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .admin-bar__name {
+    font-family: var(--sans); font-size: 12.5px;
+    font-weight: var(--w-sans-medium); color: var(--cream);
+  }
+
+  /* Page header bar — breadcrumb + meta */
+  .app-head {
+    background: white;
+    border-bottom: 1px solid var(--line);
+  }
+  .app-head__inner {
+    max-width: 1480px; margin: 0 auto;
+    padding: 22px clamp(20px, 3vw, 36px) 24px;
+  }
+  .app-head__crumb {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 12px; color: var(--ink-soft);
+    margin-bottom: 14px;
+    font-weight: var(--w-sans-medium);
+  }
+  .app-head__crumb a {
+    color: var(--teal);
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .app-head__crumb a:hover { border-color: var(--teal); }
+  .app-head__crumb .sep { color: var(--line); }
+  .app-head__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px; align-items: end;
+  }
+  .app-head__title {
+    display: flex; align-items: baseline; gap: 18px;
+    flex-wrap: wrap;
+  }
+  .app-head__title h1 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 3.2vw, 44px);
+    font-weight: var(--w-serif-regular);
+    letter-spacing: -0.02em; line-height: 1;
+    color: var(--ink);
+  }
+  .app-head__title h1 em { color: var(--coral); font-style: italic; }
+  .app-head__id {
+    font-family: var(--serif); font-style: italic;
+    font-size: 22px; color: var(--ink-soft);
+  }
+  .app-head__meta {
+    margin-top: 10px;
+    display: flex; gap: 18px; flex-wrap: wrap;
+    font-size: 12.5px; color: var(--ink-soft);
+  }
+  .app-head__meta strong {
+    color: var(--ink); font-weight: var(--w-sans-bold);
+  }
+  .app-status {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 14px;
+    font-family: var(--sans); font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em; text-transform: uppercase;
+    border-radius: var(--r-pill); width: max-content;
+  }
+  .app-status::before {
+    content: ''; width: 7px; height: 7px;
+    border-radius: 50%; background: currentColor;
+  }
+  .app-status--ready { background: rgba(212, 247, 72, 0.32); color: var(--teal); }
+
+  /* Main grid */
+  .app-grid {
+    max-width: 1480px; margin: 0 auto;
+    padding: 36px clamp(20px, 3vw, 36px) 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 320px;
+    gap: 24px;
+    align-items: start;
+  }
+  @media (max-width: 1200px) {
+    .app-grid { grid-template-columns: 1fr 1fr; }
+    .app-side { grid-column: span 2; position: static; }
+  }
+  @media (max-width: 800px) {
+    .app-grid { grid-template-columns: 1fr; }
+    .app-side { grid-column: auto; }
+  }
+
+  /* Person card */
+  .person-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    overflow: hidden;
+  }
+  .person-card__head {
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--line);
+    display: flex; align-items: center; gap: 16px;
+  }
+  .person-card__avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: var(--cream-warm); color: var(--coral);
+    font-family: var(--serif); font-style: italic; font-size: 21px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .person-card--friend .person-card__avatar {
+    background: var(--ink); color: var(--ball);
+  }
+  .person-card__id {
+    font-family: var(--sans); font-size: 10.5px;
+    font-weight: var(--w-sans-bold); letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--coral);
+  }
+  .person-card--friend .person-card__id { color: var(--teal); }
+  .person-card__name {
+    font-family: var(--serif); font-size: 26px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink); line-height: 1.1;
+    margin-top: 4px;
+  }
+  .person-card__sub {
+    font-size: 13px; color: var(--ink-soft); margin-top: 4px;
+  }
+
+  /* Vouch quote — special treatment, applicant side only */
+  .vouch-card {
+    background: var(--cream-warm);
+    border-left: 3px solid var(--coral);
+    padding: 22px 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  .vouch-card__label {
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .vouch-card__label::after {
+    content: ''; flex: 1; height: 1px; background: var(--line);
+  }
+  .vouch-card__quote {
+    font-family: var(--serif); font-style: italic;
+    font-size: 19px; line-height: 1.45;
+    color: var(--ink); margin: 0;
+  }
+  .vouch-card__quote::before { content: '"'; color: var(--coral); }
+  .vouch-card__quote::after  { content: '"'; color: var(--coral); }
+
+  /* Field rows */
+  .person-card__body { padding: 24px 26px; }
+  .field-group {
+    display: flex; flex-direction: column; gap: 22px;
+  }
+  .field-row {
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .field-row__label {
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+  .field-row__value {
+    font-size: 14.5px; line-height: 1.55; color: var(--ink);
+  }
+  .field-row__value--prose {
+    font-family: var(--serif); font-style: italic;
+    font-size: 16px; line-height: 1.5; color: var(--ink);
+  }
+  .field-row__value strong {
+    font-weight: var(--w-sans-bold);
+  }
+  .field-row__value a {
+    color: var(--teal);
+    border-bottom: 1px solid var(--teal);
+  }
+  .chip-static {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 4px 12px;
+    background: var(--cream-warm);
+    border-radius: var(--r-pill);
+    font-size: 12.5px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink);
+  }
+  .chip-static .ball-dot {
+    width: 6px; height: 6px;
+    background: var(--ball);
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .meta-pair {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .person-card__footer {
+    background: var(--cream-warm);
+    padding: 14px 26px;
+    border-top: 1px solid var(--line);
+    display: flex; gap: 14px; flex-wrap: wrap;
+    font-size: 11.5px;
+    color: var(--ink-soft);
+  }
+  .person-card__footer strong {
+    color: var(--ink); font-weight: var(--w-sans-bold);
+  }
+  .person-card__footer .ok::before {
+    content: '✓'; color: var(--teal); margin-right: 6px;
+  }
+  .person-card__footer .no::before {
+    content: '○'; color: var(--ink-soft); margin-right: 6px;
+  }
+
+  /* Sidebar */
+  .app-side {
+    position: sticky; top: 90px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .side-block {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 24px;
+  }
+  .side-block h3 {
+    font-family: var(--sans);
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .side-block dl {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 12px 14px;
+    margin: 0;
+    font-size: 13.5px;
+  }
+  .side-block dt {
+    color: var(--ink-soft);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding-top: 2px;
+  }
+  .side-block dd {
+    color: var(--ink); margin: 0;
+    font-family: var(--serif); font-style: italic;
+    font-size: 14.5px;
+  }
+  .side-block dd strong {
+    font-family: var(--sans); font-style: normal;
+    font-weight: var(--w-sans-bold);
+  }
+
+  .audit {
+    background: var(--ink); color: var(--cream);
+    border: none;
+  }
+  .audit h3 { color: var(--ball); }
+  .audit__entry {
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(245, 241, 232, 0.1);
+    font-size: 12.5px;
+  }
+  .audit__entry:last-child { border-bottom: none; }
+  .audit__entry strong {
+    display: block;
+    font-family: var(--serif); font-size: 14px;
+    color: var(--cream); margin-bottom: 2px;
+    font-weight: var(--w-serif-medium);
+  }
+  .audit__entry .when {
+    color: rgba(245, 241, 232, 0.5);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: var(--w-sans-bold);
+  }
+
+  /* Notes area */
+  .notes {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 22px 24px;
+  }
+  .notes h3 {
+    font-family: var(--sans);
+    font-size: 10px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 12px;
+  }
+  .notes textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 14px 16px;
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    font-family: var(--sans);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+    resize: vertical;
+  }
+  .notes textarea:focus {
+    outline: none; border-color: var(--teal); background: white;
+  }
+  .notes__history {
+    margin-top: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .note-line {
+    padding: 12px 14px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+  .note-line__meta {
+    font-size: 10.5px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .note-line__meta .when { color: var(--ink-soft); }
+
+  /* Decision bar — sticky bottom */
+  .decision-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: white;
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -8px 24px -16px rgba(0,0,0,0.1);
+    z-index: 40;
+    padding: 16px clamp(20px, 3vw, 36px);
+  }
+  .decision-bar__inner {
+    max-width: 1480px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 800px) {
+    .decision-bar__inner { grid-template-columns: 1fr; gap: 12px; }
+  }
+  .decision-bar__pair {
+    display: flex; align-items: center; gap: 12px;
+    font-size: 13px; color: var(--ink-soft);
+  }
+  .decision-bar__pair strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+  .decision-bar__mini-avatars {
+    display: flex; position: relative;
+  }
+  .decision-bar__mini-avatar {
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--cream-warm); color: var(--coral);
+    font-family: var(--serif); font-style: italic; font-size: 11px;
+    display: flex; align-items: center; justify-content: center;
+    border: 2px solid white;
+  }
+  .decision-bar__mini-avatar:nth-child(2) {
+    margin-left: -8px;
+    background: var(--ink); color: var(--ball);
+  }
+  .decision-bar__actions {
+    display: flex; gap: 10px; justify-self: end;
+  }
+  .btn-decision {
+    padding: 12px 22px;
+    border-radius: var(--r-pill);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid transparent;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-decision .arrow { font-size: 14px; }
+  .btn-decision--accept {
+    background: var(--ink);
+    color: var(--ball);
+    box-shadow: 0 4px 12px -6px rgba(0, 0, 0, 0.3);
+  }
+  .btn-decision--accept:hover {
+    background: var(--navy);
+    transform: translateY(-1px);
+  }
+  .btn-decision--reject {
+    background: white;
+    color: var(--coral-deep);
+    border-color: var(--line);
+  }
+  .btn-decision--reject:hover {
+    border-color: var(--coral);
+    background: var(--cream-warm);
+  }
+  .btn-decision--flag {
+    background: rgba(255, 165, 0, 0.18);
+    color: #b85c00;
+  }
+  .btn-decision--flag:hover {
+    background: rgba(255, 165, 0, 0.28);
+  }
+
+  .keyboard-hint {
+    font-size: 11px; color: var(--ink-soft);
+    text-align: center;
+    margin-top: 6px;
+  }
+  .keyboard-hint kbd {
+    display: inline-block;
+    padding: 2px 7px;
+    margin: 0 2px;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    font-family: var(--sans);
+    font-size: 10.5px;
+    font-weight: var(--w-sans-bold);
+    color: var(--ink);
+  }
+
+  .notes-wrap {
+    max-width: 1480px;
+    margin: 24px auto 0;
+    padding: 0 clamp(20px, 3vw, 36px);
+  }
+</style>
+</head>
+<body>
+
+<header class="admin-bar" data-screen-label="Admin Bar">
+  <div class="admin-bar__inner">
+    <a href="admin-inbox.html" class="admin-bar__logo">
+      <span class="admin-bar__logo-dot" aria-hidden="true"></span>
+      DOUBLES
+      <span class="admin-bar__logo-tag">Admin</span>
+    </a>
+    <nav class="admin-nav" aria-label="Admin sections">
+      <a href="admin-inbox.html" class="is-active">Applications</a>
+      <a href="#">Roster</a>
+      <a href="#">Volumes</a>
+      <a href="#">Intros</a>
+      <a href="#">Settings</a>
+    </nav>
+    <div class="admin-bar__right">
+      <div class="admin-bar__avatar" aria-hidden="true">D</div>
+      <span class="admin-bar__name">Di</span>
+    </div>
+  </div>
+</header>
+
+<!-- =========================================================
+     APP HEADER
+     ========================================================= -->
+<div class="app-head" data-screen-label="App Header">
+  <div class="app-head__inner">
+    <div class="app-head__crumb">
+      <a href="admin-inbox.html">← Inbox</a>
+      <span class="sep">/</span>
+      <span>Vol. 01</span>
+      <span class="sep">/</span>
+      <span>Awaiting you</span>
+    </div>
+    <div class="app-head__row">
+      <div>
+        <div class="app-head__title">
+          <h1>Jordan Rivers <em>&amp;</em> Alex Mendoza</h1>
+          <span class="app-head__id">#247</span>
+          <span class="app-status app-status--ready">Ready to decide</span>
+        </div>
+        <div class="app-head__meta">
+          <span><strong>Submitted</strong> 3h ago (both sides in)</span>
+          <span><strong>Referred</strong> A friend (Jamie L.)</span>
+          <span><strong>Volume</strong> Vol. 01 · Founding Launch</span>
+          <span><strong>Payment</strong> $290 held, not yet captured</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     PAIR GRID
+     ========================================================= -->
+<div class="app-grid">
+
+  <!-- ===== APPLICANT ===== -->
+  <article class="person-card">
+    <div class="person-card__head">
+      <div class="person-card__avatar">JR</div>
+      <div>
+        <div class="person-card__id">The applicant · 32 · single</div>
+        <h2 class="person-card__name">Jordan Rivers</h2>
+        <div class="person-card__sub">Co-founder, River &amp; Co. · jordan@river.co · (415) 555-2147</div>
+      </div>
+    </div>
+
+    <div class="vouch-card">
+      <div class="vouch-card__label">Vouching for Alex</div>
+      <p class="vouch-card__quote">Alex is the smartest person I know who's also actually fun. We worked together on a fintech in 2022 — she'll out-curious anyone at the table.</p>
+    </div>
+
+    <div class="person-card__body">
+      <div class="field-group">
+
+        <div class="field-row">
+          <span class="field-row__label">Working on</span>
+          <span class="field-row__value">Co-founder of a fintech for restaurants, post-Series A, building in SF.</span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Role</span>
+          <span class="field-row__value">
+            <span class="chip-static"><span class="ball-dot"></span> Founder / Operator</span>
+          </span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Why Doubles</span>
+          <span class="field-row__value field-row__value--prose">"Honest answer: I'm tired of apps, and a few friends I trust said this is the move. I want to meet smart people in person, with low-stakes context."</span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Social</span>
+          <span class="field-row__value">
+            <span class="meta-pair">
+              <a href="#">linkedin.com/in/jordanrivers</a>
+              <a href="#">@jordan.rivers</a>
+            </span>
+          </span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Referred by</span>
+          <span class="field-row__value">Jamie Lin — friend (attended Atlas dinner '24)</span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Dietary</span>
+          <span class="field-row__value">None noted.</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="person-card__footer">
+      <span class="ok"><strong>Payment held</strong> · $145</span>
+      <span class="ok"><strong>CoC agreed</strong></span>
+      <span class="no"><strong>Photo consent</strong> · TBD on accept</span>
+    </div>
+  </article>
+
+  <!-- ===== FRIEND ===== -->
+  <article class="person-card person-card--friend">
+    <div class="person-card__head">
+      <div class="person-card__avatar">AM</div>
+      <div>
+        <div class="person-card__id">The +1 · 34 · single</div>
+        <h2 class="person-card__name">Alex Mendoza</h2>
+        <div class="person-card__sub">Co-founder, Mendoza Studio · alex@mendoza.studio · (415) 555-3082</div>
+      </div>
+    </div>
+
+    <div class="vouch-card" style="background: rgba(212, 247, 72, 0.18); border-left-color: var(--teal);">
+      <div class="vouch-card__label" style="color: var(--teal);">Alex's "why me"</div>
+      <p class="vouch-card__quote">I'm a chronic question-asker — I love finding out what someone built and why they bothered. Also I'll never let dinner get awkward; I think small talk is a skill issue.</p>
+    </div>
+
+    <div class="person-card__body">
+      <div class="field-group">
+
+        <div class="field-row">
+          <span class="field-row__label">Working on</span>
+          <span class="field-row__value">Co-founder of a design studio working with early-stage founders on brand and product. Eight years in agencies before, now solo with one partner.</span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Role</span>
+          <span class="field-row__value">
+            <span class="chip-static"><span class="ball-dot"></span> Founder / Operator</span>
+          </span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Single?</span>
+          <span class="field-row__value">
+            <span class="chip-static"><span class="ball-dot"></span> Yes, single</span>
+          </span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Social</span>
+          <span class="field-row__value">
+            <span class="meta-pair">
+              <a href="#">linkedin.com/in/alexmendoza</a>
+              <a href="#">@alexbuilds</a>
+            </span>
+          </span>
+        </div>
+
+        <div class="field-row">
+          <span class="field-row__label">Dietary</span>
+          <span class="field-row__value">Pescatarian. No severe allergies.</span>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="person-card__footer">
+      <span class="ok"><strong>Payment held</strong> · $145</span>
+      <span class="ok"><strong>CoC agreed</strong></span>
+      <span class="ok"><strong>Photo consent</strong> · opted in</span>
+    </div>
+  </article>
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="app-side" aria-label="Application metadata">
+
+    <div class="side-block">
+      <h3>Pair signal</h3>
+      <dl>
+        <dt>Roles</dt><dd>Founder × Founder</dd>
+        <dt>Ages</dt><dd>32 &amp; 34</dd>
+        <dt>SF tenure</dt><dd>Both 5+ years</dd>
+        <dt>Industries</dt><dd>Fintech &amp; Design</dd>
+        <dt>Overlap</dt><dd>Worked together '22</dd>
+        <dt>Repeat?</dt><dd>First time both</dd>
+      </dl>
+    </div>
+
+    <div class="side-block">
+      <h3>Room balance (after accept)</h3>
+      <dl>
+        <dt>Seats</dt><dd>24 of 30</dd>
+        <dt>Founders</dt><dd><strong>13</strong> (+2)</dd>
+        <dt>Investors</dt><dd>7</dd>
+        <dt>Operators</dt><dd>4</dd>
+      </dl>
+      <p style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-soft); line-height: 1.5;">
+        Pushes founder count slightly. Consider deferring one founder pair if Vol. 02 has stronger investor depth.
+      </p>
+    </div>
+
+    <div class="side-block audit">
+      <h3>Audit log</h3>
+      <div class="audit__entry">
+        <strong>Both apps received</strong>
+        <span class="when">May 24 · 11:42 AM</span>
+      </div>
+      <div class="audit__entry">
+        <strong>Alex submitted</strong>
+        <span class="when">May 24 · 9:08 AM</span>
+      </div>
+      <div class="audit__entry">
+        <strong>Invite sent to Alex</strong>
+        <span class="when">May 23 · 2:51 PM</span>
+      </div>
+      <div class="audit__entry">
+        <strong>Jordan submitted</strong>
+        <span class="when">May 23 · 2:47 PM</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- =========================================================
+     INTERNAL NOTES
+     ========================================================= -->
+<div class="notes-wrap">
+  <div class="notes">
+    <h3>Internal notes</h3>
+    <textarea placeholder="Note for the team — visible only to you, Sam, and Theo…"></textarea>
+    <div class="notes__history">
+      <div class="note-line">
+        <div class="note-line__meta">Sam · <span class="when">2h ago</span></div>
+        Jamie Lin is solid; high signal referral. I'm fine with this pair.
+      </div>
+      <div class="note-line">
+        <div class="note-line__meta">Di · <span class="when">3h ago</span></div>
+        Both vouches read genuine. Working-together history is a plus. Lean accept.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================================
+     DECISION BAR — sticky bottom
+     ========================================================= -->
+<aside class="decision-bar" role="region" aria-label="Decision">
+  <div class="decision-bar__inner">
+    <div class="decision-bar__pair">
+      <div class="decision-bar__mini-avatars" aria-hidden="true">
+        <div class="decision-bar__mini-avatar">JR</div>
+        <div class="decision-bar__mini-avatar">AM</div>
+      </div>
+      <div>
+        <div><strong>Jordan &amp; Alex</strong> · #247</div>
+        <div class="keyboard-hint">
+          <kbd>A</kbd> accept &nbsp; <kbd>R</kbd> reject &nbsp; <kbd>F</kbd> flag &nbsp; <kbd>J</kbd> next pair
+        </div>
+      </div>
+    </div>
+    <div></div>
+    <div class="decision-bar__actions">
+      <button class="btn-decision btn-decision--flag" type="button">⚐ Flag for team</button>
+      <button class="btn-decision btn-decision--reject" type="button">Reject pair</button>
+      <button class="btn-decision btn-decision--accept" type="button">Accept pair <span class="arrow">→</span></button>
+    </div>
+  </div>
+</aside>
+
+</body>
+</html>
