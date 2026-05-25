@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Doubles</title>
+<meta name="description" content="Get in touch with the founders of Doubles. We read every email." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Page header — navy with court arc */
+  .page-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(110px, 16vh, 180px) 0 clamp(70px, 10vh, 110px);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header::before {
+    /* big half-court arc */
+    content: '';
+    position: absolute;
+    right: -240px; top: 50%;
+    transform: translateY(-50%);
+    width: 720px; height: 720px;
+    border: 1px solid rgba(212, 247, 72, 0.16);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .page-header::after {
+    content: '';
+    position: absolute;
+    right: -120px; top: 50%;
+    transform: translateY(-50%);
+    width: 480px; height: 480px;
+    border: 1px solid rgba(212, 247, 72, 0.10);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .page-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 8vw, 124px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 14ch;
+  }
+  .page-header__sub {
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin: 0;
+    max-width: 40ch;
+    padding-bottom: 12px;
+  }
+  @media (max-width: 800px) {
+    .page-header__inner { grid-template-columns: 1fr; gap: 28px; }
+  }
+
+  /* Reasons strip — pick your path */
+  .reasons {
+    background: var(--cream);
+    padding: clamp(70px, 10vh, 110px) 0 0;
+  }
+  .reasons__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+  .reason {
+    background: var(--cream);
+    padding: 36px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background 0.15s;
+  }
+  .reason:hover { background: white; }
+  .reason__icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .reason__icon svg { width: 22px; height: 22px; }
+  .reason h3 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .reason p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .reason__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    padding-top: 6px;
+    border-top: 1px solid var(--line);
+    margin-top: auto;
+  }
+  .reason__link .arrow { transition: transform 0.2s; }
+  .reason:hover .reason__link .arrow { transform: translateX(4px); }
+  @media (max-width: 900px) { .reasons__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .reasons__grid { grid-template-columns: 1fr; } }
+
+  /* Main: contact form + side info */
+  .contact {
+    background: var(--cream);
+    padding: clamp(60px, 8vh, 100px) 0 var(--section-pad-sm);
+  }
+  .contact__grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) { .contact__grid { grid-template-columns: 1fr; gap: 48px; } }
+
+  /* Form */
+  .contact-form {
+    background: white;
+    border-radius: var(--r-card);
+    border: 1px solid var(--line);
+    padding: clamp(32px, 4vw, 52px);
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+    box-shadow: var(--shadow-card);
+  }
+  .contact-form__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    flex-wrap: wrap;
+  }
+  .contact-form__head h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: var(--w-serif-regular);
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .contact-form__head h2 em { color: var(--coral); }
+  .contact-form__head .hint {
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field--pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 600px) { .field--pair { grid-template-columns: 1fr; } }
+
+  .field label {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .field label .req { color: var(--coral); margin-left: 4px; }
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--sans);
+    font-weight: var(--w-sans-body);
+    font-size: 16px;
+    color: var(--ink);
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 16px;
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  }
+  .field textarea { min-height: 150px; resize: vertical; line-height: 1.55; }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    background: white;
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(27, 90, 107, 0.12);
+  }
+  .field input::placeholder,
+  .field textarea::placeholder { color: rgba(20, 39, 45, 0.35); }
+
+  .contact-form__submit {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+  }
+  .contact-form__submit .meta {
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .contact-form__submit .meta .ball-dot { width: 6px; height: 6px; }
+
+  /* Sidebar — direct channels */
+  .contact__side {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 32px;
+  }
+  .side-card--dark { background: var(--ink); border-color: transparent; color: var(--cream); }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em { font-style: italic; color: var(--coral); }
+  .side-card--dark h4 em { color: var(--ball); }
+
+  .channel {
+    display: grid;
+    grid-template-columns: 44px 1fr auto;
+    align-items: center;
+    gap: 18px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .channel:last-child { border-bottom: none; padding-bottom: 0; }
+  .channel:first-of-type { padding-top: 0; }
+  .channel__icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--teal);
+  }
+  .channel__icon svg { width: 22px; height: 22px; }
+  .channel__label {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  .channel__value {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-top: 4px;
+    line-height: 1.2;
+  }
+  .channel__value a { color: var(--ink); border-bottom: 1px solid transparent; transition: color 0.15s, border-color 0.15s; }
+  .channel__value a:hover { color: var(--teal); border-color: var(--teal); }
+  .channel__arrow {
+    color: var(--ink-soft);
+    transition: transform 0.2s, color 0.2s;
+  }
+  .channel:hover .channel__arrow { color: var(--coral); transform: translateX(4px); }
+
+  .side-meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px 18px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(245, 241, 232, 0.12);
+  }
+  .side-meta dt {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+    padding-top: 4px;
+  }
+  .side-meta dd {
+    margin: 0;
+    font-size: 14px;
+    color: rgba(245, 241, 232, 0.85);
+  }
+
+  /* Founders signoff */
+  .signoff {
+    background: var(--cream-warm);
+    padding: var(--section-pad-md) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .signoff::before {
+    content: '';
+    position: absolute;
+    left: -120px; bottom: -180px;
+    width: 480px; height: 480px;
+    border: 1px solid rgba(27, 90, 107, 0.15);
+    border-radius: 50%;
+  }
+  .signoff__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .signoff h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.6vw, 64px);
+    font-weight: var(--w-serif-regular);
+    color: var(--ink);
+    line-height: 1.05;
+  }
+  .signoff h2 em { color: var(--coral); }
+  .signoff p {
+    margin: 18px 0 0;
+    color: var(--ink-soft);
+    line-height: 1.65;
+    max-width: 44ch;
+    font-size: 16px;
+  }
+  .signoff__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.4;
+    color: var(--ink);
+    padding-left: 28px;
+    border-left: 2px solid var(--coral);
+    max-width: 36ch;
+  }
+  .signoff__quote::before {
+    content: '"';
+    font-family: var(--serif);
+    font-size: 56px;
+    font-style: italic;
+    color: var(--coral);
+    margin-left: -8px;
+    margin-right: 4px;
+    vertical-align: -16px;
+  }
+  .signoff__quote-by {
+    display: block;
+    margin-top: 18px;
+    font-style: normal;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .signoff__inner { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+<header class="page-header" data-screen-label="Contact Header">
+  <div class="page-header__inner">
+    <div>
+      <span class="eyebrow"><span class="ball"></span> We read every email</span>
+      <h1>Say <em>hello</em>.</h1>
+    </div>
+    <p class="page-header__sub">
+      Questions about applying, partnering, hosting, or just curious about the night? Pick the path that fits — we reply within a day or two.
+    </p>
+  </div>
+</header>
+
+<!-- =========================================================
+     REASONS — pick your path
+     ========================================================= -->
+<section class="reasons" data-screen-label="Reasons">
+  <div class="container">
+    <div class="reasons__grid">
+
+      <a href="apply.html" class="reason">
+        <div class="reason__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 12h12"/><path d="M11 6l6 6-6 6"/>
+            <path d="M17 4v2"/><path d="M19 12v2"/><path d="M17 18v2"/>
+          </svg>
+        </div>
+        <h3>Apply to attend.</h3>
+        <p>You want a seat at Vol. 01. Skip the form here — the application is the fastest path in.</p>
+        <span class="reason__link">Application <span class="arrow">→</span></span>
+      </a>
+
+      <a href="#partner" class="reason">
+        <div class="reason__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 21l-1.5-1.4C6 15.6 3 13 3 9.5A4.5 4.5 0 0 1 7.5 5c1.7 0 3.3.8 4.5 2.1A6.1 6.1 0 0 1 16.5 5 4.5 4.5 0 0 1 21 9.5c0 3.5-3 6.1-7.5 10.1z"/>
+          </svg>
+        </div>
+        <h3>Sponsor or partner.</h3>
+        <p>Wine, catering, brand collabs. We work with a small set of curated partners each season.</p>
+        <span class="reason__link">Inquire <span class="arrow">→</span></span>
+      </a>
+
+      <a href="events.html#host" class="reason">
+        <div class="reason__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-7h-6v7H5a1 1 0 0 1-1-1z"/>
+          </svg>
+        </div>
+        <h3>Host the next one.</h3>
+        <p>You've got a great SF home and want to lend it. We bring the catering, guests, and production.</p>
+        <span class="reason__link">Host with us <span class="arrow">→</span></span>
+      </a>
+
+      <a href="#press" class="reason">
+        <div class="reason__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M4 4h13a3 3 0 0 1 3 3v12a1 1 0 0 1-1 1H7a3 3 0 0 1-3-3z"/>
+            <path d="M8 8h8"/><path d="M8 12h8"/><path d="M8 16h5"/>
+            <path d="M20 7v12a1 1 0 0 1-1 1 1 1 0 0 1-1-1V7"/>
+          </svg>
+        </div>
+        <h3>Press &amp; coverage.</h3>
+        <p>Writing about the new SF events scene? We're happy to share notes — with or without attribution.</p>
+        <span class="reason__link">Press kit <span class="arrow">→</span></span>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     CONTACT — form + direct channels
+     ========================================================= -->
+<section class="contact" id="partner" data-screen-label="Contact Form">
+  <div class="container">
+    <div class="contact__grid">
+
+      <!-- ========== FORM ========== -->
+      <form class="contact-form" onsubmit="event.preventDefault(); alert('Demo only — wire this up to your form provider.');">
+        <div class="contact-form__head">
+          <h2>Send us a <em>note</em>.</h2>
+          <span class="hint">Reply in 24 — 48 hours</span>
+        </div>
+
+        <div class="field--pair">
+          <div class="field">
+            <label for="c-name">Your name <span class="req">*</span></label>
+            <input id="c-name" type="text" placeholder="Jordan Rivers" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email <span class="req">*</span></label>
+            <input id="c-email" type="email" placeholder="jordan@company.com" required />
+          </div>
+        </div>
+
+        <div class="field--pair">
+          <div class="field">
+            <label for="c-topic">What's this about? <span class="req">*</span></label>
+            <select id="c-topic" required>
+              <option>Sponsor or partnership</option>
+              <option>Host with us</option>
+              <option>Press &amp; coverage</option>
+              <option>Application question</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="c-company">Company / fund / publication</label>
+            <input id="c-company" type="text" placeholder="Optional" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="c-message">Your message <span class="req">*</span></label>
+          <textarea id="c-message" placeholder="A few sentences is plenty. What are you working on, and what made you think of Doubles?" required></textarea>
+        </div>
+
+        <div class="contact-form__submit">
+          <button type="submit" class="btn btn--coral">Send message <span class="arrow">→</span></button>
+          <span class="meta"><span class="ball-dot"></span> Founders read every reply</span>
+        </div>
+      </form>
+
+      <!-- ========== SIDEBAR ========== -->
+      <aside class="contact__side" aria-label="Other ways to reach us">
+
+        <div class="side-card">
+          <h4 style="margin-bottom: 8px;">Faster <em>channels</em>.</h4>
+          <p style="font-size: 13.5px; color: var(--ink-soft); margin: 0 0 18px; line-height: 1.6;">
+            If you'd rather not wait for the form. We answer email first.
+          </p>
+
+          <div class="channel">
+            <div class="channel__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                <path d="M3 7l9 7 9-7"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel__label">Email</div>
+              <div class="channel__value"><a href="mailto:hello@doubles.singles">hello@doubles.singles</a></div>
+            </div>
+            <div class="channel__arrow">→</div>
+          </div>
+
+          <div class="channel">
+            <div class="channel__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="3" width="18" height="18" rx="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel__label">Instagram</div>
+              <div class="channel__value"><a href="#">@doubles.singles</a></div>
+            </div>
+            <div class="channel__arrow">→</div>
+          </div>
+
+          <div class="channel">
+            <div class="channel__icon">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel__label">X / Twitter</div>
+              <div class="channel__value"><a href="#">@doublesSF</a></div>
+            </div>
+            <div class="channel__arrow">→</div>
+          </div>
+
+          <div class="channel">
+            <div class="channel__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 9l9-6 9 6v11a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="channel__label">Mail</div>
+              <div class="channel__value" style="font-size: 16px;">
+                Doubles, LLC<br/>
+                <span style="font-family: var(--sans); font-size: 13px; font-weight: var(--w-sans-body); color: var(--ink-soft);">228 Sutter St, Floor 4<br/>San Francisco, CA 94108</span>
+              </div>
+            </div>
+            <div></div>
+          </div>
+        </div>
+
+        <div class="side-card side-card--dark">
+          <h4>Before you write — <em>read this</em>.</h4>
+          <p style="font-size: 14px; color: rgba(245,241,232,0.75); line-height: 1.6; margin-top: 12px;">
+            About 80% of the email we get is answered on the FAQ. If your question is "how does it work" or "what does it cost," skip the form and check there first — you'll get the answer faster than we can write you.
+          </p>
+          <dl class="side-meta">
+            <dt>FAQ</dt>     <dd><a href="faq.html" style="color: var(--ball); border-bottom: 1px solid rgba(212,247,72,0.5);">Frequently asked →</a></dd>
+            <dt>Apply</dt>   <dd><a href="apply.html" style="color: var(--ball); border-bottom: 1px solid rgba(212,247,72,0.5);">Application →</a></dd>
+            <dt>Press</dt>   <dd><a href="#" style="color: var(--ball); border-bottom: 1px solid rgba(212,247,72,0.5);">Press kit →</a></dd>
+          </dl>
+        </div>
+
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     SIGNOFF — Founders' note
+     ========================================================= -->
+<section class="signoff" data-screen-label="Signoff">
+  <div class="signoff__inner">
+    <div>
+      <span class="eyebrow eyebrow--coral"><span class="ball"></span> A note from the founders</span>
+      <h2 style="margin-top: 18px;">Hi. We're <em>real people</em>.</h2>
+      <p>
+        Doubles is run by a small team of founders who got tired of how SF dating worked. There's no auto-responder, no support queue, no "your ticket is #4831." If you write, one of us reads it.
+      </p>
+    </div>
+    <div class="signoff__quote">
+      We started Doubles because we wanted to go to it ourselves. Email us like you would a friend who happens to throw a really good party.
+      <span class="signoff__quote-by">— The founders of Doubles</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

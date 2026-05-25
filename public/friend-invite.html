@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>You've been vouched for — Doubles</title>
+<meta name="description" content="Jordan thinks you should be in the room. Here's what they said, and what we'd like to know." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POST-FLOW SHELL — see application-submitted.html for the
+     canonical definitions. Duplicated here so each page is
+     self-contained.
+     ========================================================= */
+
+  .flow { min-height: 100vh; background: var(--cream); }
+
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(90px, 14vh, 150px) 0 clamp(60px, 9vh, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  .flow-header::before {
+    content: '';
+    position: absolute;
+    top: -60%; right: -10%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(52px, 7.4vw, 108px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    max-width: 18ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 28px;
+    max-width: 52ch;
+  }
+
+  /* Pull quote — the vouch.
+     Big italic serif, attribution underneath. Sits inside the dark header. */
+  .vouch {
+    margin-top: 50px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 28px;
+    align-items: start;
+  }
+  .vouch__avatar {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(140deg, rgba(245,241,232,0.06), rgba(245,241,232,0.02));
+    border: 1px solid rgba(245, 241, 232, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 26px;
+    color: var(--ball);
+    flex-shrink: 0;
+  }
+  .vouch__body { padding-top: 4px; }
+  .vouch__quote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: clamp(22px, 2.4vw, 30px);
+    line-height: 1.35;
+    color: var(--cream);
+    margin-bottom: 16px;
+    max-width: 36ch;
+  }
+  .vouch__quote::before { content: '"'; color: var(--coral); margin-right: 2px; }
+  .vouch__quote::after { content: '"'; color: var(--coral); }
+  .vouch__attr {
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.55);
+  }
+  .vouch__attr strong { color: var(--ball); font-weight: var(--w-sans-bold); }
+  @media (max-width: 700px) {
+    .vouch { grid-template-columns: 1fr; gap: 18px; }
+  }
+
+  /* ----- WHAT IS DOUBLES — quick explainer band on cream ----- */
+  .explainer {
+    padding: clamp(70px, 10vh, 110px) 0 clamp(50px, 7vh, 80px);
+  }
+  .explainer__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+  }
+  .explainer h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4.4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 14px;
+    max-width: 20ch;
+  }
+  .explainer h2 em { color: var(--coral); font-style: italic; }
+  .explainer__lede {
+    font-size: 19px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 24px 0 36px;
+    max-width: 58ch;
+  }
+  .explainer__lede strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+
+  /* Two-column "what / what not" frame */
+  .doubles-isnt {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 24px 0 8px;
+  }
+  .doubles-isnt__col {
+    padding: 26px 28px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+  }
+  .doubles-isnt__col h4 {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .doubles-isnt__col h4 em { color: var(--coral); font-style: italic; }
+  .doubles-isnt__col ul {
+    list-style: none;
+    padding: 0; margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .doubles-isnt__col li {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+  }
+  .doubles-isnt__col li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    background: var(--ball);
+  }
+  .doubles-isnt__col--no li::before { background: var(--coral); opacity: 0.6; }
+  @media (max-width: 700px) { .doubles-isnt { grid-template-columns: 1fr; } }
+
+  /* ----- FORM SECTION ----- */
+  .friend-form-section {
+    padding: clamp(40px, 6vh, 80px) 0 var(--section-pad-sm);
+  }
+  .friend-form-section__grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .friend-form-section__grid { grid-template-columns: 1fr; gap: 50px; }
+  }
+
+  /* Form (lighter than apply.html — three short groups) */
+  .friend-form { display: flex; flex-direction: column; gap: 36px; }
+  .friend-form__group {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: clamp(28px, 4vw, 42px);
+  }
+  .friend-form__group-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .friend-form__group-head .num {
+    font-family: var(--serif);
+    font-size: 28px;
+    color: var(--coral);
+    font-style: italic;
+    line-height: 1;
+  }
+  .friend-form__group-head h3 {
+    font-family: var(--serif);
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-right: auto;
+    line-height: 1.2;
+  }
+  .friend-form__group-head h3 em { color: var(--coral); font-style: italic; }
+  .friend-form__group-head .hint {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink-soft);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+  .field--pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-bottom: 22px;
+  }
+  .field--pair .field { margin-bottom: 0; }
+  @media (max-width: 640px) { .field--pair { grid-template-columns: 1fr; } }
+
+  .field label {
+    font-size: 13px;
+    font-weight: var(--w-sans-bold);
+    color: var(--ink);
+    letter-spacing: 0.04em;
+  }
+  .field .req { color: var(--coral); }
+  .field .help { font-size: 13px; color: var(--ink-soft); margin: -4px 0 4px; line-height: 1.5; }
+  .field input[type="text"],
+  .field input[type="email"],
+  .field input[type="url"],
+  .field input[type="number"],
+  .field textarea {
+    font-family: var(--sans);
+    font-size: 15.5px;
+    color: var(--ink);
+    background: var(--cream);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 14px 16px;
+    transition: border-color 0.15s, background 0.15s;
+  }
+  .field input:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--teal);
+    background: white;
+  }
+  .field textarea { resize: vertical; min-height: 110px; line-height: 1.55; }
+  .field input.is-locked {
+    background: var(--cream-warm);
+    color: var(--ink-soft);
+    cursor: not-allowed;
+  }
+  .locked-tag {
+    font-size: 11px;
+    color: var(--teal);
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-left: 8px;
+  }
+
+  /* Radio chips — same vocabulary as apply.html */
+  .chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    font-size: 13.5px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink-soft);
+    background: white;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s, background 0.15s;
+  }
+  .chip input { display: none; }
+  .chip .ball-dot { background: var(--line); width: 7px; height: 7px; border-radius: 50%; }
+  .chip:has(input:checked) {
+    border-color: var(--teal);
+    color: var(--ink);
+    background: var(--cream-warm);
+  }
+  .chip:has(input:checked) .ball-dot { background: var(--ball); }
+
+  .checkbox-block {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 18px 20px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .checkbox-block input { margin-top: 4px; flex-shrink: 0; width: 16px; height: 16px; accent-color: var(--coral); }
+  .checkbox-block a { color: var(--teal); border-bottom: 1px solid var(--teal); }
+
+  /* Payment band — pre-submit, sets expectation */
+  .payment-band {
+    background: var(--ink);
+    color: var(--cream);
+    border-radius: var(--r-card);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+  }
+  @media (max-width: 700px) { .payment-band { grid-template-columns: 1fr; gap: 18px; } }
+  .payment-band__copy {
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(245, 241, 232, 0.75);
+    max-width: 48ch;
+  }
+  .payment-band__copy strong {
+    display: block;
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin-bottom: 6px;
+    font-style: italic;
+  }
+  .payment-band__amount {
+    font-family: var(--serif);
+    font-size: 46px;
+    font-weight: var(--w-serif-regular);
+    color: var(--ball);
+    line-height: 1;
+  }
+  .payment-band__amount small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.45);
+    margin-top: 6px;
+  }
+
+  .friend-form__submit {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding-top: 8px;
+  }
+  .friend-form__submit .meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Sidebar */
+  .flow-side {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  @media (max-width: 1000px) { .flow-side { position: static; } }
+
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 28px;
+  }
+  .side-card--dark { background: var(--ink); color: var(--cream); border-color: transparent; }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    line-height: 1.2;
+    margin-top: 12px;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em { color: var(--coral); font-style: italic; }
+  .side-card--dark h4 em { color: var(--ball); }
+
+  .side-meta {
+    margin: 18px 0 0;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 10px 14px;
+    font-size: 14px;
+  }
+  .side-meta dt {
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+  .side-card--dark .side-meta dt { color: rgba(245, 241, 232, 0.5); }
+  .side-card:not(.side-card--dark) .side-meta dt { color: var(--ink-soft); }
+  .side-meta dd {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin: 0;
+  }
+  .side-card:not(.side-card--dark) .side-meta dd { color: var(--ink); }
+
+  .side-list {
+    list-style: none;
+    padding: 0; margin: 16px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .side-list li { display: flex; gap: 10px; align-items: baseline; }
+  .side-list li::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ball);
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="#friend-form" class="btn btn--coral btn--sm">
+      Go to form <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<main class="flow">
+
+  <!-- =========================================================
+       HEADER — vouch + welcome
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="Friend Invite Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · You've been vouched for</span>
+      <h1>Jordan thinks you should be <em>in the room</em>.</h1>
+      <p class="flow-header__sub">
+        Hi Alex — Jordan Rivers applied to bring you to a Doubles event,
+        which means there's a seat held for you. Here's what they said
+        about you, and what we'd like to know before we say yes.
+      </p>
+
+      <!-- The vouch -->
+      <div class="vouch" role="blockquote" aria-label="What Jordan said about you">
+        <div class="vouch__avatar" aria-hidden="true">JR</div>
+        <div class="vouch__body">
+          <p class="vouch__quote">Alex is the smartest person I know who's also actually fun. We worked together on a fintech in 2022 — she'll out-curious anyone at the table.</p>
+          <div class="vouch__attr">
+            <strong>Jordan Rivers</strong> · Co-founder, River &amp; Co.
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       EXPLAINER — quick "what is doubles" before the form
+       ========================================================= -->
+  <section class="explainer" data-screen-label="What Is Doubles">
+    <div class="explainer__inner">
+      <span class="eyebrow"><span class="ball"></span> First time hearing about us? Here's the short version</span>
+      <h2>A dating event that <em>doesn't</em> feel like one.</h2>
+      <p class="explainer__lede">
+        Doubles is a quarterly, hand-curated dinner for thirty single
+        founders, investors, and operators in San Francisco. The format is
+        what we call <strong>doubles</strong> — you came with one friend
+        you'd trust to set you up. The night opens with a fireside chat
+        plus a long Q&amp;A (we call it the <strong>Volley</strong>), and
+        rolls into an open-buffet dinner party that wraps by nine.
+      </p>
+
+      <div class="doubles-isnt">
+        <div class="doubles-isnt__col">
+          <h4>What it <em>is</em>.</h4>
+          <ul>
+            <li>Thirty curated singles in a private SF home</li>
+            <li>Catered dinner, hand-picked wine, one big shared night</li>
+            <li>A fireside chat &amp; Q&amp;A with a founder or investor</li>
+            <li>A chance to leave with a phone number, or at least a story</li>
+          </ul>
+        </div>
+        <div class="doubles-isnt__col doubles-isnt__col--no">
+          <h4>What it isn't.</h4>
+          <ul>
+            <li>A mixer or speed-dating round</li>
+            <li>Name tags or icebreakers or matchmaker clipboards</li>
+            <li>A pitch event — pitching is against the rules</li>
+            <li>An app or a swipe queue</li>
+          </ul>
+        </div>
+      </div>
+
+      <p style="margin-top: 28px; font-size: 14.5px; color: var(--ink-soft);">
+        For the full story: <a href="about.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">about Doubles</a> ·
+        <a href="volley.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">the Volley</a> ·
+        <a href="code-of-conduct.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">code of conduct</a> ·
+        <a href="faq.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">FAQ</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       FORM — short friend questionnaire + sidebar
+       ========================================================= -->
+  <section class="friend-form-section" id="friend-form" data-screen-label="Friend Form">
+    <div class="container">
+      <div class="friend-form-section__grid">
+
+        <!-- ===== FORM ===== -->
+        <form class="friend-form" onsubmit="event.preventDefault(); alert('Demo only — wire this up to your form provider + Stripe.');">
+
+          <!-- Group 1 — Confirm you -->
+          <div class="friend-form__group">
+            <div class="friend-form__group-head">
+              <span class="num">01</span>
+              <h3>Confirm <em>you</em>.</h3>
+              <span class="hint">Pre-filled · edit if anything's off</span>
+            </div>
+
+            <div class="field--pair">
+              <div class="field">
+                <label for="f-name">Full name <span class="req">*</span></label>
+                <input id="f-name" type="text" value="Alex Mendoza" required />
+              </div>
+              <div class="field">
+                <label for="f-age">Age <span class="req">*</span></label>
+                <input id="f-age" type="number" min="21" max="80" placeholder="34" required />
+              </div>
+            </div>
+
+            <div class="field--pair">
+              <div class="field">
+                <label for="f-email">Email <span class="req">*</span> <span class="locked-tag">From invitation</span></label>
+                <input id="f-email" type="email" value="alex@mendoza.studio" class="is-locked" readonly />
+              </div>
+              <div class="field">
+                <label for="f-phone">Mobile <span class="req">*</span></label>
+                <input id="f-phone" type="text" placeholder="(415) 555 · · · ·" required />
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Are you single? <span class="req">*</span></label>
+              <p class="help">No judgement on the spectrum — but the room is built around dating, so we ask.</p>
+              <div class="chip-group" role="radiogroup">
+                <label class="chip"><input type="radio" name="single" value="yes" checked /><span class="ball-dot"></span> Yes, single</label>
+                <label class="chip"><input type="radio" name="single" value="dating" /><span class="ball-dot"></span> Dating, but open</label>
+                <label class="chip"><input type="radio" name="single" value="no" /><span class="ball-dot"></span> Not single right now</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>What best describes you? <span class="req">*</span></label>
+              <div class="chip-group" role="radiogroup">
+                <label class="chip"><input type="radio" name="role" value="founder" checked /><span class="ball-dot"></span> Founder / Operator</label>
+                <label class="chip"><input type="radio" name="role" value="investor" /><span class="ball-dot"></span> Investor / VC</label>
+                <label class="chip"><input type="radio" name="role" value="exec" /><span class="ball-dot"></span> Exec / Senior IC</label>
+                <label class="chip"><input type="radio" name="role" value="other" /><span class="ball-dot"></span> Other</label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 2 — In your words -->
+          <div class="friend-form__group">
+            <div class="friend-form__group-head">
+              <span class="num">02</span>
+              <h3>In your <em>words</em>.</h3>
+              <span class="hint">Two short answers</span>
+            </div>
+
+            <div class="field">
+              <label for="f-work">What are you working on? <span class="req">*</span></label>
+              <p class="help">One sentence. Company, fund, what you're focused on right now.</p>
+              <textarea id="f-work" placeholder="Co-founder of a design studio working with early-stage founders on brand and product." required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="f-why">Why <em style="color: var(--coral); font-style: italic;">you</em>, in two more sentences than Jordan? <span class="req">*</span></label>
+              <p class="help">Jordan gave us their pitch. We'd love yours — what makes you a good seatmate at this dinner?</p>
+              <textarea id="f-why" placeholder="I'm a chronic question-asker — I love finding out what someone built and why they bothered. Also I'll never let dinner get awkward; I think small talk is a skill issue." required></textarea>
+            </div>
+
+            <div class="field--pair">
+              <div class="field">
+                <label for="f-linkedin">LinkedIn</label>
+                <input id="f-linkedin" type="url" placeholder="linkedin.com/in/ · · · " />
+              </div>
+              <div class="field">
+                <label for="f-instagram">Instagram</label>
+                <input id="f-instagram" type="text" placeholder="@your.handle" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Group 3 — Logistics -->
+          <div class="friend-form__group">
+            <div class="friend-form__group-head">
+              <span class="num">03</span>
+              <h3>One last <em>thing</em>.</h3>
+              <span class="hint">Quick logistics</span>
+            </div>
+
+            <div class="field">
+              <label for="f-dietary">Dietary or accessibility notes</label>
+              <p class="help">The kitchen plans around this. Leave blank if nothing applies.</p>
+              <input id="f-dietary" type="text" placeholder="Pescatarian · severe nut allergy · etc." />
+            </div>
+
+            <div class="field">
+              <div class="checkbox-block">
+                <input type="checkbox" id="f-coc" required />
+                <label for="f-coc" style="font-weight: var(--w-sans-body); color: var(--ink); letter-spacing: 0;">
+                  I've read the <a href="code-of-conduct.html">code of conduct</a>
+                  and agree to show up like I'd show up for a great dinner.
+                  <span class="req">*</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="field" style="margin-top: 20px;">
+              <div class="checkbox-block">
+                <input type="checkbox" id="f-photos" />
+                <label for="f-photos" style="font-weight: var(--w-sans-body); color: var(--ink); letter-spacing: 0;">
+                  I'm OK with appearing in wide-shot photography from the
+                  event (no candid solo shots without my approval).
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment band -->
+          <div class="payment-band">
+            <div class="payment-band__copy">
+              <strong>$145 will be held on your card.</strong>
+              We only charge if your application is accepted. If we say
+              no, the hold drops off within five business days. The
+              charge covers catering, drinks, the venue, and the
+              speaker fee — we don't profit on the founding volume.
+            </div>
+            <div class="payment-band__amount" aria-label="Held amount">
+              $145
+              <small>Hold · refunded if rejected</small>
+            </div>
+          </div>
+
+          <div class="friend-form__submit">
+            <button type="submit" class="btn btn--coral">Submit &amp; hold $145 <span class="arrow">→</span></button>
+            <span class="meta"><span class="ball-dot"></span> You and Jordan are reviewed together · 48 hours</span>
+          </div>
+        </form>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="flow-side" aria-label="Event details">
+
+          <div class="side-card side-card--dark">
+            <span class="eyebrow"><span class="ball"></span> The seat held for you</span>
+            <h4 style="margin-top: 14px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+            <dl class="side-meta">
+              <dt>Date</dt><dd>Sat, June 21</dd>
+              <dt>Time</dt><dd>6:00 — 9:00 PM</dd>
+              <dt>Where</dt><dd>Twin Peaks, SF</dd>
+              <dt>Dress</dt><dd>Smart casual</dd>
+            </dl>
+          </div>
+
+          <div class="side-card">
+            <h4>How this <em>works</em>.</h4>
+            <ul class="side-list">
+              <li>You and Jordan are reviewed together as a pair</li>
+              <li>About one in four pairs are invited per volume</li>
+              <li>You'll hear back in 48 hours of submitting</li>
+              <li>If accepted, your card is charged and you're in</li>
+              <li>If not, the hold drops off — no charge</li>
+            </ul>
+          </div>
+
+          <div class="side-card">
+            <h4>The <em>night</em>.</h4>
+            <ul class="side-list">
+              <li>6:00 — 30 min of welcome drinks &amp; networking</li>
+              <li>6:30 — 15-min fireside chat with our speaker</li>
+              <li>6:45 — 45-min Q&amp;A; the room warms up</li>
+              <li>7:30 — Open-buffet dinner party until 9</li>
+            </ul>
+            <p style="font-size: 13px; color: var(--ink-soft); margin-top: 16px;">
+              The speaker is revealed at the door — that's part of the fun.
+            </p>
+          </div>
+
+          <div class="side-card">
+            <h4>Need to <em>step away</em>?</h4>
+            <p style="font-size: 13.5px; line-height: 1.55; color: var(--ink-soft);">
+              Your progress is saved when you start typing. You have seven
+              days to come back and finish — we'll send one gentle nudge
+              after 48 hours.
+            </p>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Application Submitted — Doubles</title>
+<meta name="description" content="Your Doubles application is in. Here's what happens next." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POST-FLOW SHELL — used on application-submitted, accepted,
+     confirmation, not-this-volume, status. Quieter than the
+     marketing pages. Type-driven. No imagery.
+     ========================================================= */
+
+  .flow {
+    min-height: 100vh;
+    background: var(--cream);
+  }
+
+  /* Page header — narrow, type-led, generous breathing */
+  .flow-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(90px, 14vh, 150px) 0 clamp(60px, 9vh, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Faint half-court arc, top-right corner — same vocabulary as
+     volley.html / about.html headers, just smaller and softer. */
+  .flow-header::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 80%;
+    aspect-ratio: 1 / 1;
+    border-radius: 50%;
+    border: 1px solid rgba(212, 247, 72, 0.06);
+    pointer-events: none;
+  }
+  .flow-header__inner {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+  }
+  .flow-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 8vw, 120px);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 22px;
+    max-width: 15ch;
+  }
+  .flow-header h1 em { color: var(--ball); font-style: italic; }
+  .flow-header__sub {
+    font-family: var(--sans);
+    font-size: clamp(16px, 1.3vw, 19px);
+    font-weight: var(--w-sans-light);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.78);
+    margin-top: 28px;
+    max-width: 48ch;
+  }
+
+  /* Status strip — shows where the user is in the four-stage
+     process. Reused across application-submitted, accepted,
+     confirmation, status. */
+  .status-strip {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .status-step {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    padding-top: 22px;
+  }
+  .status-step::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(245, 241, 232, 0.12);
+  }
+  .status-step--done::before    { background: var(--ball); }
+  .status-step--current::before { background: var(--coral); }
+  .status-step__label {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+  }
+  .status-step--done .status-step__label    { color: var(--ball); }
+  .status-step--current .status-step__label { color: var(--coral); }
+  .status-step__title {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    line-height: 1.25;
+  }
+  .status-step__meta {
+    font-size: 12px;
+    color: rgba(245, 241, 232, 0.55);
+    line-height: 1.4;
+  }
+  @media (max-width: 800px) {
+    .status-strip { grid-template-columns: repeat(2, 1fr); gap: 18px 24px; }
+  }
+
+  /* Two-column body — main content + sticky sidecard */
+  .flow-body {
+    padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm);
+  }
+  .flow-body__grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 80px;
+    align-items: start;
+  }
+  @media (max-width: 1000px) {
+    .flow-body__grid { grid-template-columns: 1fr; gap: 50px; }
+  }
+
+  .flow-body__main { max-width: 64ch; }
+  .flow-body__main > .eyebrow { margin-bottom: 18px; }
+  .flow-body__main h2 {
+    font-family: var(--serif);
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .flow-body__main h2 em { color: var(--coral); font-style: italic; }
+  .flow-body__main p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    margin-bottom: 18px;
+  }
+  .flow-body__main p.lead {
+    font-size: 19px;
+    color: var(--ink-soft);
+    margin-bottom: 32px;
+  }
+
+  /* Next-steps timeline — vertical, milestone-led */
+  .next-steps {
+    margin: 32px 0;
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .next-steps__item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: start;
+  }
+  .next-steps__when {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--teal);
+    font-style: italic;
+    line-height: 1.3;
+  }
+  .next-steps__when small {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .next-steps__what h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .next-steps__what h4 em { color: var(--coral); font-style: italic; }
+  .next-steps__what p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  @media (max-width: 700px) {
+    .next-steps__item { grid-template-columns: 1fr; gap: 8px; padding: 22px 0; }
+  }
+
+  /* Inline note — for "we sent a copy to" reassurance line */
+  .inline-note {
+    margin: 32px 0;
+    padding: 20px 24px;
+    background: var(--cream-warm);
+    border-left: 2px solid var(--teal);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+  }
+  .inline-note__icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    color: var(--teal);
+    margin-top: 1px;
+  }
+  .inline-note strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+
+  /* Sidebar cards */
+  .flow-side {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  @media (max-width: 1000px) { .flow-side { position: static; } }
+
+  .side-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 28px;
+  }
+  .side-card--dark { background: var(--ink); color: var(--cream); border-color: transparent; }
+  .side-card h4 {
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: var(--w-serif-medium);
+    line-height: 1.2;
+    margin-top: 12px;
+  }
+  .side-card--dark h4 { color: var(--cream); }
+  .side-card h4 em { color: var(--coral); font-style: italic; }
+  .side-card--dark h4 em { color: var(--ball); }
+
+  .side-meta {
+    margin: 18px 0 0;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 10px 14px;
+    font-size: 14px;
+  }
+  .side-meta dt {
+    color: rgba(245, 241, 232, 0.55);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-top: 3px;
+  }
+  .side-card--dark .side-meta dt { color: rgba(245, 241, 232, 0.5); }
+  .side-card:not(.side-card--dark) .side-meta dt { color: var(--ink-soft); }
+  .side-meta dd {
+    font-family: var(--serif);
+    font-size: 17px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+    margin: 0;
+  }
+  .side-card:not(.side-card--dark) .side-meta dd { color: var(--ink); }
+
+  /* Friend status card — special block on application-submitted */
+  .friend-status {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .friend-status__head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .friend-status__avatar {
+    width: 48px; height: 48px;
+    border-radius: 50%;
+    background: var(--cream-warm);
+    border: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--coral);
+    flex-shrink: 0;
+  }
+  .friend-status__name {
+    font-family: var(--serif);
+    font-size: 19px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .friend-status__name small {
+    display: block;
+    font-family: var(--sans);
+    font-style: normal;
+    font-size: 12px;
+    font-weight: var(--w-sans-medium);
+    color: var(--ink-soft);
+    margin-top: 4px;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .friend-status__progress {
+    height: 4px;
+    background: var(--cream-warm);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 4px;
+  }
+  .friend-status__progress-fill {
+    height: 100%;
+    background: var(--coral);
+    width: 25%;
+  }
+  .friend-status__detail {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    margin: 0;
+  }
+  .friend-status__detail strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+
+  /* Quiet helper-link section at bottom */
+  .while-you-wait {
+    background: var(--cream-warm);
+    padding: var(--section-pad-sm) 0;
+    border-top: 1px solid var(--line);
+  }
+  .while-you-wait__head {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    margin-bottom: 40px;
+  }
+  .while-you-wait h2 {
+    font-family: var(--serif);
+    font-size: clamp(32px, 3.8vw, 56px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-top: 14px;
+  }
+  .while-you-wait h2 em { color: var(--coral); font-style: italic; }
+  .while-you-wait__grid {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .wyw-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .wyw-card:hover {
+    border-color: var(--teal);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .wyw-card__num {
+    font-family: var(--serif);
+    font-size: 13px;
+    color: var(--coral);
+    font-style: italic;
+  }
+  .wyw-card h3 {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .wyw-card h3 em { color: var(--coral); font-style: italic; }
+  .wyw-card p {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin: 0;
+  }
+  .wyw-card__link {
+    margin-top: auto;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--teal);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  @media (max-width: 800px) { .while-you-wait__grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="status.html" class="btn btn--coral btn--sm">
+      Check status <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<main class="flow">
+
+  <!-- =========================================================
+       HEADER — "Thanks, Jordan" + status strip
+       ========================================================= -->
+  <header class="flow-header" data-screen-label="Submitted Header">
+    <div class="flow-header__inner">
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Application received</span>
+      <h1>Thanks, <em>Jordan</em>.<br/>We've got it.</h1>
+      <p class="flow-header__sub">
+        Your application is in. We've already emailed Alex to invite them
+        to complete the friend side. Below is exactly what happens between
+        now and June 21 — bookmark this page, or check status anytime.
+      </p>
+
+      <!-- 4-stage status strip -->
+      <div class="status-strip" aria-label="Application progress">
+        <div class="status-step status-step--done">
+          <span class="status-step__label">01 · Done</span>
+          <span class="status-step__title">You applied</span>
+          <span class="status-step__meta">May 24, 2026 · 2:47 PM</span>
+        </div>
+        <div class="status-step status-step--current">
+          <span class="status-step__label">02 · In progress</span>
+          <span class="status-step__title">Alex completes their side</span>
+          <span class="status-step__meta">Invited just now · 7 days to respond</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__label">03 · Up next</span>
+          <span class="status-step__title">48-hour review</span>
+          <span class="status-step__meta">Begins when both apps are in</span>
+        </div>
+        <div class="status-step">
+          <span class="status-step__label">04 · Then</span>
+          <span class="status-step__title">Decision &amp; charge</span>
+          <span class="status-step__meta">$145 held, charged only if accepted</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       BODY — next steps + sidebar
+       ========================================================= -->
+  <section class="flow-body" data-screen-label="Next Steps">
+    <div class="container">
+      <div class="flow-body__grid">
+
+        <!-- ===== MAIN ===== -->
+        <div class="flow-body__main">
+          <span class="eyebrow"><span class="ball"></span> What happens next</span>
+          <h2>Four <em>moves</em>. Two weeks, ideally less.</h2>
+          <p class="lead">
+            Every Doubles application is two-sided. Yours is in; Alex's
+            is what we're waiting on. Here's the timing.
+          </p>
+
+          <ul class="next-steps">
+
+            <li class="next-steps__item">
+              <div class="next-steps__when">
+                Right now
+                <small>Step 02</small>
+              </div>
+              <div class="next-steps__what">
+                <h4>Alex gets an <em>invitation email</em>.</h4>
+                <p>We sent it to <strong>alex@mendoza.studio</strong> in the last minute. It's short — your vouch, a quick "what is Doubles", and a five-question form. Their card gets held the same way yours did. If they need a nudge, send them this link: <a href="friend-invite.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">doubles.singles/i/8XK2Q</a></p>
+              </div>
+            </li>
+
+            <li class="next-steps__item">
+              <div class="next-steps__when">
+                Within 7 days
+                <small>Soft deadline</small>
+              </div>
+              <div class="next-steps__what">
+                <h4>Alex submits their side.</h4>
+                <p>Most friends finish in five minutes. If it's been 48 hours, we'll send one gentle reminder. If they don't respond at all, your application stays in our pool — we'll just hold it for the next volume rather than this one.</p>
+              </div>
+            </li>
+
+            <li class="next-steps__item">
+              <div class="next-steps__when">
+                48 hours after
+                <small>Step 03</small>
+              </div>
+              <div class="next-steps__what">
+                <h4>We review.</h4>
+                <p>Two of the three founders look at both applications together. About one in four pairs come through — most rejections aren't <em>no</em> forever, they're <em>not this room</em>. You'll hear back either way, by email, within 48 hours of the second application landing.</p>
+              </div>
+            </li>
+
+            <li class="next-steps__item">
+              <div class="next-steps__when">
+                If we say yes
+                <small>Step 04</small>
+              </div>
+              <div class="next-steps__what">
+                <h4>Your card is charged. You're in.</h4>
+                <p>We charge $145 each — yours and Alex's, separately — and send you a confirmation page with everything you need. We share the venue address 48 hours before the event. If we say no, the hold drops off your card within five business days.</p>
+              </div>
+            </li>
+
+          </ul>
+
+          <div class="inline-note" role="status">
+            <svg class="inline-note__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="14" rx="2"/>
+              <path d="m3 7 9 6 9-6"/>
+            </svg>
+            <div>
+              We sent a copy of your application and this timeline to
+              <strong>jordan@river.co</strong>. If you don't see it within
+              ten minutes, check spam or <a href="contact.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">email us</a>.
+            </div>
+          </div>
+
+          <p style="margin-top: 32px; font-size: 14px; color: var(--ink-soft);">
+            Need to update something? Reply to the confirmation email and
+            we'll handle it. We don't have an account dashboard — yet.
+          </p>
+        </div>
+
+        <!-- ===== SIDEBAR ===== -->
+        <aside class="flow-side" aria-label="Your application">
+
+          <div class="side-card side-card--dark">
+            <span class="eyebrow"><span class="ball"></span> You applied for</span>
+            <h4 style="margin-top: 14px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+            <dl class="side-meta">
+              <dt>Date</dt><dd>Sat, June 21</dd>
+              <dt>Time</dt><dd>6:00 — 9:00 PM</dd>
+              <dt>Where</dt><dd>Twin Peaks, SF</dd>
+              <dt>Hold</dt><dd>$145 · not yet charged</dd>
+            </dl>
+          </div>
+
+          <div class="friend-status">
+            <div class="friend-status__head">
+              <div class="friend-status__avatar" aria-hidden="true">AM</div>
+              <div>
+                <div class="friend-status__name">
+                  Alex Mendoza
+                  <small>Your +1 · Awaiting their side</small>
+                </div>
+              </div>
+            </div>
+            <div class="friend-status__progress" aria-label="Application progress">
+              <div class="friend-status__progress-fill" style="width: 25%;"></div>
+            </div>
+            <p class="friend-status__detail">
+              <strong>Invited just now.</strong> Once Alex submits, we
+              review together. You'll get an email update at every stage.
+            </p>
+            <a href="#" style="font-size: 11px; font-weight: var(--w-sans-bold); letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal); display: inline-flex; gap: 8px; align-items: center;">
+              Resend invite <span style="font-size: 14px;">→</span>
+            </a>
+          </div>
+
+          <div class="side-card">
+            <span class="eyebrow"><span class="ball"></span> Before the night</span>
+            <h4 style="margin-top: 14px;">A few <em>house things</em>.</h4>
+            <ul style="list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 10px; font-size: 13.5px; line-height: 1.55; color: var(--ink-soft);">
+              <li>◯ Read the <a href="code-of-conduct.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">code of conduct</a></li>
+              <li>◯ Speaker for the Volley is revealed at the door</li>
+              <li>◯ Smart casual, no sneakers</li>
+              <li>◯ Address shared 48 hours before</li>
+            </ul>
+          </div>
+
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       WHILE YOU WAIT — three helpful reads
+       ========================================================= -->
+  <section class="while-you-wait" data-screen-label="While You Wait">
+    <div class="while-you-wait__head">
+      <span class="eyebrow eyebrow--coral"><span class="ball"></span> While you wait</span>
+      <h2>Three <em>good reads</em>.</h2>
+    </div>
+
+    <div class="while-you-wait__grid">
+
+      <a class="wyw-card" href="about.html">
+        <span class="wyw-card__num">01 / 03</span>
+        <h3>Why we <em>built</em> this.</h3>
+        <p>Three friends, one founding volume, and a strong feeling that the dating event we wanted didn't exist. The full story.</p>
+        <span class="wyw-card__link">Read about us <span style="font-size: 13px;">→</span></span>
+      </a>
+
+      <a class="wyw-card" href="volley.html">
+        <span class="wyw-card__num">02 / 03</span>
+        <h3>How the <em>Volley</em> works.</h3>
+        <p>A 15-minute fireside chat and a 45-minute Q&amp;A, before dinner. Why we do it, and why it makes the rest of the night flow.</p>
+        <span class="wyw-card__link">Read about the Volley <span style="font-size: 13px;">→</span></span>
+      </a>
+
+      <a class="wyw-card" href="code-of-conduct.html">
+        <span class="wyw-card__num">03 / 03</span>
+        <h3>The <em>house rules</em>.</h3>
+        <p>What we expect from the room, and what we'll never tolerate. Short, written like a friend explaining the place.</p>
+        <span class="wyw-card__link">Read the code <span style="font-size: 13px;">→</span></span>
+      </a>
+
+    </div>
+  </section>
+
+</main>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

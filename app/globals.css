@@ -1,0 +1,4 @@
+/*
+   This file exists so Next.js compiles. The actual styles live in /public/assets/doubles.css
+   and are loaded by each HTML file's own <link> tag. Do not add rules here.
+*/

@@ -1,0 +1,14 @@
+project_id = "cjxxqdsbtckurqwkkjem"
+
+[db]
+port = 54321
+major_version = 17
+
+[api]
+port = 54322
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[realtime]
+enabled = true

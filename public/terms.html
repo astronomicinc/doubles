@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Terms of Service — Doubles</title>
+<meta name="description" content="The basic agreement between you and Doubles, LLC." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* =========================================================
+     POLICY PAGE TEMPLATE — same as code-of-conduct.html
+     Shared layout. Page-specific additions for Terms:
+       - .definitions block (top)
+       - .plain callout (plain-language version, sits inline with prose)
+     ========================================================= */
+
+  .policy-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(90px, 13vh, 140px) 0 clamp(50px, 7vh, 80px);
+    border-bottom: 1px solid rgba(245, 241, 232, 0.08);
+  }
+  .policy-header__inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+  .policy-header h1 {
+    font-family: var(--serif); font-weight: var(--w-serif-regular);
+    font-size: clamp(48px, 6.5vw, 92px);
+    line-height: 1; letter-spacing: -0.025em;
+    color: var(--cream); margin-top: 16px; max-width: 16ch;
+  }
+  .policy-header h1 em { color: var(--ball); }
+  .policy-meta {
+    display: flex; flex-wrap: wrap; gap: 32px;
+    margin-top: 40px; padding-top: 28px;
+    border-top: 1px solid rgba(245, 241, 232, 0.14);
+    font-size: 11px; font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: rgba(245, 241, 232, 0.5);
+  }
+  .policy-meta__item strong {
+    display: block; color: var(--ball);
+    font-weight: var(--w-sans-bold); margin-bottom: 4px;
+  }
+  .policy-meta__item span {
+    font-family: var(--serif); font-weight: var(--w-serif-medium);
+    text-transform: none; letter-spacing: 0;
+    font-size: 16px; color: var(--cream);
+  }
+
+  .policy { background: var(--cream); padding: clamp(70px, 10vh, 110px) 0 var(--section-pad-sm); }
+  .policy__grid {
+    display: grid; grid-template-columns: 260px 1fr; gap: 80px; align-items: start;
+  }
+  @media (max-width: 1000px) { .policy__grid { grid-template-columns: 1fr; gap: 36px; } }
+
+  .policy__toc { position: sticky; top: 100px; }
+  @media (max-width: 1000px) { .policy__toc { position: static; } }
+  .policy__toc-label {
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--line);
+  }
+  .policy__toc ol {
+    list-style: none; padding: 0; margin: 0;
+    display: flex; flex-direction: column; gap: 2px; counter-reset: toc;
+  }
+  .policy__toc li { counter-increment: toc; }
+  .policy__toc a {
+    display: flex; align-items: baseline; gap: 14px;
+    padding: 10px 0 10px 14px; margin-left: -14px;
+    font-size: 13.5px; line-height: 1.4;
+    color: var(--ink-soft);
+    border-left: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .policy__toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    font-family: var(--serif); font-size: 13px;
+    color: var(--coral); flex-shrink: 0; width: 22px;
+  }
+  .policy__toc a:hover { color: var(--ink); }
+  .policy__toc a.is-active {
+    color: var(--ink); border-left-color: var(--coral);
+    font-weight: var(--w-sans-medium);
+  }
+
+  .prose { max-width: 62ch; }
+
+  .tldr {
+    background: var(--cream-warm);
+    border-left: 2px solid var(--coral);
+    padding: 28px 32px;
+    border-radius: 0 var(--r-card) var(--r-card) 0;
+    margin-bottom: 56px;
+  }
+  .tldr__label {
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .tldr__label::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+  .tldr p {
+    font-family: var(--serif); font-style: italic;
+    font-size: clamp(18px, 1.7vw, 22px); line-height: 1.45;
+    color: var(--ink); margin: 0;
+  }
+
+  .prose h2 {
+    font-family: var(--serif);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.05; color: var(--ink);
+    margin: 64px 0 20px; scroll-margin-top: 100px;
+    display: flex; align-items: baseline; gap: 20px;
+  }
+  .prose h2 em { color: var(--coral); }
+  .prose h2 .num {
+    font-family: var(--serif); font-size: 0.55em;
+    font-weight: var(--w-serif-regular); color: var(--teal); flex-shrink: 0;
+  }
+  .prose h2:first-of-type { margin-top: 0; }
+  .prose h3 {
+    font-family: var(--serif); font-size: 22px;
+    font-weight: var(--w-serif-medium); color: var(--ink);
+    margin: 36px 0 14px; line-height: 1.3;
+  }
+  .prose p {
+    font-size: 17px; line-height: 1.7; color: var(--ink); margin: 0 0 18px;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--ink); font-weight: var(--w-sans-bold); }
+  .prose em { color: var(--coral); font-style: italic; }
+  .prose a {
+    color: var(--teal); border-bottom: 1px solid var(--teal);
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .prose a:hover { color: var(--coral); border-color: var(--coral); }
+
+  .prose ul {
+    list-style: none; padding: 0; margin: 0 0 22px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .prose ul li {
+    position: relative;
+    padding-left: 22px;
+    font-size: 17px; line-height: 1.6; color: var(--ink);
+  }
+  .prose ul li::before {
+    content: '';
+    position: absolute; left: 0; top: 10px;
+    width: 7px; height: 7px;
+    background: var(--ball); border-radius: 50%;
+  }
+
+  .prose ol {
+    counter-reset: ol; list-style: none;
+    padding: 0; margin: 0 0 22px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .prose ol li {
+    counter-increment: ol;
+    position: relative;
+    padding-left: 46px;
+    font-size: 17px; line-height: 1.6; color: var(--ink);
+  }
+  .prose ol li::before {
+    content: counter(ol, decimal-leading-zero);
+    position: absolute; left: 0; top: 0;
+    font-family: var(--serif); font-size: 18px;
+    color: var(--coral); width: 30px;
+  }
+
+  /* ===== Definitions block — Terms-specific ===== */
+  .definitions {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 8px 28px;
+    margin-bottom: 32px;
+  }
+  .definitions__row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .definitions__row:last-child { border-bottom: none; }
+  .definitions__term {
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--teal);
+    font-style: italic;
+  }
+  .definitions__def {
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  @media (max-width: 700px) {
+    .definitions__row { grid-template-columns: 1fr; gap: 4px; }
+    .definitions__term { font-size: 17px; }
+  }
+
+  /* ===== Plain-language callout — Terms-specific ===== */
+  .plain {
+    margin: 24px 0 28px;
+    padding: 18px 22px;
+    background: var(--cream-warm);
+    border-radius: var(--r-card);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+  .plain__label {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--teal);
+    padding: 5px 10px;
+    border-radius: var(--r-pill);
+    background: white;
+    border: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .plain p {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* Related cards */
+  .related { background: var(--cream-warm); padding: var(--section-pad-sm) 0; border-top: 1px solid var(--line); }
+  .related__inner { max-width: var(--container); margin: 0 auto; padding: 0 var(--gutter); }
+  .related__head {
+    display: grid; grid-template-columns: 1fr auto; gap: 40px;
+    align-items: end; margin-bottom: 36px; padding-bottom: 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .related h2 {
+    font-family: var(--serif); font-size: clamp(28px, 3vw, 44px);
+    font-weight: var(--w-serif-regular); color: var(--ink); margin-top: 10px;
+  }
+  .related h2 em { color: var(--coral); }
+  .related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .related__card {
+    background: white; border: 1px solid var(--line);
+    border-radius: var(--r-card); padding: 28px;
+    display: flex; flex-direction: column; gap: 12px;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+  .related__card:hover {
+    border-color: var(--teal); transform: translateY(-2px);
+    box-shadow: var(--shadow-card);
+  }
+  .related__card.is-current {
+    background: var(--ink); color: var(--cream); border-color: transparent;
+  }
+  .related__card-num { font-family: var(--serif); font-size: 14px; color: var(--coral); }
+  .related__card.is-current .related__card-num { color: var(--ball); }
+  .related__card h3 {
+    font-family: var(--serif); font-size: 24px;
+    font-weight: var(--w-serif-medium); color: var(--ink); line-height: 1.2;
+  }
+  .related__card.is-current h3 { color: var(--cream); }
+  .related__card h3 em { color: var(--coral); }
+  .related__card.is-current h3 em { color: var(--ball); }
+  .related__card p {
+    font-size: 13.5px; color: var(--ink-soft);
+    line-height: 1.55; margin: 0;
+  }
+  .related__card.is-current p { color: rgba(245, 241, 232, 0.7); }
+  .related__card-link {
+    margin-top: auto; padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-size: 11px; font-weight: var(--w-sans-bold);
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--teal);
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .related__card.is-current .related__card-link {
+    color: rgba(245, 241, 232, 0.55);
+    border-top-color: rgba(245, 241, 232, 0.18);
+  }
+  @media (max-width: 800px) {
+    .related__grid { grid-template-columns: 1fr; }
+    .related__head { grid-template-columns: 1fr; gap: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="apply.html">Apply</a></li>
+      <li><a href="volley.html">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <a href="apply.html" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<header class="policy-header" data-screen-label="Terms Header">
+  <div class="policy-header__inner">
+    <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> The basic agreement between you and Doubles, LLC</span>
+    <h1>Terms of <em>Service</em>.</h1>
+    <div class="policy-meta">
+      <div class="policy-meta__item"><strong>Last updated</strong><span>May 14, 2026</span></div>
+      <div class="policy-meta__item"><strong>Effective</strong><span>Vol. 01 — June 21, 2026</span></div>
+      <div class="policy-meta__item"><strong>Reading time</strong><span>~ 8 minutes</span></div>
+      <div class="policy-meta__item"><strong>Governs</strong><span>Use of doubles.singles</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="policy" data-screen-label="Terms Body">
+  <div class="container">
+    <div class="policy__grid">
+
+      <nav class="policy__toc" aria-label="Table of contents">
+        <div class="policy__toc-label">In this document</div>
+        <ol>
+          <li><a href="#definitions" class="is-active">Definitions</a></li>
+          <li><a href="#eligibility">Eligibility &amp; application</a></li>
+          <li><a href="#payment">Payment &amp; fees</a></li>
+          <li><a href="#cancellations">Cancellations &amp; refunds</a></li>
+          <li><a href="#conduct">Conduct &amp; removal</a></li>
+          <li><a href="#liability">Liability &amp; venue</a></li>
+          <li><a href="#ip">Intellectual property</a></li>
+          <li><a href="#changes">Changes &amp; contact</a></li>
+        </ol>
+      </nav>
+
+      <article class="prose">
+
+        <div class="tldr">
+          <div class="tldr__label">In one breath</div>
+          <p>You apply, we review, we charge your card only if accepted. You can cancel until a week out for a full refund. Behave according to the Code of Conduct, accept that Doubles isn't a guarantee of romance, and we're square.</p>
+        </div>
+
+        <!-- 01 Definitions -->
+        <h2 id="definitions"><span class="num">01</span> <em>Definitions</em>.</h2>
+        <p>To save you re-reading the same nouns twice — here's what we mean when we use these words.</p>
+
+        <div class="definitions">
+          <div class="definitions__row">
+            <div class="definitions__term">Doubles</div>
+            <div class="definitions__def">Doubles, LLC, a Delaware limited liability company operating dating events in San Francisco. We also use "we," "us," and "our."</div>
+          </div>
+          <div class="definitions__row">
+            <div class="definitions__term">You</div>
+            <div class="definitions__def">The person reading this — an applicant, attendee, or visitor to the website at doubles.singles.</div>
+          </div>
+          <div class="definitions__row">
+            <div class="definitions__term">An Event</div>
+            <div class="definitions__def">A specific Doubles volume — a single curated dinner held in a private SF home, typically once per quarter.</div>
+          </div>
+          <div class="definitions__row">
+            <div class="definitions__term">Application</div>
+            <div class="definitions__def">The form you submit at <a href="apply.html">/apply</a>, together with the parallel questionnaire your invited friend submits.</div>
+          </div>
+          <div class="definitions__row">
+            <div class="definitions__term">The Site</div>
+            <div class="definitions__def">Everything at doubles.singles — pages, forms, the newsletter, and any associated tooling.</div>
+          </div>
+        </div>
+
+        <!-- 02 Eligibility -->
+        <h2 id="eligibility"><span class="num">02</span> Eligibility &amp; <em>application</em>.</h2>
+        <p>To apply for and attend a Doubles event, you must be:</p>
+        <ul>
+          <li>At least 21 years old.</li>
+          <li>Single — meaning not currently in a committed relationship or marriage. We trust you to define this honestly.</li>
+          <li>Able to enter binding agreements in your jurisdiction.</li>
+        </ul>
+
+        <p><strong>The application is not a ticket.</strong> Submitting an application is a request to attend. We review every application against the curation of the room and respond within 48 hours. We may decline applications for any lawful reason. We do not, and will not, decline applications on the basis of race, religion, national origin, sexual orientation, gender identity, disability, or other protected characteristics.</p>
+
+        <div class="plain">
+          <span class="plain__label">In plain English</span>
+          <p>You're applying to a curated room. We can say no, but never for a reason we couldn't say out loud.</p>
+        </div>
+
+        <h3>The friend you bring.</h3>
+        <p>Doubles requires you to bring one friend who also meets the eligibility criteria above. Your friend must complete their own questionnaire. We evaluate each guest independently — your acceptance does not guarantee your friend's, and vice versa.</p>
+
+        <!-- 03 Payment -->
+        <h2 id="payment"><span class="num">03</span> Payment &amp; <em>fees</em>.</h2>
+        <p>Each Doubles event has a per-person fee, communicated at the time of application. For Vol. 01, the fee is <strong>$145 per person</strong>. The fee covers catering, beverage, venue, programming, and production.</p>
+
+        <ol>
+          <li><strong>Card capture, not card charge.</strong> When you apply, we collect payment details but do not charge them. No money moves until you and your friend are both confirmed.</li>
+          <li><strong>Confirmation triggers charge.</strong> Once both halves of the doubles pair are accepted, both cards are charged simultaneously, in full, for the event fee.</li>
+          <li><strong>If either side is declined,</strong> no card is charged and no obligation is created.</li>
+        </ol>
+
+        <div class="plain">
+          <span class="plain__label">In plain English</span>
+          <p>You won't be charged until your friend is also confirmed. We don't take money speculatively.</p>
+        </div>
+
+        <p>All fees are in US dollars. Payment processing is handled by our payments provider — Doubles does not store full card numbers on our own systems. See our <a href="privacy.html">Privacy Policy</a> for details.</p>
+
+        <!-- 04 Cancellations -->
+        <h2 id="cancellations"><span class="num">04</span> Cancellations &amp; <em>refunds</em>.</h2>
+
+        <p>You may cancel at any time before the event, with the following refund schedule:</p>
+        <ul>
+          <li><strong>More than 7 days before the event:</strong> 100% refund, no questions asked.</li>
+          <li><strong>2 — 7 days before:</strong> 50% refund. The other 50% goes to the catering deposit, which is non-recoverable by that point.</li>
+          <li><strong>Inside 48 hours:</strong> No monetary refund — but you may transfer your seat to another single who meets eligibility, subject to our review and approval.</li>
+        </ul>
+
+        <h3>If Doubles cancels.</h3>
+        <p>In the rare event we cancel a Doubles night (act-of-god, venue failure, illness in the team), we will issue a 100% refund to every confirmed guest within five business days, and we will offer first-priority confirmed seats at the next volume.</p>
+
+        <div class="plain">
+          <span class="plain__label">In plain English</span>
+          <p>Cancel a week out? Full refund. Cancel the night before? You can send someone else, but you can't get the money back.</p>
+        </div>
+
+        <!-- 05 Conduct -->
+        <h2 id="conduct"><span class="num">05</span> Conduct &amp; <em>removal</em>.</h2>
+        <p>Attendance at a Doubles event is conditional on adherence to the <a href="code-of-conduct.html">Code of Conduct</a>, which is incorporated into these Terms by reference.</p>
+        <p>We reserve the right to remove any guest from a Doubles event, with no refund, for material violation of the Code of Conduct. We also reserve the right to decline future applications from any guest who has been previously removed or warned.</p>
+        <p>Our enforcement framework — three levels: a quiet word, a formal warning, or removal — is described in §07 of the Code of Conduct. We exercise enforcement at our reasonable discretion, applied consistently to all guests regardless of standing or seniority.</p>
+
+        <!-- 06 Liability -->
+        <h2 id="liability"><span class="num">06</span> Liability &amp; <em>venue</em>.</h2>
+        <p>Doubles is a social event. We make no guarantees about who you'll meet, whether any romantic connection will result, or what the rest of your life will look like afterward. We promise a beautifully produced evening with carefully curated people — what happens between you and another guest is your responsibility, not ours.</p>
+
+        <h3>Venue conditions.</h3>
+        <p>Doubles events take place in private residences. By attending, you agree to:</p>
+        <ul>
+          <li>Treat the venue and its contents with reasonable care.</li>
+          <li>Comply with any house-specific instructions communicated by Doubles staff (shoe removal, restricted areas, parking).</li>
+          <li>Accept responsibility for damage you cause to the venue or its property.</li>
+        </ul>
+
+        <h3>Indemnification.</h3>
+        <p>To the maximum extent permitted by law, Doubles, LLC, our hosts, and our employees are not liable for any indirect, incidental, or consequential damages arising from your attendance — including but not limited to emotional, romantic, professional, or reputational outcomes. Our total liability to you, for any cause, is limited to the amount you paid for the event.</p>
+
+        <div class="plain">
+          <span class="plain__label">In plain English</span>
+          <p>We host a great party. We can't promise it'll change your life, and we can't be sued if it doesn't.</p>
+        </div>
+
+        <!-- 07 IP -->
+        <h2 id="ip"><span class="num">07</span> Intellectual <em>property</em>.</h2>
+        <p>The Doubles name, logo, the "Doubles, not solos." tagline, the doubles.singles website design, and all related branding are the property of Doubles, LLC. You may not reproduce them for commercial use without our written permission.</p>
+
+        <h3>Photography &amp; recordings.</h3>
+        <p>Photos and recordings of the event — including the Volley fireside chat — are the property of Doubles, LLC. We may use them for marketing, retrospective coverage, and the Doubles Dispatch newsletter. We will not publish recognizable images of any specific guest without their explicit consent.</p>
+
+        <p>If you appear in a photo we wish to use, we'll email you for approval at the address on file. You may opt out at any time, including retroactively — we will replace the image and remove past instances within thirty days.</p>
+
+        <!-- 08 Changes -->
+        <h2 id="changes"><span class="num">08</span> Changes &amp; <em>contact</em>.</h2>
+        <p>We update these Terms occasionally as Doubles evolves. Material changes — anything affecting your payment, refund rights, or obligations — will be emailed to current applicants and confirmed guests at least 14 days before they take effect.</p>
+        <p>This version of the Terms supersedes any prior version. By continuing to use the Site or attending a Doubles event after a change takes effect, you accept the updated Terms.</p>
+
+        <h3>Get in touch.</h3>
+        <p>Questions about these Terms? Email <a href="mailto:legal@doubles.singles">legal@doubles.singles</a>. A real human reads that inbox, and we respond within two business days.</p>
+
+        <p>For day-to-day matters — applications, refund requests, conduct reports — the right address is <a href="mailto:hello@doubles.singles">hello@doubles.singles</a>. See the <a href="contact.html">Contact page</a> for all available channels.</p>
+
+        <p style="margin-top: 36px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 14px;">
+          This document is governed by the laws of the State of California. Last revised May 14, 2026.
+        </p>
+
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="related" data-screen-label="Related policies">
+  <div class="related__inner">
+    <div class="related__head">
+      <div>
+        <span class="eyebrow eyebrow--coral"><span class="ball"></span> Doubles · Legal</span>
+        <h2>The other <em>documents</em>.</h2>
+      </div>
+      <p style="font-size: 14px; color: var(--ink-soft); max-width: 32ch; line-height: 1.6;">
+        Three short policies. Read them once and you'll know everything we're committing to.
+      </p>
+    </div>
+    <div class="related__grid">
+      <a class="related__card" href="code-of-conduct.html">
+        <span class="related__card-num">01 / 03</span>
+        <h3>Code of <em>Conduct</em>.</h3>
+        <p>The behavior that keeps the room worth showing up for.</p>
+        <span class="related__card-link">Read code <span class="arrow">→</span></span>
+      </a>
+      <article class="related__card is-current">
+        <span class="related__card-num">02 / 03</span>
+        <h3>Terms of <em>Service</em>.</h3>
+        <p>The basic agreement between you and Doubles, LLC — applications, payments, refunds.</p>
+        <span class="related__card-link">You're here</span>
+      </article>
+      <a class="related__card" href="privacy.html">
+        <span class="related__card-num">03 / 03</span>
+        <h3>Privacy <em>Policy</em>.</h3>
+        <p>What data we collect, why we collect it, and how long we keep it. Short on jargon.</p>
+        <span class="related__card-link">Read privacy <span class="arrow">→</span></span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const ids = ['definitions', 'eligibility', 'payment', 'cancellations', 'conduct', 'liability', 'ip', 'changes'];
+    const links = ids.map(id => document.querySelector(`.policy__toc a[href="#${id}"]`));
+    const sections = ids.map(id => document.getElementById(id));
+    function update() {
+      let active = 0;
+      const y = window.scrollY + 180;
+      for (let i = 0; i < sections.length; i++) if (sections[i].offsetTop <= y) active = i;
+      links.forEach((a, i) => a.classList.toggle('is-active', i === active));
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    update();
+  })();
+</script>
+
+</body>
+</html>

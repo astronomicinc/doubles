@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Volley — Doubles</title>
+<meta name="description" content="Every Doubles event opens with a fireside chat featuring a world-class founder, investor, or operator." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="assets/doubles.css" />
+
+<style>
+  /* Page header (replaces hero for sub-pages) */
+  .page-header {
+    background: var(--navy);
+    color: var(--cream);
+    padding: clamp(110px, 16vh, 180px) 0 clamp(70px, 10vh, 110px);
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header__inner {
+    max-width: var(--container);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .page-header h1 {
+    font-family: var(--serif);
+    font-weight: var(--w-serif-regular);
+    font-size: clamp(56px, 8vw, 124px);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    color: var(--cream);
+    margin-top: 18px;
+    max-width: 14ch;
+  }
+  .page-header h1 em { color: var(--ball); }
+  .page-header__sub {
+    font-size: clamp(15px, 1.2vw, 17px);
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.75);
+    margin: 0;
+    max-width: 40ch;
+    padding-bottom: 12px;
+  }
+  /* Court arc decoration */
+  .page-header__arc {
+    position: absolute;
+    right: -200px; bottom: -300px;
+    width: 720px; height: 720px;
+    border: 1px solid rgba(212, 247, 72, 0.22);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .page-header__arc::before {
+    content: '';
+    position: absolute;
+    inset: 80px;
+    border: 1px solid rgba(212, 247, 72, 0.14);
+    border-radius: 50%;
+  }
+  @media (max-width: 800px) {
+    .page-header__inner { grid-template-columns: 1fr; gap: 28px; }
+    .page-header__arc   { display: none; }
+  }
+
+  /* Spotlight (large speaker card) */
+  .spotlight {
+    background: var(--cream);
+    padding: var(--section-pad-md) 0;
+  }
+  .spotlight__card {
+    background: white;
+    border-radius: var(--r-card);
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    box-shadow: var(--shadow-event);
+    min-height: 620px;
+  }
+  .spotlight__photo {
+    position: relative;
+    background: linear-gradient(160deg, var(--navy) 0%, var(--teal) 60%, var(--teal-deep) 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: clamp(36px, 4vw, 56px);
+  }
+  .spotlight__photo::before {
+    /* big court arc */
+    content: '';
+    position: absolute;
+    right: -200px; top: -200px;
+    width: 520px; height: 520px;
+    border: 1px solid rgba(212, 247, 72, 0.2);
+    border-radius: 50%;
+  }
+  .spotlight__photo::after {
+    content: '';
+    position: absolute;
+    right: -100px; top: -100px;
+    width: 320px; height: 320px;
+    border: 1px solid rgba(212, 247, 72, 0.12);
+    border-radius: 50%;
+  }
+  .spotlight__avatar {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -60%);
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 35% 30%, rgba(212, 247, 72, 0.2), transparent 60%),
+      rgba(245, 241, 232, 0.04);
+    border: 1px dashed rgba(245, 241, 232, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(245, 241, 232, 0.35);
+  }
+  .spotlight__avatar svg { width: 88px; height: 88px; }
+  .spotlight__photo-tag {
+    position: relative;
+    z-index: 1;
+    color: var(--ball);
+    font-size: 11px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .spotlight__photo-tag::before {
+    content: '';
+    width: 28px; height: 1px; background: var(--ball);
+  }
+  .spotlight__body {
+    padding: clamp(36px, 4vw, 60px);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .spotlight__body h2 {
+    font-size: clamp(36px, 4vw, 60px);
+    font-weight: var(--w-serif-regular);
+    line-height: 1.05;
+    color: var(--ink);
+  }
+  .spotlight__body h2 em { color: var(--coral); }
+  .spotlight__body > p {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0;
+    max-width: 50ch;
+  }
+  .spotlight__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 14px 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin: 0;
+    font-size: 14px;
+  }
+  .spotlight__meta dt {
+    font-size: 10px;
+    font-weight: var(--w-sans-bold);
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    padding-top: 4px;
+  }
+  .spotlight__meta dd {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+  }
+  .spotlight__cta { margin-top: auto; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .spotlight__cta .note {
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 900px) {
+    .spotlight__card { grid-template-columns: 1fr; }
+    .spotlight__photo { min-height: 380px; }
+  }
+
+  /* Why it works — 3 column principles */
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--line-cream);
+    border-top: 1px solid var(--line-cream);
+    border-bottom: 1px solid var(--line-cream);
+  }
+  .principle {
+    background: var(--teal);
+    padding: 44px 36px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    min-height: 320px;
+  }
+  .principle__num {
+    font-family: var(--serif);
+    font-size: 48px;
+    font-weight: var(--w-serif-regular);
+    line-height: 1;
+    color: var(--ball);
+  }
+  .principle h3 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: var(--w-serif-medium);
+    color: var(--cream);
+  }
+  .principle p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.65;
+    color: rgba(245, 241, 232, 0.72);
+  }
+  @media (max-width: 800px) { .principles { grid-template-columns: 1fr; } }
+
+  /* Timeline */
+  .timeline {
+    background: var(--cream-warm);
+    padding: var(--section-pad-md) 0;
+  }
+  .timeline__list {
+    list-style: none;
+    padding: 0; margin: 0;
+    position: relative;
+    border-left: 1px solid var(--line);
+    padding-left: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+  .timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: -42px; top: 8px;
+    width: 12px; height: 12px;
+    background: var(--ball);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--cream-warm), 0 0 0 5px var(--line);
+  }
+  .timeline__time {
+    font-family: var(--serif);
+    font-size: 28px;
+    font-weight: var(--w-serif-medium);
+    color: var(--teal);
+    line-height: 1.1;
+  }
+  .timeline__time small {
+    display: block;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: var(--w-sans-medium);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  .timeline__detail h4 {
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: var(--w-serif-medium);
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .timeline__detail p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    max-width: 60ch;
+  }
+  @media (max-width: 700px) {
+    .timeline__item { grid-template-columns: 1fr; gap: 8px; }
+  }
+
+  /* CTA */
+  .page-cta {
+    background: var(--cream);
+    padding: var(--section-pad-md) 0;
+    text-align: center;
+  }
+  .page-cta__inner { max-width: 720px; margin: 0 auto; padding: 0 var(--gutter); }
+  .page-cta h2 { font-size: clamp(40px, 5.6vw, 80px); }
+  .page-cta h2 em { color: var(--coral); }
+  .page-cta p {
+    margin: 24px auto 36px;
+    max-width: 48ch;
+    color: var(--ink-soft);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     NAV (shared)
+     ========================================================= -->
+<nav class="nav" data-screen-label="Nav">
+  <div class="nav__inner">
+    <a href="index.html" class="nav__logo" aria-label="Doubles">
+      <span class="nav__logo-dot" aria-hidden="true"></span>
+      <span>DOUBLES</span>
+    </a>
+    <ul class="nav__links">
+      <li><a href="events.html">Events</a></li>
+      <li><a href="index.html#apply">Apply</a></li>
+      <li><a href="volley.html" aria-current="page">Volley</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="#">FAQ</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+    <a href="index.html#apply" class="btn btn--coral btn--sm">
+      Join the list <span class="arrow">→</span>
+    </a>
+  </div>
+</nav>
+
+<!-- =========================================================
+     PAGE HEADER
+     ========================================================= -->
+<header class="page-header" data-screen-label="Volley Header">
+  <div class="page-header__arc" aria-hidden="true"></div>
+  <div class="page-header__inner">
+    <div>
+      <span class="eyebrow"><span class="ball"></span> What's different · A Doubles original</span>
+      <h1>The <em>Volley</em>.</h1>
+    </div>
+    <p class="page-header__sub">
+      Every Doubles night opens with a thirty-minute fireside chat featuring a
+      world-class founder, investor, or operator. It's the serve that sets up
+      the whole evening.
+    </p>
+  </div>
+</header>
+
+<!-- =========================================================
+     SPOTLIGHT — Featured speaker (placeholder)
+     ========================================================= -->
+<section class="spotlight" data-screen-label="Spotlight">
+  <div class="container">
+
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"><span class="ball"></span> Vol. 01 · Opening speaker</span>
+        <h2 class="t-h2">Curated, every <em>volume</em>.</h2>
+      </div>
+      <p class="lead">
+        We hand-pick a speaker whose story will resonate with the room. Less
+        keynote, more campfire — short, candid, and built for conversation.
+      </p>
+    </div>
+
+    <article class="spotlight__card">
+      <div class="spotlight__photo">
+        <div class="spotlight__avatar" aria-hidden="true">
+          <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.2">
+            <circle cx="16" cy="12" r="5"/>
+            <path d="M5 28c0-5.5 5-9 11-9s11 3.5 11 9"/>
+          </svg>
+        </div>
+        <span class="spotlight__photo-tag">Vol. 01 · Speaker placeholder</span>
+      </div>
+
+      <div class="spotlight__body">
+        <span class="eyebrow eyebrow--coral"><span class="ball"></span> Announcement coming soon</span>
+        <h2>A speaker <em>worth flying in for</em>.</h2>
+        <p>
+          We're keeping the first speaker quiet until two weeks out — part of the
+          magic of Doubles is showing up curious. What we'll tell you now: you'll
+          recognize the name, and you'll want to ask them something afterward.
+        </p>
+
+        <dl class="spotlight__meta">
+          <dt>Format</dt>  <dd>Fireside chat + audience Q&amp;A</dd>
+          <dt>Length</dt>  <dd>30 minutes, no slides</dd>
+          <dt>Moderator</dt><dd>One of the founders of Doubles</dd>
+          <dt>Topic</dt>   <dd>Reveal at the door</dd>
+        </dl>
+
+        <div class="spotlight__cta">
+          <a href="index.html#apply" class="btn btn--coral">Apply for Vol. 01 <span class="arrow">→</span></a>
+          <span class="note">Speaker announced June 7</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- =========================================================
+     PRINCIPLES — Why this works
+     ========================================================= -->
+<section class="section section--md section--teal court-grid" data-screen-label="Why it works">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"><span class="ball"></span> Why this works</span>
+        <h2 class="t-h2">It changes the <em>shape</em> of the night.</h2>
+      </div>
+      <p class="lead">
+        Three small mechanics, working together. The Volley isn't decoration —
+        it's how we engineer chemistry in a room of strangers.
+      </p>
+    </div>
+
+    <div class="principles">
+
+      <div class="principle">
+        <div class="principle__num">01</div>
+        <h3>No awkward intros.</h3>
+        <p>Everyone arrives focused on the speaker. You get to listen and
+          observe, not perform. The pressure to "be on" the moment you walk in
+          quietly disappears.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle__num">02</div>
+        <h3>Instant conversation.</h3>
+        <p>You all just heard the same story. Dinner conversation has a shared
+          starting point, so the first ten minutes flow naturally instead of
+          stalling on weather and job titles.</p>
+      </div>
+
+      <div class="principle">
+        <div class="principle__num">03</div>
+        <h3>Inspiring, always.</h3>
+        <p>Even if you don't exchange numbers, you'll leave with a story worth
+          telling and an idea worth chasing. No Doubles night is a wasted
+          night.</p>
+      </div>
+
+    </div>
+
+    <div class="net-divider" style="margin-top: 80px;">
+      <span>Serve</span>
+      <div class="net"></div>
+      <span>Volley</span>
+      <div class="net"></div>
+      <span>Rally</span>
+    </div>
+  </div>
+</section>
+
+<!-- =========================================================
+     TIMELINE — The format, hour by hour
+     ========================================================= -->
+<section class="timeline" data-screen-label="Format">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <span class="eyebrow"><span class="ball"></span> The format</span>
+        <h2 class="t-h2">How the <em>night</em> moves.</h2>
+      </div>
+      <p class="lead">
+        We orchestrate the first half so the second half can run itself.
+        Doors at six; the fireside lands at 6:30, the room finds its rhythm by 7:30.
+      </p>
+    </div>
+
+    <ol class="timeline__list">
+
+      <li class="timeline__item">
+        <div class="timeline__time">6:00<small>Doors &amp; networking</small></div>
+        <div class="timeline__detail">
+          <h4>Cocktail-party energy.</h4>
+          <p>Upbeat jazz on the speakers, golden-hour light through a wall
+            of glass, bay views in every direction — and a glass in your
+            hand inside ninety seconds. Thirty minutes to mingle and shake
+            some hands before the room sits at 6:30.</p>
+        </div>
+      </li>
+
+      <li class="timeline__item">
+        <div class="timeline__time">6:30<small>The fireside</small></div>
+        <div class="timeline__detail">
+          <h4>Fifteen minutes, one story.</h4>
+          <p>Our speaker, in conversation with one of the founders. The story,
+            the lessons, the candor. You leave knowing something you didn't
+            when you arrived — and the room shares a moment to talk about.</p>
+        </div>
+      </li>
+
+      <li class="timeline__item">
+        <div class="timeline__time">6:45<small>The Q&amp;A</small></div>
+        <div class="timeline__detail">
+          <h4>Forty-five minutes for the room.</h4>
+          <p>This is the move. Every question you hear is a thread someone at
+            dinner can pull on. By 7:30, every guest has heard every other
+            guest say something interesting — the icebreaker work is done.</p>
+        </div>
+      </li>
+
+      <li class="timeline__item">
+        <div class="timeline__time">7:30<small>Dinner party</small></div>
+        <div class="timeline__detail">
+          <h4>An open buffet, dinner-party energy.</h4>
+          <p>Catered by a kitchen we love and laid out for grazing — shared
+            plates you build yourself, hand-picked wine, the music up just
+            enough. The room <em>moves</em>: half standing, half sitting,
+            knots of conversation forming and dissolving. By nine, you've met
+            half the room.</p>
+        </div>
+      </li>
+
+    </ol>
+  </div>
+</section>
+
+<!-- =========================================================
+     CTA
+     ========================================================= -->
+<section class="page-cta" data-screen-label="CTA">
+  <div class="page-cta__inner">
+    <span class="eyebrow eyebrow--coral"><span class="ball"></span> Match point</span>
+    <h2 class="t-h2" style="margin-top: 14px;">Hear the <em>opening serve</em>.</h2>
+    <p>
+      Vol. 01 lands Saturday, June 21. Apply with your friend now, and we'll
+      reveal the speaker line-up two weeks out.
+    </p>
+    <a href="index.html#apply" class="btn btn--coral">Apply for Vol. 01 <span class="arrow">→</span></a>
+  </div>
+</section>
+
+<!-- =========================================================
+     FOOTER (shared)
+     ========================================================= -->
+<footer class="footer" data-screen-label="Footer">
+  <div class="container">
+    <div class="footer__grid">
+
+      <div class="footer__brand">
+        <a href="index.html" class="nav__logo">
+          <span class="nav__logo-dot" aria-hidden="true"></span>
+          <span>DOUBLES</span>
+        </a>
+        <p class="footer__tag">"Doubles, not solos."</p>
+        <div class="footer__socials">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor"/></svg></a>
+          <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.5 8.57L22.5 22h-6.8l-5.32-6.96L4.5 22H1.24l8.04-9.19L1.5 2h6.97l4.81 6.36L18.24 2zm-1.2 18h1.84L7.05 4H5.1l11.94 16z"/></svg></a>
+          <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer__col">
+        <h4>Community</h4>
+        <ul>
+          <li><a href="events.html">What's Next</a></li>
+          <li><a href="code-of-conduct.html">Code of Conduct</a></li>
+          <li><a href="mailto:chris@astronomic.com">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="terms.html">Terms</a></li>
+          <li><a href="privacy.html">Privacy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer__newsletter">
+        <h4>The Doubles Dispatch</h4>
+        <p>Quarterly notes from the floor — new events, new venues, the occasional love story.</p>
+        <form onsubmit="event.preventDefault();">
+          <input type="email" placeholder="your@email.com" aria-label="Email"/>
+          <button type="submit">Join <span class="arrow">→</span></button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Doubles, LLC</span>
+      <span class="tag"><span class="ball"></span> Good people. Great matches.</span>
+      <span>Made in San Francisco</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
