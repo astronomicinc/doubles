@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { verifySession } from '@/app/lib/auth';
 
 // Protected routes that require authentication
 const PROTECTED_ROUTES = [
@@ -12,7 +11,7 @@ const PROTECTED_ROUTES = [
   '/admin',
 ];
 
-export async function middleware(request: NextRequest) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Check if route is protected
@@ -32,20 +31,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/auth/signin', request.url));
   }
 
-  // Verify session
-  const sessionResult = await verifySession(sessionToken);
-
-  if (!sessionResult.success || !sessionResult.user) {
-    // Clear invalid session cookie
-    const response = NextResponse.redirect(new URL('/auth/signin', request.url));
-    response.cookies.delete('auth_token');
-    return response;
-  }
-
-  // Session is valid, add user info to request headers for downstream use
+  // Session token exists, pass it along in headers for server components to verify
+  // Actual verification happens in server components via getCurrentUser()
   const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-user-id', sessionResult.user.id);
-  requestHeaders.set('x-user-email', sessionResult.user.email);
+  requestHeaders.set('x-session-token', sessionToken);
 
   return NextResponse.next({
     request: {

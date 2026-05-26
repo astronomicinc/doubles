@@ -1,26 +1,27 @@
 import { headers } from 'next/headers';
-import { supabase } from './auth';
+import { supabase, verifySession } from './auth';
 
 /**
- * Get current user from request headers (set by middleware)
+ * Get current user from session token (set by middleware)
  * Only available in server components
  */
 export async function getCurrentUser() {
   const headersList = await headers();
-  const userId = headersList.get('x-user-id');
+  const sessionToken = headersList.get('x-session-token');
 
-  if (!userId) {
+  if (!sessionToken) {
     return null;
   }
 
   try {
-    const { data: user } = await supabase
-      .from('users')
-      .select('*')
-      .eq('id', userId)
-      .single();
+    // Verify the session token
+    const sessionResult = await verifySession(sessionToken);
 
-    return user;
+    if (!sessionResult.success || !sessionResult.user) {
+      return null;
+    }
+
+    return sessionResult.user;
   } catch (error) {
     console.error('Error fetching current user:', error);
     return null;
