@@ -8,7 +8,6 @@ import { supabase } from './auth';
 export async function getCurrentUser() {
   const headersList = await headers();
   const userId = headersList.get('x-user-id');
-  const userEmail = headersList.get('x-user-email');
 
   if (!userId) {
     return null;
