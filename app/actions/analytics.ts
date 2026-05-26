@@ -323,3 +323,197 @@ export async function listAllVolumes(): Promise<VolumeListItem[]> {
 
   return volumes || [];
 }
+
+export interface TrendIndicator {
+  value: number;
+  direction: 'up' | 'down' | 'neutral';
+}
+
+export interface VolumeAnalyticsWithTrend extends VolumeAnalytics {
+  approvalRateTrend: TrendIndicator;
+  checkInRateTrend: TrendIndicator;
+  matchRateTrend: TrendIndicator;
+  revenueTrend: TrendIndicator;
+}
+
+/**
+ * getAllVolumesAnalytics: Get analytics for all volumes with trend indicators
+ * Requires admin role
+ * Returns volumes ordered newest first with trend calculations
+ */
+export async function getAllVolumesAnalytics(): Promise<VolumeAnalyticsWithTrend[]> {
+  // Verify admin role
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('Not authenticated');
+  }
+
+  const { data: adminRole } = await supabase
+    .from('admin_roles')
+    .select('role')
+    .eq('user_id', user.id)
+    .single();
+
+  if (!adminRole || adminRole.role !== 'admin') {
+    throw new Error('Not authorized: admin role required');
+  }
+
+  // Fetch all volumes ordered newest first
+  const { data: volumes, error: volumesError } = await supabase
+    .from('volumes')
+    .select('id, number, name, status, doors_date')
+    .order('doors_date', { ascending: false });
+
+  if (volumesError || !volumes) {
+    throw new Error(`Failed to fetch volumes: ${volumesError?.message}`);
+  }
+
+  // Fetch analytics for each volume
+  const allAnalytics: VolumeAnalyticsWithTrend[] = [];
+
+  for (let i = 0; i < volumes.length; i++) {
+    const volume = volumes[i];
+    const analytics = await getVolumeAnalytics(volume.id);
+    const previous = allAnalytics[i - 1]; // Previous is i-1 since we're iterating newest first
+
+    const withTrends: VolumeAnalyticsWithTrend = {
+      ...analytics,
+      approvalRateTrend: previous
+        ? calculateTrend(analytics.applications.approvalRate, previous.applications.approvalRate)
+        : { value: 0, direction: 'neutral' },
+      checkInRateTrend: previous
+        ? calculateTrend(analytics.attendance.checkInRate, previous.attendance.checkInRate)
+        : { value: 0, direction: 'neutral' },
+      matchRateTrend: previous
+        ? calculateTrend(analytics.mutualMatches.matchRate, previous.mutualMatches.matchRate)
+        : { value: 0, direction: 'neutral' },
+      revenueTrend: previous
+        ? calculateTrend(analytics.financial.totalRevenue, previous.financial.totalRevenue)
+        : { value: 0, direction: 'neutral' },
+    };
+
+    allAnalytics.push(withTrends);
+  }
+
+  return allAnalytics;
+}
+
+/**
+ * getHistoricalSummary: Get aggregate statistics across all volumes
+ * Requires admin role
+ */
+export async function getHistoricalSummary(): Promise<{
+  eventsTotal: number;
+  averageApprovalRate: number;
+  averageCheckInRate: number;
+  averageMatchRate: number;
+  totalRevenue: number;
+  totalApplications: number;
+  totalMatches: number;
+  dateRange: { earliest: string; latest: string };
+  trendDirection: 'improving' | 'declining' | 'stable';
+}> {
+  // Verify admin role
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error('Not authenticated');
+  }
+
+  const { data: adminRole } = await supabase
+    .from('admin_roles')
+    .select('role')
+    .eq('user_id', user.id)
+    .single();
+
+  if (!adminRole || adminRole.role !== 'admin') {
+    throw new Error('Not authorized: admin role required');
+  }
+
+  // Get all volumes
+  const allAnalytics = await getAllVolumesAnalytics();
+
+  if (allAnalytics.length === 0) {
+    return {
+      eventsTotal: 0,
+      averageApprovalRate: 0,
+      averageCheckInRate: 0,
+      averageMatchRate: 0,
+      totalRevenue: 0,
+      totalApplications: 0,
+      totalMatches: 0,
+      dateRange: { earliest: '', latest: '' },
+      trendDirection: 'stable',
+    };
+  }
+
+  // Calculate aggregates
+  const eventsTotal = allAnalytics.length;
+  const averageApprovalRate = Math.round(
+    allAnalytics.reduce((sum, a) => sum + a.applications.approvalRate, 0) / eventsTotal
+  );
+  const averageCheckInRate = Math.round(
+    allAnalytics.reduce((sum, a) => sum + a.attendance.checkInRate, 0) / eventsTotal
+  );
+  const averageMatchRate = Math.round(
+    allAnalytics.reduce((sum, a) => sum + a.mutualMatches.matchRate, 0) / eventsTotal
+  );
+  const totalRevenue = allAnalytics.reduce((sum, a) => sum + a.financial.totalRevenue, 0);
+  const totalApplications = allAnalytics.reduce((sum, a) => sum + a.applications.total, 0);
+  const totalMatches = allAnalytics.reduce((sum, a) => sum + a.mutualMatches.total, 0);
+
+  // Determine trend direction by comparing recent vs earlier events
+  const recentCount = Math.min(3, Math.floor(eventsTotal / 2));
+  const earlierCount = Math.min(3, Math.floor(eventsTotal / 2));
+
+  let trendDirection: 'improving' | 'declining' | 'stable' = 'stable';
+  if (recentCount > 0 && earlierCount > 0) {
+    const recentAvg = allAnalytics
+      .slice(0, recentCount)
+      .reduce((sum, a) => sum + a.applications.approvalRate + a.attendance.checkInRate + a.mutualMatches.matchRate, 0) / (recentCount * 3);
+    const earlierAvg = allAnalytics
+      .slice(eventsTotal - earlierCount)
+      .reduce((sum, a) => sum + a.applications.approvalRate + a.attendance.checkInRate + a.mutualMatches.matchRate, 0) / (earlierCount * 3);
+
+    if (recentAvg > earlierAvg + 2) {
+      trendDirection = 'improving';
+    } else if (recentAvg < earlierAvg - 2) {
+      trendDirection = 'declining';
+    }
+  }
+
+  // Calculate date range
+  const earliest = allAnalytics[allAnalytics.length - 1].volume.doors_date;
+  const latest = allAnalytics[0].volume.doors_date;
+
+  return {
+    eventsTotal,
+    averageApprovalRate,
+    averageCheckInRate,
+    averageMatchRate,
+    totalRevenue,
+    totalApplications,
+    totalMatches,
+    dateRange: { earliest, latest },
+    trendDirection,
+  };
+}
+
+/**
+ * Helper: Calculate trend between two values
+ */
+function calculateTrend(current: number, previous: number): TrendIndicator {
+  if (previous === 0) {
+    return { value: 0, direction: 'neutral' };
+  }
+
+  const percentChange = ((current - previous) / previous) * 100;
+  const rounded = Math.round(percentChange);
+
+  if (rounded > 2) {
+    return { value: rounded, direction: 'up' };
+  } else if (rounded < -2) {
+    return { value: Math.abs(rounded), direction: 'down' };
+  } else {
+    return { value: 0, direction: 'neutral' };
+  }
+}

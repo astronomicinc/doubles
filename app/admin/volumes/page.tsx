@@ -75,15 +75,43 @@ async function VolumesContent() {
       padding: '48px clamp(20px, 3vw, 40px)',
       minHeight: '100vh',
     }}>
-      <h1 style={{
-        fontFamily: 'var(--serif)',
-        fontSize: 'clamp(32px, 4vw, 48px)',
-        fontWeight: '400',
-        color: '#1A1A1A',
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         marginBottom: '32px',
       }}>
-        Volumes
-      </h1>
+        <h1 style={{
+          fontFamily: 'var(--serif)',
+          fontSize: 'clamp(32px, 4vw, 48px)',
+          fontWeight: '400',
+          color: '#1A1A1A',
+          margin: '0',
+        }}>
+          Volumes
+        </h1>
+        <Link
+          href="/admin/compare"
+          style={{
+            background: '#1B5A6B',
+            color: 'white',
+            padding: '10px 20px',
+            borderRadius: '4px',
+            textDecoration: 'none',
+            fontSize: '14px',
+            fontWeight: '600',
+            whiteSpace: 'nowrap',
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLAnchorElement).style.background = '#154655';
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLAnchorElement).style.background = '#1B5A6B';
+          }}
+        >
+          📊 View Trends
+        </Link>
+      </div>
 
       {volumes.length === 0 ? (
         <div style={{
