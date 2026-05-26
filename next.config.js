@@ -20,6 +20,7 @@ const nextConfig = {
       { source: '/design-system', destination: '/design-system.html' },
 
       // Auth/Application flow
+      { source: '/auth/signin', destination: '/auth/signin.html' },
       { source: '/status', destination: '/status.html' },
       { source: '/friend-invite', destination: '/friend-invite.html' },
       { source: '/application-submitted', destination: '/application-submitted.html' },
