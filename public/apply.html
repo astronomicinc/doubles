@@ -466,7 +466,7 @@
     <div class="apply__grid">
 
       <!-- ========== FORM ========== -->
-      <form class="form" onsubmit="event.preventDefault(); alert('Demo only — wire this up to your form provider.');">
+      <form class="form" id="applyForm">
 
         <!-- Section 1 — About you -->
         <div class="form__group">
@@ -485,6 +485,17 @@
               <label for="age">Age <span class="req">*</span></label>
               <input id="age" name="age" type="number" min="21" max="80" placeholder="32" required />
             </div>
+          </div>
+
+          <div class="field--pair">
+            <div class="field">
+              <label>Gender <span class="req">*</span></label>
+              <div class="chip-group" role="radiogroup">
+                <label class="chip"><input type="radio" name="gender" value="male" required /><span class="ball-dot"></span> Male</label>
+                <label class="chip"><input type="radio" name="gender" value="female" required /><span class="ball-dot"></span> Female</label>
+              </div>
+            </div>
+            <div style="flex: 1;"></div>
           </div>
 
           <div class="field--pair">
@@ -566,6 +577,17 @@
                   <label for="friend-email">Friend's email <span class="req">*</span></label>
                   <input id="friend-email" name="friend-email" type="email" placeholder="alex@company.com" required />
                 </div>
+              </div>
+
+              <div class="field--pair">
+                <div class="field">
+                  <label>Friend's gender <span class="req">*</span></label>
+                  <div class="chip-group" role="radiogroup">
+                    <label class="chip"><input type="radio" name="friend-gender" value="male" required /><span class="ball-dot"></span> Male</label>
+                    <label class="chip"><input type="radio" name="friend-gender" value="female" required /><span class="ball-dot"></span> Female</label>
+                  </div>
+                </div>
+                <div style="flex: 1;"></div>
               </div>
 
               <div class="field">
@@ -703,6 +725,70 @@
     </div>
   </div>
 </footer>
+
+<script>
+  const form = document.getElementById('applyForm');
+  const submitBtn = form.querySelector('button[type="submit"]');
+
+  // Handle form submission
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    // Disable submit button
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Processing...';
+
+    try {
+      // Get form data
+      const formData = new FormData(form);
+
+      // Map form fields to API payload
+      const payload = {
+        applicantName: formData.get('name'),
+        applicantEmail: formData.get('email'),
+        applicantAge: parseInt(formData.get('age')),
+        applicantGender: formData.get('gender'),
+        friendName: formData.get('friend-name'),
+        friendEmail: formData.get('friend-email'),
+        friendGender: formData.get('friend-gender'),
+        whyVouch: formData.get('friend-why'),
+        volumeId: 'vol-01', // Hardcoded to Volume 1 for now
+      };
+
+      // Validate payload
+      if (!payload.applicantName || !payload.applicantEmail || !payload.applicantAge ||
+          !payload.applicantGender || !payload.friendName || !payload.friendEmail ||
+          !payload.friendGender || !payload.whyVouch) {
+        alert('Please fill in all required fields');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+        return;
+      }
+
+      // Call /api/apply endpoint
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Application submission failed');
+      }
+
+      // Show success and redirect
+      window.location.href = result.nextUrl || '/application-submitted';
+    } catch (error) {
+      console.error('Form submission error:', error);
+      alert(`Error: ${error.message}`);
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+</script>
 
 </body>
 </html>

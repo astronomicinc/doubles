@@ -479,5 +479,97 @@
   Founder hotline
 </a>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const SUPABASE_URL = 'https://cjxxqdsbtckurqwkkjem.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqeHhxZHNidGNrdXJxd2tramVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NjYwNjUsImV4cCI6MjA5NTI0MjA2NX0.JMBfEBfOf2p3xPdf2YDB1lmvbfkuqTjZOSNnwbAc0Lo';
+
+  let supabase = null;
+
+  function initSupabase() {
+    if (!window.supabase || !window.supabase.createClient) {
+      setTimeout(initSupabase, 100);
+      return;
+    }
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+
+  initSupabase();
+
+  // Attach click handlers to all check-in buttons
+  document.querySelectorAll('.dc-checkin-btn').forEach((btn) => {
+    btn.addEventListener('click', handleCheckIn);
+  });
+
+  async function handleCheckIn(e) {
+    e.preventDefault();
+    const btn = e.target.closest('button');
+    const guest = btn.closest('.dc-guest');
+    const isCheckedIn = guest.classList.contains('is-checked-in');
+
+    try {
+      // Get authentication token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('You must be logged in to check in guests');
+        window.location.href = '/auth/signin';
+        return;
+      }
+
+      // For this demo, we'll use placeholder values
+      // In production, these would come from data attributes
+      const applicationId = btn.getAttribute('data-app-id') || 'demo-app-id';
+      const userId = btn.getAttribute('data-user-id') || 'demo-user-id';
+      const role = btn.getAttribute('data-role') || 'applicant';
+
+      // Toggle UI immediately for responsive feel
+      guest.classList.toggle('is-checked-in');
+      btn.disabled = true;
+
+      try {
+        // Call /api/checkin endpoint
+        const response = await fetch('/api/checkin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session.access_token}`,
+          },
+          body: JSON.stringify({
+            applicationId,
+            userId,
+            role,
+          }),
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+          throw new Error(result.error || 'Check-in failed');
+        }
+
+        // Success - update timestamp
+        const meta = guest.querySelector('.dc-guest__meta');
+        if (!isCheckedIn) {
+          // Just checked in
+          const now = new Date();
+          const time = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+          meta.innerHTML = `<span>Checked in ${time}</span>`;
+        }
+      } catch (error) {
+        console.error('Check-in error:', error);
+        // Revert UI on error
+        guest.classList.toggle('is-checked-in');
+        alert(`Error: ${error.message}`);
+      }
+
+      btn.disabled = false;
+    } catch (error) {
+      console.error('Auth error:', error);
+      alert('Authentication failed. Please sign in again.');
+      window.location.href = '/auth/signin';
+    }
+  }
+</script>
+
 </body>
 </html>

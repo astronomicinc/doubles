@@ -363,7 +363,7 @@
 
         <div class="action__footer">
           <span class="note">Alex will be emailed within the minute. Your new +1 has 5 days to respond.</span>
-          <button type="button" class="btn-action btn-action--primary">Send swap request <span style="font-size: 14px;">→</span></button>
+          <button type="button" class="btn-action btn-action--primary" id="swapBtn">Send swap request <span style="font-size: 14px;">→</span></button>
         </div>
       </article>
 
@@ -392,7 +392,7 @@
 
         <div class="action__footer">
           <span class="note">Refund processed within 5 business days. Both of you are released.</span>
-          <button type="button" class="btn-action btn-action--danger">Cancel my seat</button>
+          <button type="button" class="btn-action btn-action--danger" id="cancelBtn">Cancel my seat</button>
         </div>
       </article>
 
@@ -460,6 +460,140 @@
     </div>
   </div>
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+  const SUPABASE_URL = 'https://cjxxqdsbtckurqwkkjem.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqeHhxZHNidGNrdXJxd2tramVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NjYwNjUsImV4cCI6MjA5NTI0MjA2NX0.JMBfEBfOf2p3xPdf2YDB1lmvbfkuqTjZOSNnwbAc0Lo';
+
+  let supabase = null;
+
+  function initSupabase() {
+    if (!window.supabase || !window.supabase.createClient) {
+      setTimeout(initSupabase, 100);
+      return;
+    }
+    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  }
+
+  initSupabase();
+
+  // Get query params to extract applicationId
+  const urlParams = new URLSearchParams(window.location.search);
+  const applicationId = urlParams.get('app') || 'temp-app-id'; // For demo
+
+  // Swap button handler
+  document.getElementById('swapBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+    const btn = e.target.closest('button');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    try {
+      const newFriendName = document.getElementById('swap-name').value.trim();
+      const newFriendEmail = document.getElementById('swap-email').value.trim();
+      const newFriendGender = 'female'; // Assume opposite gender; form doesn't specify
+
+      if (!newFriendName || !newFriendEmail) {
+        alert('Please fill in friend name and email');
+        btn.disabled = false;
+        btn.textContent = originalText;
+        return;
+      }
+
+      // Get authentication token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('You must be logged in to swap your +1');
+        window.location.href = '/auth/signin';
+        return;
+      }
+
+      // Call /api/manage-seat with swap action
+      const response = await fetch('/api/manage-seat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          action: 'swap',
+          applicationId,
+          newFriendName,
+          newFriendEmail,
+          newFriendGender,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Swap failed');
+      }
+
+      alert('Swap request sent! Your new +1 will receive an invitation.');
+      // Optionally reload the page
+      window.location.reload();
+    } catch (error) {
+      console.error('Swap error:', error);
+      alert(`Error: ${error.message}`);
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
+
+  // Cancel button handler
+  document.getElementById('cancelBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    if (!confirm('Are you sure you want to cancel your seat? This cannot be undone.')) {
+      return;
+    }
+
+    const btn = e.target.closest('button');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Processing...';
+
+    try {
+      // Get authentication token
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        alert('You must be logged in to cancel your seat');
+        window.location.href = '/auth/signin';
+        return;
+      }
+
+      // Call /api/manage-seat with cancel action
+      const response = await fetch('/api/manage-seat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({
+          action: 'cancel',
+          applicationId,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || 'Cancellation failed');
+      }
+
+      alert('Your seat has been cancelled. You\'ll receive a confirmation email shortly.');
+      window.location.href = '/status';
+    } catch (error) {
+      console.error('Cancel error:', error);
+      alert(`Error: ${error.message}`);
+      btn.disabled = false;
+      btn.textContent = originalText;
+    }
+  });
+</script>
 
 </body>
 </html>
