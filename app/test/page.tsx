@@ -1,8 +1,19 @@
+import { Suspense } from 'react';
+
+async function TestContent() {
+  return (
+    <div style={{padding: '20px', fontFamily: 'sans-serif', fontSize: '16px'}}>
+      <h1>Test Route Works!</h1>
+      <p>Basic async component rendering correctly.</p>
+      <p>Timestamp: {new Date().toISOString()}</p>
+    </div>
+  );
+}
+
 export default function TestPage() {
   return (
-    <div style={{padding: '20px', fontFamily: 'sans-serif'}}>
-      <h1>Test page works!</h1>
-      <p>If you can see this, routing is functioning correctly.</p>
-    </div>
+    <Suspense fallback={<div>Loading...</div>}>
+      <TestContent />
+    </Suspense>
   );
 }
