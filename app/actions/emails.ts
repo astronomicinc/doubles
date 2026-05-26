@@ -289,3 +289,112 @@ export async function sendCheckInEmail(
     throw error;
   }
 }
+
+/**
+ * Send intro/match email to both parties after mutual match is computed
+ */
+export async function sendIntroEmail(
+  userAEmail: string,
+  userAName: string,
+  userBEmail: string,
+  userBName: string,
+  kindA: string,
+  kindB: string,
+  volumeId: string
+) {
+  const matchLink = `${SITE_URL}/post-event/match?volume=${volumeId}`;
+
+  // Determine match type for messaging
+  const getMatchType = (kind: string) => {
+    if (kind === 'both') return 'both a date and to connect';
+    if (kind === 'date') return 'a date';
+    return 'to connect';
+  };
+
+  // Email to User A
+  const htmlA = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+      <h1 style="color: #1B5A6B; font-size: 24px;">You have a match!</h1>
+
+      <p>Hi ${userAName},</p>
+
+      <p>Great news! <strong>${userBName}</strong> was interested in ${getMatchType(kindB)} with you at Doubles—and you were interested in ${getMatchType(kindA)} with them.</p>
+
+      <h2 style="color: #1B5A6B; font-size: 18px;">What happens next?</h2>
+      <p>You can now connect directly with ${userBName}. We'll also share their contact information with you, so you can reach out if you'd like to follow up.</p>
+
+      <p style="text-align: center; margin: 32px 0;">
+        <a href="${matchLink}" style="background-color: #1B5A6B; color: white; padding: 12px 32px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+          View Your Match
+        </a>
+      </p>
+
+      <p style="font-size: 14px; color: #666;">
+        Your match is waiting. Good luck out there!
+      </p>
+
+      <p style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; font-size: 12px; color: #999;">
+        © Doubles — Strategy. Partnership. Connection.
+      </p>
+    </div>
+  `;
+
+  try {
+    const resultA = await getResend().emails.send({
+      from: FROM_EMAIL,
+      to: userAEmail,
+      subject: `You matched with ${userBName}!`,
+      html: htmlA,
+    });
+
+    if (resultA.error) {
+      console.error('Email send error (User A):', resultA.error);
+      throw new Error(`Failed to send email to ${userAEmail}: ${resultA.error.message}`);
+    }
+
+    // Email to User B (similar structure)
+    const htmlB = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
+        <h1 style="color: #1B5A6B; font-size: 24px;">You have a match!</h1>
+
+        <p>Hi ${userBName},</p>
+
+        <p>Great news! <strong>${userAName}</strong> was interested in ${getMatchType(kindA)} with you at Doubles—and you were interested in ${getMatchType(kindB)} with them.</p>
+
+        <h2 style="color: #1B5A6B; font-size: 18px;">What happens next?</h2>
+        <p>You can now connect directly with ${userAName}. We'll also share their contact information with you, so you can reach out if you'd like to follow up.</p>
+
+        <p style="text-align: center; margin: 32px 0;">
+          <a href="${matchLink}" style="background-color: #1B5A6B; color: white; padding: 12px 32px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">
+            View Your Match
+          </a>
+        </p>
+
+        <p style="font-size: 14px; color: #666;">
+          Your match is waiting. Good luck out there!
+        </p>
+
+        <p style="margin-top: 32px; padding-top: 16px; border-top: 1px solid #eee; font-size: 12px; color: #999;">
+          © Doubles — Strategy. Partnership. Connection.
+        </p>
+      </div>
+    `;
+
+    const resultB = await getResend().emails.send({
+      from: FROM_EMAIL,
+      to: userBEmail,
+      subject: `You matched with ${userAName}!`,
+      html: htmlB,
+    });
+
+    if (resultB.error) {
+      console.error('Email send error (User B):', resultB.error);
+      throw new Error(`Failed to send email to ${userBEmail}: ${resultB.error.message}`);
+    }
+
+    return { resultA, resultB };
+  } catch (error) {
+    console.error('Send intro email error:', error);
+    throw error;
+  }
+}

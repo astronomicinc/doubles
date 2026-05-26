@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
-import SparksPageContent from './content';
+import MatchPageContent from './content';
 
-function SparksPageLoading() {
+function MatchPageLoading() {
   return (
     <div style={{
       maxWidth: '1200px',
@@ -10,16 +10,16 @@ function SparksPageLoading() {
       textAlign: 'center'
     }}>
       <div style={{ fontSize: '16px', color: '#666' }}>
-        Loading attendees...
+        Loading your matches...
       </div>
     </div>
   );
 }
 
-export default function SparksPage() {
+export default function MatchPage() {
   return (
-    <Suspense fallback={<SparksPageLoading />}>
-      <SparksPageContent />
+    <Suspense fallback={<MatchPageLoading />}>
+      <MatchPageContent />
     </Suspense>
   );
 }

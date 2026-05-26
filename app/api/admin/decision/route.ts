@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { capturePaymentIntent, cancelPaymentIntent } from '@/app/actions/stripe';
-import {
-  updateApplicationStatus,
-  getApplicationByPaymentIntent,
-} from '@/app/actions/applications';
+import { updateApplicationStatus } from '@/app/actions/applications';
 import {
   sendApprovalEmail,
   sendRejectionEmail,
@@ -127,7 +124,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Get applicant email and name for notifications
-    const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+    const { data: { users } } = await supabase.auth.admin.listUsers();
     const applicantUser = users?.find(u => u.id === application.applicant_user_id);
     const applicantEmail = applicantUser?.email || '';
     const applicantName = applicantUser?.user_metadata?.name || 'Applicant';

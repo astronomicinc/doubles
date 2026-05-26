@@ -57,12 +57,12 @@ export function useAuth() {
           });
 
           setSession({
-            access_token: currentSession.session.access_token,
-            refresh_token: currentSession.session.refresh_token,
-            expires_in: currentSession.session.expires_in || 0,
-            expires_at: currentSession.session.expires_at,
-            token_type: currentSession.session.token_type,
-            type: currentSession.session.type,
+            access_token: currentSession.access_token,
+            refresh_token: currentSession.refresh_token || '',
+            expires_in: currentSession.expires_in || 0,
+            expires_at: currentSession.expires_at,
+            token_type: currentSession.token_type || 'Bearer',
+            type: 'session',
           });
         }
 
@@ -74,6 +74,8 @@ export function useAuth() {
       }
     }
 
+    let subscription: any = null;
+
     getAuth();
 
     // Listen for auth state changes
@@ -84,8 +86,8 @@ export function useAuth() {
       const supabase = createClient(supabaseUrl, supabaseKey);
 
       const {
-        data: { subscription },
-      } = supabase.auth.onAuthStateChange((event, currentSession) => {
+        data: { subscription: authSubscription },
+      } = supabase.auth.onAuthStateChange((_event, currentSession) => {
         if (currentSession?.user) {
           setUser({
             id: currentSession.user.id,
@@ -95,12 +97,12 @@ export function useAuth() {
           });
 
           setSession({
-            access_token: currentSession.session.access_token,
-            refresh_token: currentSession.session.refresh_token,
-            expires_in: currentSession.session.expires_in || 0,
-            expires_at: currentSession.session.expires_at,
-            token_type: currentSession.session.token_type,
-            type: currentSession.session.type,
+            access_token: currentSession.access_token,
+            refresh_token: currentSession.refresh_token || '',
+            expires_in: currentSession.expires_in || 0,
+            expires_at: currentSession.expires_at,
+            token_type: currentSession.token_type || 'Bearer',
+            type: 'session',
           });
         } else {
           setUser(null);
@@ -108,10 +110,12 @@ export function useAuth() {
         }
       });
 
-      return () => {
-        subscription?.unsubscribe();
-      };
+      subscription = authSubscription;
     }
+
+    return () => {
+      subscription?.unsubscribe();
+    };
   }, []);
 
   return {

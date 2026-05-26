@@ -347,11 +347,13 @@ export async function getEventAttendees(volumeId: string, currentUserId: string)
         const asApplicant = applications?.find(app => app.applicant_user_id === u.id);
         const asPlusOne = applications?.find(app => app.plus_one_user_id === u.id);
 
+        const role: 'Applicant' | 'Plus-One' | 'Attendee' = asApplicant ? 'Applicant' : asPlusOne ? 'Plus-One' : 'Attendee';
+
         return {
           id: u.id,
           name: u.user_metadata?.name || 'Attendee',
           email: u.email || '',
-          role: asApplicant ? 'Applicant' : asPlusOne ? 'Plus-One' : 'Attendee',
+          role,
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
@@ -395,6 +397,161 @@ export async function getMyPicks(volumeId: string) {
     return picksMap;
   } catch (error) {
     console.error('Get my picks error:', error);
+    throw error;
+  }
+}
+
+/**
+ * getMutualMatches: Fetch current user's mutual matches for an event
+ * Returns array of intro records where the user is either party
+ */
+export async function getMutualMatches(volumeId: string) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+
+    // Fetch intros where user is either user_a or user_b
+    const { data: intros, error } = await supabase
+      .from('intros')
+      .select('id, user_a_id, user_b_id, kind_a, kind_b, email_sent_at, user_a_viewed_at, user_b_viewed_at')
+      .eq('volume_id', volumeId)
+      .or(`user_a_id.eq.${user.id},user_b_id.eq.${user.id}`);
+
+    if (error) {
+      throw new Error(`Failed to fetch matches: ${error.message}`);
+    }
+
+    return intros || [];
+  } catch (error) {
+    console.error('Get mutual matches error:', error);
+    throw error;
+  }
+}
+
+/**
+ * getMyMatches: Fetch current user's mutual matches with enriched user data
+ * Returns array of match objects with name, email, and kind information
+ */
+export async function getMyMatches(volumeId: string) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+
+    // Fetch intros
+    const intros = await getMutualMatches(volumeId);
+
+    if (intros.length === 0) {
+      return [];
+    }
+
+    // Collect all matched user IDs
+    const matchedUserIds = new Set<string>();
+    intros.forEach(intro => {
+      if (intro.user_a_id !== user.id) matchedUserIds.add(intro.user_a_id);
+      if (intro.user_b_id !== user.id) matchedUserIds.add(intro.user_b_id);
+    });
+
+    // Fetch user details
+    const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+
+    if (usersError || !users) {
+      throw new Error('Failed to fetch user details');
+    }
+
+    // Build user map
+    const userMap: Record<string, any> = {};
+    users.forEach(u => {
+      if (matchedUserIds.has(u.id)) {
+        userMap[u.id] = {
+          id: u.id,
+          name: u.user_metadata?.name || u.email,
+          email: u.email,
+        };
+      }
+    });
+
+    // Enrich intros with user data
+    const enrichedMatches = intros
+      .map(intro => {
+        const isUserA = intro.user_a_id === user.id;
+        const matchedUserId = isUserA ? intro.user_b_id : intro.user_a_id;
+        const matchedUser = userMap[matchedUserId];
+
+        if (!matchedUser) return null;
+
+        return {
+          id: intro.id,
+          matchedUser,
+          kindMyPick: isUserA ? intro.kind_a : intro.kind_b,
+          kindTheirPick: isUserA ? intro.kind_b : intro.kind_a,
+          emailSentAt: intro.email_sent_at,
+          iViewed: isUserA ? intro.user_a_viewed_at : intro.user_b_viewed_at,
+          theyViewed: isUserA ? intro.user_b_viewed_at : intro.user_a_viewed_at,
+        };
+      })
+      .filter((m): m is Exclude<typeof m, null> => m !== null)
+      .sort((a, b) => new Date(b.emailSentAt).getTime() - new Date(a.emailSentAt).getTime());
+
+    return enrichedMatches;
+  } catch (error) {
+    console.error('Get my matches error:', error);
+    throw error;
+  }
+}
+
+/**
+ * recordIntroViewed: Mark an intro as viewed by the current user
+ */
+export async function recordIntroViewed(introId: string) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+
+    // Fetch the intro to determine which column to update
+    const { data: intro, error: fetchError } = await supabase
+      .from('intros')
+      .select('user_a_id, user_b_id')
+      .eq('id', introId)
+      .single();
+
+    if (fetchError) {
+      throw new Error(`Failed to fetch intro: ${fetchError.message}`);
+    }
+
+    let updateData: any = { updated_at: new Date().toISOString() };
+
+    if (intro.user_a_id === user.id) {
+      updateData.user_a_viewed_at = new Date().toISOString();
+    } else if (intro.user_b_id === user.id) {
+      updateData.user_b_viewed_at = new Date().toISOString();
+    } else {
+      throw new Error('User is not a party to this intro');
+    }
+
+    // Update the viewed_at timestamp
+    const { data, error } = await supabase
+      .from('intros')
+      .update(updateData)
+      .eq('id', introId)
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to record view: ${error.message}`);
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Record intro viewed error:', error);
     throw error;
   }
 }

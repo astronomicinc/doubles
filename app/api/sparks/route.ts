@@ -93,14 +93,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Also check if picker attended as a plus_one
-    const { data: pickerPlusOne } = await supabase
-      .from('plus_ones')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('status', 'accepted')
-      .single();
-
     // Verify picked user attended same event
     // They must be either applicant or plus_one, confirmed/accepted, and checked in
     const { data: pickedApp } = await supabase
