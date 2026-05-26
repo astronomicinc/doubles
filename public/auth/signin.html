@@ -153,20 +153,33 @@
     <p class="help-text">A sign-in link will be sent to your email. It expires in 24 hours.</p>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
   <script>
-    // Initialize Supabase
+    // Initialize Supabase when library loads
     const SUPABASE_URL = 'https://cjxxqdsbtckurqwkkjem.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqeHhxZHNidGNrdXJxd2tramVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NjYwNjUsImV4cCI6MjA5NTI0MjA2NX0.JMBfEBfOf2p3xPdf2YDB1lmvbfkuqTjZOSNnwbAc0Lo';
 
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    let supabaseClient;
 
     const form = document.getElementById('signinForm');
     const emailInput = document.getElementById('email');
     const submitBtn = document.getElementById('submitBtn');
     const messageDiv = document.getElementById('message');
 
-    form.addEventListener('submit', async (e) => {
+    function initSupabase() {
+      if (!window.supabase || !window.supabase.createClient) {
+        console.log('Supabase library not loaded yet, retrying...');
+        setTimeout(initSupabase, 100);
+        return;
+      }
+
+      supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      console.log('Supabase initialized');
+
+      form.addEventListener('submit', handleSignIn);
+    }
+
+    async function handleSignIn(e) {
       e.preventDefault();
 
       const email = emailInput.value.trim();
@@ -181,7 +194,8 @@
       messageDiv.classList.remove('show', 'success', 'error');
 
       try {
-        const { error } = await supabase.auth.signInWithOtp({
+        console.log('Signing in with email:', email);
+        const { error } = await supabaseClient.auth.signInWithOtp({
           email: email,
           options: {
             emailRedirectTo: `${window.location.origin}/auth/callback`,
@@ -189,6 +203,7 @@
         });
 
         if (error) {
+          console.error('Sign in error:', error);
           showMessage(error.message || 'Failed to send sign-in link', 'error');
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Sign-In Link';
@@ -200,17 +215,20 @@
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Sign-In Link';
       } catch (error) {
-        console.error('Error:', error);
+        console.error('Catch error:', error);
         showMessage('An error occurred. Please try again.', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Sign-In Link';
       }
-    });
+    }
 
     function showMessage(text, type) {
       messageDiv.textContent = text;
       messageDiv.className = `message show ${type}`;
     }
+
+    // Initialize Supabase
+    initSupabase();
   </script>
 </body>
 </html>
