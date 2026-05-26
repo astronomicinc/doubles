@@ -471,16 +471,16 @@
 <main class="flow">
 
   <!-- =========================================================
-       HEADER — "Thanks, Jordan" + status strip
+       HEADER — "Thanks, {{user_name}}" + status strip
        ========================================================= -->
   <header class="flow-header" data-screen-label="Submitted Header">
     <div class="flow-header__inner">
-      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> Vol. 01 · Application received</span>
-      <h1>Thanks, <em>Jordan</em>.<br/>We've got it.</h1>
+      <span class="eyebrow" style="color: var(--ball);"><span class="ball"></span> {{volume_name}} · Application received</span>
+      <h1>Thanks, <em>{{user_name}}</em>.<br/>We've got it.</h1>
       <p class="flow-header__sub">
-        Your application is in. We've already emailed Alex to invite them
+        Your application is in. We've already emailed {{friend_name}} to invite them
         to complete the friend side. Below is exactly what happens between
-        now and June 21 — bookmark this page, or check status anytime.
+        now and {{event_date}} — bookmark this page, or check status anytime.
       </p>
 
       <!-- 4-stage status strip -->
@@ -488,11 +488,11 @@
         <div class="status-step status-step--done">
           <span class="status-step__label">01 · Done</span>
           <span class="status-step__title">You applied</span>
-          <span class="status-step__meta">May 24, 2026 · 2:47 PM</span>
+          <span class="status-step__meta">{{submitted_time}}</span>
         </div>
         <div class="status-step status-step--current">
           <span class="status-step__label">02 · In progress</span>
-          <span class="status-step__title">Alex completes their side</span>
+          <span class="status-step__title">{{friend_name}} completes their side</span>
           <span class="status-step__meta">Invited just now · 7 days to respond</span>
         </div>
         <div class="status-step">
@@ -580,7 +580,7 @@
             </svg>
             <div>
               We sent a copy of your application and this timeline to
-              <strong>jordan@river.co</strong>. If you don't see it within
+              <strong>{{user_email}}</strong>. If you don't see it within
               ten minutes, check spam or <a href="contact.html" style="color: var(--teal); border-bottom: 1px solid var(--teal);">email us</a>.
             </div>
           </div>
@@ -596,21 +596,21 @@
 
           <div class="side-card side-card--dark">
             <span class="eyebrow"><span class="ball"></span> You applied for</span>
-            <h4 style="margin-top: 14px;">Vol. 01 — <em>Founding Launch</em>.</h4>
+            <h4 style="margin-top: 14px;">{{volume_name}}.</h4>
             <dl class="side-meta">
-              <dt>Date</dt><dd>Sat, June 21</dd>
-              <dt>Time</dt><dd>6:00 — 9:00 PM</dd>
-              <dt>Where</dt><dd>Twin Peaks, SF</dd>
+              <dt>Date</dt><dd>{{event_date}}</dd>
+              <dt>Time</dt><dd>{{event_time}}</dd>
+              <dt>Where</dt><dd>{{event_location}}</dd>
               <dt>Hold</dt><dd>$145 · not yet charged</dd>
             </dl>
           </div>
 
           <div class="friend-status">
             <div class="friend-status__head">
-              <div class="friend-status__avatar" aria-hidden="true">AM</div>
+              <div class="friend-status__avatar" aria-hidden="true">{{friend_initials}}</div>
               <div>
                 <div class="friend-status__name">
-                  Alex Mendoza
+                  {{friend_name}}
                   <small>Your +1 · Awaiting their side</small>
                 </div>
               </div>
@@ -619,7 +619,7 @@
               <div class="friend-status__progress-fill" style="width: 25%;"></div>
             </div>
             <p class="friend-status__detail">
-              <strong>Invited just now.</strong> Once Alex submits, we
+              <strong>Invited just now.</strong> Once {{friend_name}} submits, we
               review together. You'll get an email update at every stage.
             </p>
             <a href="#" style="font-size: 11px; font-weight: var(--w-sans-bold); letter-spacing: 0.22em; text-transform: uppercase; color: var(--teal); display: inline-flex; gap: 8px; align-items: center;">

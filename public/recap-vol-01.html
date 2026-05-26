@@ -483,24 +483,24 @@
         <span style="color: var(--ball);">Recap</span>
       </div>
       <h1>The night we <em>had</em>.</h1>
-      <p style="font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; color: rgba(245, 241, 232, 0.78); max-width: 38ch; margin-top: 14px;">Vol. 01 · Founding Launch · Twin Peaks, San Francisco · Saturday, June 21.</p>
+      <p style="font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; color: rgba(245, 241, 232, 0.78); max-width: 38ch; margin-top: 14px;">{{volume_label}} · {{volume_name}} · {{venue_location}} · {{volume_date}}.</p>
 
       <div class="recap-hero__strap">
         <div class="recap-hero__strap-item">
           <div class="label">Volume</div>
-          <div class="value">Vol. <em>01</em></div>
+          <div class="value">{{volume_num}}</div>
         </div>
         <div class="recap-hero__strap-item">
           <div class="label">Date</div>
-          <div class="value">Sat, June 21</div>
+          <div class="value">{{volume_date}}</div>
         </div>
         <div class="recap-hero__strap-item">
           <div class="label">Venue</div>
-          <div class="value">A private home, <em>Twin Peaks</em></div>
+          <div class="value">A private home, <em>{{venue_name}}</em></div>
         </div>
         <div class="recap-hero__strap-item">
-          <div class="label">Speaker</div>
-          <div class="value"><em>Maya Patel</em></div>
+          <div class="label">Attendees</div>
+          <div class="value"><em>{{attendee_count}}</em> people</div>
         </div>
       </div>
 
@@ -629,11 +629,11 @@
   <!-- APPLY CTA -->
   <section class="apply-cta" data-screen-label="Apply CTA">
     <div class="apply-cta__inner">
-      <span class="eyebrow"><span class="ball"></span> Vol. 02 · September 13</span>
+      <span class="eyebrow"><span class="ball"></span> {{next_volume_label}}</span>
       <h2>Be in the <em>next</em> room.</h2>
       <p>One application keeps you in our pool for every future volume. Bring a friend.</p>
       <div class="apply-cta__actions">
-        <a class="btn btn--coral" href="apply.html">Apply for Vol. 02 <span class="arrow">→</span></a>
+        <a class="btn btn--coral" href="apply.html">Apply {{next_volume_label}} <span class="arrow">→</span></a>
         <a class="btn btn--ghost" href="events.html">See the calendar</a>
       </div>
     </div>
