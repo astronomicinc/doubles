@@ -791,12 +791,164 @@
     </div>
     <div></div>
     <div class="decision-bar__actions">
-      <button class="btn-decision btn-decision--flag" type="button">⚐ Flag for team</button>
-      <button class="btn-decision btn-decision--reject" type="button">Reject pair</button>
-      <button class="btn-decision btn-decision--accept" type="button">Accept pair <span class="arrow">→</span></button>
+      <button class="btn-decision btn-decision--flag" type="button" id="flagBtn">⚐ Flag for team</button>
+      <button class="btn-decision btn-decision--reject" type="button" id="rejectBtn">Reject pair</button>
+      <button class="btn-decision btn-decision--accept" type="button" id="acceptBtn">Accept pair <span class="arrow">→</span></button>
     </div>
   </div>
 </aside>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/+esm';
+
+  const SUPABASE_URL = 'https://uohljgsnynjjbkrmqzpg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvaGxqZ3NueW5qamJrcm1xenBnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU5NzI0OTYsImV4cCI6MTczNzUwMDQ5Nn0.J2h_l3qGV3W3gABQeC7b5DGKsVfVJQmKZlLcGCbQ6z0';
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Get applicationId from URL query param
+  const urlParams = new URLSearchParams(window.location.search);
+  const applicationId = urlParams.get('id');
+
+  if (!applicationId) {
+    console.error('No applicationId provided in URL');
+  }
+
+  // Get admin auth token
+  async function getAdminToken() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      throw new Error('Not authenticated');
+    }
+    return session.access_token;
+  }
+
+  // Handle Accept button
+  document.getElementById('acceptBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = await getAdminToken();
+
+      // Prompt for event details
+      const eventDate = prompt('Event date (e.g., "June 15, 2026"):');
+      if (!eventDate) return; // User cancelled
+
+      const eventVenue = prompt('Event venue (e.g., "Twin Peaks"):');
+      if (!eventVenue) return; // User cancelled
+
+      // Show loading state
+      const btn = e.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Processing...';
+      btn.disabled = true;
+
+      // Call admin decision API
+      const response = await fetch('/api/admin/decision', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          applicationId,
+          decision: 'approved',
+          eventDate,
+          eventVenue,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to approve application');
+      }
+
+      // Success
+      alert(`✓ Application approved!\n\n${result.message}`);
+      // Optionally reload or navigate to next application
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (error) {
+      console.error('Accept error:', error);
+      alert(`✗ Error: ${error.message}`);
+      // Restore button state
+      const btn = e.target;
+      btn.innerHTML = 'Accept pair <span class="arrow">→</span>';
+      btn.disabled = false;
+    }
+  });
+
+  // Handle Reject button
+  document.getElementById('rejectBtn').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    try {
+      const token = await getAdminToken();
+
+      // Prompt for rejection reason
+      const reason = prompt('Rejection reason (required):');
+      if (!reason) {
+        alert('Rejection reason is required');
+        return;
+      }
+
+      // Show loading state
+      const btn = e.target;
+      const originalText = btn.innerHTML;
+      btn.innerHTML = 'Processing...';
+      btn.disabled = true;
+
+      // Call admin decision API
+      const response = await fetch('/api/admin/decision', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          applicationId,
+          decision: 'rejected',
+          reason,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to reject application');
+      }
+
+      // Success
+      alert(`✓ Application rejected.\n\n${result.message}`);
+      // Optionally reload or navigate to next application
+      setTimeout(() => window.location.reload(), 1000);
+    } catch (error) {
+      console.error('Reject error:', error);
+      alert(`✗ Error: ${error.message}`);
+      // Restore button state
+      const btn = e.target;
+      btn.innerHTML = 'Reject pair';
+      btn.disabled = false;
+    }
+  });
+
+  // Handle Flag button (simple internal flag)
+  document.getElementById('flagBtn').addEventListener('click', (e) => {
+    e.preventDefault();
+    alert('Flag feature coming soon. For now, use internal notes.');
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'a' || e.key === 'A') {
+      document.getElementById('acceptBtn').click();
+    } else if (e.key === 'r' || e.key === 'R') {
+      document.getElementById('rejectBtn').click();
+    } else if (e.key === 'f' || e.key === 'F') {
+      document.getElementById('flagBtn').click();
+    }
+  });
+</script>
 
 </body>
 </html>

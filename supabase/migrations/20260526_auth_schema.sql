@@ -52,9 +52,10 @@ CREATE POLICY "Users can read their own profile"
   ON users FOR SELECT
   USING (auth.uid() = id);
 
-CREATE POLICY "Admins can read all profiles"
-  ON users FOR SELECT
-  USING (auth.role() = 'authenticated' AND role = 'admin');
+-- Note: Admin role checking is done via admin_roles table in Phase 3C
+-- CREATE POLICY "Admins can read all profiles"
+--   ON users FOR SELECT
+--   USING (auth.role() = 'authenticated' AND role = 'admin');
 
 -- Cleanup expired tokens (optional: call via cron job)
 CREATE OR REPLACE FUNCTION cleanup_expired_tokens()
