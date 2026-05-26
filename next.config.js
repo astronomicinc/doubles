@@ -6,7 +6,7 @@ const nextConfig = {
     return [
       // Marketing pages
       // Note: '/' is now handled by app/page.tsx (Phase 2 dynamic migration)
-      // Note: '/events' is now handled by app/events/page.tsx (Phase 2A migration)
+      { source: '/events', destination: '/events.html' },
       { source: '/about', destination: '/about.html' },
       { source: '/apply', destination: '/apply.html' },
       { source: '/volley', destination: '/volley.html' },
@@ -20,9 +20,9 @@ const nextConfig = {
       { source: '/design-system', destination: '/design-system.html' },
 
       // Auth/Application flow
-      // Note: '/application-submitted' is now handled by app/application-submitted/page.tsx (Phase 2A migration)
       { source: '/status', destination: '/status.html' },
       { source: '/friend-invite', destination: '/friend-invite.html' },
+      { source: '/application-submitted', destination: '/application-submitted.html' },
       { source: '/accepted', destination: '/accepted.html' },
       { source: '/not-this-volume', destination: '/not-this-volume.html' },
       { source: '/confirmation', destination: '/confirmation.html' },
@@ -32,10 +32,10 @@ const nextConfig = {
       // Post-event
       { source: '/post-event/sparks', destination: '/post-event-sparks.html' },
       { source: '/post-event/match', destination: '/post-event-match.html' },
-      // Note: '/post-event/no-mutuals' is now handled by app/post-event/no-mutuals/page.tsx (Phase 2A migration)
+      { source: '/post-event/no-mutuals', destination: '/post-event-no-mutuals.html' },
 
       // Recap
-      // Note: '/recap/[volumeId]' is now handled by app/recap/[volumeId]/page.tsx (Phase 2A migration)
+      { source: '/recap/vol-01', destination: '/recap-vol-01.html' },
 
       // Operations/Admin
       { source: '/dispatch', destination: '/dispatch.html' },
@@ -43,11 +43,11 @@ const nextConfig = {
       { source: '/email-templates', destination: '/email-templates.html' },
 
       // Admin dashboard
-      // Note: '/admin' is now handled by app/admin/page.tsx (Phase 2A migration)
-      // Note: '/admin/volumes' is now handled by app/admin/volumes/page.tsx (Phase 2A migration)
+      { source: '/admin', destination: '/admin-dashboard.html' },
       { source: '/admin/inbox', destination: '/admin-inbox.html' },
       { source: '/admin/application', destination: '/admin-application.html' },
       { source: '/admin/roster', destination: '/admin-roster.html' },
+      { source: '/admin/volumes', destination: '/admin-volumes.html' },
       { source: '/admin/intros', destination: '/admin-intros.html' },
     ];
   },
