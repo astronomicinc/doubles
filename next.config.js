@@ -5,7 +5,7 @@ const nextConfig = {
   async rewrites() {
     return [
       // Marketing pages
-      { source: '/', destination: '/index.html' },
+      // Note: '/' is now handled by app/page.tsx (Phase 2 dynamic migration)
       { source: '/about', destination: '/about.html' },
       { source: '/apply', destination: '/apply.html' },
       { source: '/events', destination: '/events.html' },
