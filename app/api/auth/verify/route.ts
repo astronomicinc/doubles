@@ -45,7 +45,7 @@ export async function GET(request: NextRequest) {
     const expiresAt = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
     const sessionResult = await createSession(user.id, expiresAt);
 
-    if (!sessionResult.success) {
+    if (!sessionResult.success || !sessionResult.sessionToken) {
       return NextResponse.json(
         { error: 'Failed to create session' },
         { status: 500 }
