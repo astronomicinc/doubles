@@ -2,9 +2,23 @@
 
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const FROM_EMAIL = 'noreply@doubles.singles';
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://doubles.singles';
+
+// Initialize Resend lazily to avoid errors during build time
+let resend: Resend | null = null;
+
+function getResend() {
+  if (!resend) {
+    const apiKey = process.env.RESEND_API_KEY;
+    if (!apiKey) {
+      console.warn('RESEND_API_KEY not set - email sending will fail');
+      throw new Error('RESEND_API_KEY environment variable is not set');
+    }
+    resend = new Resend(apiKey);
+  }
+  return resend;
+}
 
 /**
  * Send application confirmation email to applicant
@@ -41,7 +55,7 @@ export async function sendApplicationConfirmationEmail(
   `;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: applicantEmail,
       subject: 'Your Doubles Application',
@@ -102,7 +116,7 @@ export async function sendPlusOneInvitationEmail(
   `;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: friendEmail,
       subject: `${applicantName} invited you to Doubles`,
@@ -159,7 +173,7 @@ export async function sendApprovalEmail(
   `;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: applicantEmail,
       subject: 'You\'re approved for Doubles!',
@@ -207,7 +221,7 @@ export async function sendRejectionEmail(
   `;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: applicantEmail,
       subject: 'Your Doubles Application',
@@ -257,7 +271,7 @@ export async function sendCheckInEmail(
   `;
 
   try {
-    const result = await resend.emails.send({
+    const result = await getResend().emails.send({
       from: FROM_EMAIL,
       to: applicantEmail,
       subject: 'Your Doubles Recap',

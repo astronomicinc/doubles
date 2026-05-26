@@ -63,18 +63,13 @@ export async function POST(request: NextRequest) {
 
     // Step 1: Create Stripe payment intent ($145)
     console.log('Creating Stripe payment intent...');
-    const paymentIntentResult = await createPaymentIntent({
-      amount: 14500, // $145.00 in cents
-      currency: 'usd',
-      description: `Doubles application for ${applicantName}`,
-      capture_method: 'manual', // Hold the payment; admin captures later
-    });
+    const paymentIntentResult = await createPaymentIntent(145, applicantEmail); // Amount in dollars, email
 
-    if (!paymentIntentResult.id) {
+    if (!paymentIntentResult.success || !paymentIntentResult.intentId) {
       throw new Error('Failed to create Stripe payment intent');
     }
 
-    const paymentIntentId = paymentIntentResult.id;
+    const paymentIntentId = paymentIntentResult.intentId;
 
     // Step 2: Create application + plus_one records
     console.log('Creating application record...');

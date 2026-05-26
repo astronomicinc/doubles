@@ -41,14 +41,12 @@ export async function submitApplication(data: ApplicationSubmitData): Promise<st
 
   try {
     // Step 1: Create or get applicant user via Supabase Auth API
-    // First check if user exists
-    const { data: existingUser } = await supabase.auth.admin.getUserByEmail(applicantEmail);
+    // Try to create user (will fail if already exists)
+    let applicantUserId: string | undefined;
+    let createError: Error | null = null;
 
-    let applicantUserId = existingUser?.id;
-
-    if (!applicantUserId) {
-      // Create new user if doesn't exist
-      const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
+    try {
+      const { data: newUser, error } = await supabase.auth.admin.createUser({
         email: applicantEmail,
         email_confirm: false, // They'll confirm via magic link
         user_metadata: {
@@ -58,11 +56,38 @@ export async function submitApplication(data: ApplicationSubmitData): Promise<st
         },
       });
 
-      if (createError) {
-        throw new Error(`Failed to create user: ${createError.message}`);
+      if (error) {
+        createError = error as Error;
+      } else if (newUser?.user?.id) {
+        applicantUserId = newUser.user.id;
       }
+    } catch (e) {
+      createError = e as Error;
+    }
 
-      applicantUserId = newUser.user.id;
+    // If create failed due to duplicate, try to get user by email via listUsers
+    if (!applicantUserId && createError) {
+      try {
+        const { data: users, error: listError } = await supabase.auth.admin.listUsers();
+        if (!listError && users?.users) {
+          const existingUser = users.users.find(u => u.email === applicantEmail);
+          if (existingUser) {
+            applicantUserId = existingUser.id;
+          }
+        }
+      } catch (e) {
+        console.log('Could not lookup existing user, continuing with new user creation');
+      }
+    }
+
+    // If still no user ID, the creation truly failed
+    if (!applicantUserId && createError) {
+      throw new Error(`Failed to create or find user: ${createError.message}`);
+    }
+
+    // If we still don't have an ID, something went wrong
+    if (!applicantUserId) {
+      throw new Error('Failed to create or find user: unknown error');
     }
 
     // Step 2: Create application record
