@@ -153,7 +153,14 @@
     <p class="help-text">A sign-in link will be sent to your email. It expires in 24 hours.</p>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
+    // Initialize Supabase
+    const SUPABASE_URL = 'https://cjxxqdsbtckurqwkkjem.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqeHhxZHNidGNrdXJxd2tramVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk2NjYwNjUsImV4cCI6MjA5NTI0MjA2NX0.JMBfEBfOf2p3xPdf2YDB1lmvbfkuqTjZOSNnwbAc0Lo';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
     const form = document.getElementById('signinForm');
     const emailInput = document.getElementById('email');
     const submitBtn = document.getElementById('submitBtn');
@@ -174,24 +181,21 @@
       messageDiv.classList.remove('show', 'success', 'error');
 
       try {
-        const response = await fetch('/api/auth/signin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
+        const { error } = await supabase.auth.signInWithOtp({
+          email: email,
+          options: {
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
           },
-          body: JSON.stringify({ email }),
         });
 
-        const data = await response.json();
-
-        if (!response.ok) {
-          showMessage(data.error || 'Failed to send sign-in link', 'error');
+        if (error) {
+          showMessage(error.message || 'Failed to send sign-in link', 'error');
           submitBtn.disabled = false;
           submitBtn.textContent = 'Send Sign-In Link';
           return;
         }
 
-        showMessage(data.message || 'Sign-in link sent! Check your email.', 'success');
+        showMessage(`Check your email at ${email} for a sign-in link.`, 'success');
         emailInput.value = '';
         submitBtn.disabled = false;
         submitBtn.textContent = 'Send Sign-In Link';

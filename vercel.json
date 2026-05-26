@@ -1,6 +1,7 @@
 {
   "rewrites": [
     { "source": "/auth/signin", "destination": "/auth/signin.html" },
+    { "source": "/auth/callback", "destination": "/auth/callback.html" },
     { "source": "/events", "destination": "/events.html" },
     { "source": "/admin", "destination": "/admin-dashboard.html" },
     { "source": "/admin/volumes", "destination": "/admin-volumes.html" },

@@ -21,6 +21,7 @@ const nextConfig = {
 
       // Auth/Application flow
       { source: '/auth/signin', destination: '/auth/signin.html' },
+      { source: '/auth/callback', destination: '/auth/callback.html' },
       { source: '/status', destination: '/status.html' },
       { source: '/friend-invite', destination: '/friend-invite.html' },
       { source: '/application-submitted', destination: '/application-submitted.html' },
