@@ -1,4 +1,6 @@
 {
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
   "rewrites": [
     { "source": "/auth/signin", "destination": "/auth/signin.html" },
     { "source": "/events", "destination": "/events.html" },
@@ -7,5 +9,10 @@
     { "source": "/application-submitted", "destination": "/application-submitted.html" },
     { "source": "/recap/vol-01", "destination": "/recap-vol-01.html" },
     { "source": "/post-event/no-mutuals", "destination": "/post-event-no-mutuals.html" }
-  ]
+  ],
+  "functions": {
+    "app/api/**": {
+      "runtime": "nodejs18.x"
+    }
+  }
 }
