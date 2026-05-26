@@ -295,3 +295,106 @@ export async function checkInAttendee(applicationId: string, userId: string, rol
 
   return data;
 }
+
+/**
+ * getEventAttendees: Fetch all confirmed, checked-in attendees for an event
+ * Excludes the current user (no picking self)
+ * Returns array of attendee objects with user metadata
+ */
+export async function getEventAttendees(volumeId: string, currentUserId: string) {
+  try {
+    // Get all confirmed applications for this volume that have checked in
+    const { data: applications, error: appError } = await supabase
+      .from('applications')
+      .select('id, applicant_user_id, plus_one_user_id, checked_in')
+      .eq('volume_id', volumeId)
+      .eq('applicant_status', 'confirmed')
+      .eq('checked_in', true);
+
+    if (appError) {
+      throw new Error(`Failed to fetch applications: ${appError.message}`);
+    }
+
+    // Collect all attendee user IDs (applicants + plus-ones who checked in)
+    const attendeeIds = new Set<string>();
+
+    applications?.forEach(app => {
+      if (app.applicant_user_id && app.applicant_user_id !== currentUserId) {
+        attendeeIds.add(app.applicant_user_id);
+      }
+      if (app.plus_one_user_id && app.plus_one_user_id !== currentUserId) {
+        attendeeIds.add(app.plus_one_user_id);
+      }
+    });
+
+    // If no attendees, return empty array
+    if (attendeeIds.size === 0) {
+      return [];
+    }
+
+    // Fetch user metadata from Supabase auth
+    const { data: { users }, error: usersError } = await supabase.auth.admin.listUsers();
+
+    if (usersError || !users) {
+      throw new Error('Failed to fetch user details');
+    }
+
+    // Build attendee list with role context
+    const attendees = users
+      .filter(u => attendeeIds.has(u.id))
+      .map(u => {
+        // Determine if this user was an applicant or plus-one
+        const asApplicant = applications?.find(app => app.applicant_user_id === u.id);
+        const asPlusOne = applications?.find(app => app.plus_one_user_id === u.id);
+
+        return {
+          id: u.id,
+          name: u.user_metadata?.name || 'Attendee',
+          email: u.email || '',
+          role: asApplicant ? 'Applicant' : asPlusOne ? 'Plus-One' : 'Attendee',
+        };
+      })
+      .sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically
+
+    return attendees;
+  } catch (error) {
+    console.error('Get event attendees error:', error);
+    throw error;
+  }
+}
+
+/**
+ * getMyPicks: Fetch current user's spark picks for an event
+ * Returns map of { [pickedUserId]: kind } for easy lookup in UI
+ */
+export async function getMyPicks(volumeId: string) {
+  try {
+    const { data: { user } } = await supabase.auth.getUser();
+
+    if (!user) {
+      throw new Error('Not authenticated');
+    }
+
+    // Fetch all picks for this user in this event
+    const { data: picks, error } = await supabase
+      .from('sparks_picks')
+      .select('picked_user_id, kind')
+      .eq('picker_user_id', user.id)
+      .eq('volume_id', volumeId);
+
+    if (error) {
+      throw new Error(`Failed to fetch picks: ${error.message}`);
+    }
+
+    // Transform to map for easy lookup: { [pickedUserId]: kind }
+    const picksMap: Record<string, string> = {};
+    picks?.forEach(pick => {
+      picksMap[pick.picked_user_id] = pick.kind;
+    });
+
+    return picksMap;
+  } catch (error) {
+    console.error('Get my picks error:', error);
+    throw error;
+  }
+}
